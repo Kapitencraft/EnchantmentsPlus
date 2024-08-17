@@ -1,5 +1,6 @@
 package net.kapitencraft.enchantments_plus.event;
 
+import net.kapitencraft.enchantments_plus.enchantments.HealthMendingEnchantment;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.enchantments_plus.enchantments.armor.BasaltWalkerEnchantment;
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
@@ -33,6 +34,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.EnderManAngerEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -133,6 +135,13 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onModifyFishingHookStats(ModifyFishingHookStatsEvent event) {
-        event.hookSpeed.addAddition(event.player.getItemInHand(InteractionHand.MAIN_HAND).getEnchantmentLevel(ModEnchantments.FLASH.get()));
+        event.hookSpeed.addAddition(event.fishingRod.getEnchantmentLevel(ModEnchantments.FLASH.get()));
+    }
+
+
+    @SubscribeEvent
+    public static void healthRegenRegister(LivingHealEvent event) {
+        LivingEntity living = event.getEntity();
+        if (living instanceof Player player) event.setAmount(HealthMendingEnchantment.repairPlayerItems(player, event.getAmount()));
     }
 }

@@ -1,8 +1,8 @@
     package net.kapitencraft.enchantments_plus.enchantments.weapon;
 
-import net.kapitencraft.mysticcraft.enchantments.abstracts.IWeaponEnchantment;
-import net.kapitencraft.mysticcraft.enchantments.abstracts.ModEnchantment;
-import net.kapitencraft.mysticcraft.enchantments.abstracts.ModEnchantmentCategories;
+import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantmentCategories;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ScavengerEnchantment extends Enchantment implements IWeaponEnchantment, ModEnchantment {

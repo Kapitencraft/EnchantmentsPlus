@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon.melee;
 
-import net.kapitencraft.mysticcraft.enchantments.abstracts.IWeaponEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;

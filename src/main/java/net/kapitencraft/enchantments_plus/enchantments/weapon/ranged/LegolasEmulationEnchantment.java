@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon.ranged;
 
-import net.kapitencraft.mysticcraft.enchantments.abstracts.ModEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;

@@ -2,6 +2,9 @@ package net.kapitencraft.enchantments_plus;
 
 import com.mojang.logging.LogUtils;
 import net.kapitencraft.enchantments_plus.registry.ModBlocks;
+import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
+import net.kapitencraft.enchantments_plus.registry.ModLootTableModifiers;
+import net.kapitencraft.enchantments_plus.registry.ModMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
@@ -44,7 +47,10 @@ public class EnchantmentsPlusMod
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModBlocks.REGISTRY.register(modEventBus);
+        ModEnchantments.REGISTRY.register(modEventBus);
+        ModMobEffects.REGISTRY.register(modEventBus);
+        ModLootTableModifiers.REGISTRY.register(modEventBus);
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 }

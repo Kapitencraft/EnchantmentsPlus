@@ -1,6 +1,5 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon;
 
-import net.kapitencraft.kap_lib.content.ChainLightningHelper;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtendedCalculationEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
@@ -21,7 +20,7 @@ public class ChainLightningEnchantment extends ExtendedCalculationEnchantment im
     @Override
     protected double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
         if (MathHelper.chance(level * 1., attacker)) {
-            ChainLightningHelper.spawnLightnings(level, attacked, attacker, (float) damage);
+            //ChainLightningHelper.spawnLightnings(level, attacked, attacker, (float) damage);
         }
         return damage;
     }

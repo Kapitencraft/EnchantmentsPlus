@@ -1,5 +1,6 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon;
 
+import net.kapitencraft.enchantments_plus.data_gen.ModDamageTypes;
 import net.kapitencraft.enchantments_plus.registry.ModMobEffects;
 import net.kapitencraft.kap_lib.enchantments.abstracts.CountEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
@@ -35,8 +36,8 @@ public class InfernoEnchantment extends CountEnchantment implements IUltimateEnc
     }
 
     private void attack(LivingEntity attacked, LivingEntity attacker, int tick, float damage) {
-        MiscHelper.delayed(20, () -> {
-            attacked.hurt(attacked.damageSources(). new EntityDamageSource("inferno", attacker), damage);
+        MiscHelper.schedule(20, () -> {
+            attacked.hurt(attacked.damageSources().source(ModDamageTypes.INFERNO, attacker), damage);
                 if (tick < 5) {
                 attack(attacked, attacker, tick + 1, damage);
             }

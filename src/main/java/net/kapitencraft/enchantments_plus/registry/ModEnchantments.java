@@ -30,7 +30,7 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> TANK = register("tank", TankEnchantment::new);
     RegistryObject<Enchantment> SCAVENGER = register("scavenger", ScavengerEnchantment::new);
     RegistryObject<Enchantment> ENDER_SLAYER = register("ender_slayer", EnderSlayerEnchantment::new);
-    RegistryObject<Enchantment> CHAIN_LIGHTNING = register("chain_lightning", ChainLightningEnchantment::new);
+    //RegistryObject<Enchantment> CHAIN_LIGHTNING = register("chain_lightning", ChainLightningEnchantment::new);
     RegistryObject<Enchantment> STUNNING = register("stunning", StunningEnchantment::new);
     RegistryObject<Enchantment> COMBAT_KNOWLEDGE = register("combat_knowledge", CombatKnowledgeEnchantment::new);
     RegistryObject<Enchantment> TRANSYLVANIAN = register("transylvanian", TransylvanianEnchantment::new);
