@@ -5,7 +5,7 @@ import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.StatBoostEnchantment;
 import net.kapitencraft.kap_lib.helpers.AttributeHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
-import net.kapitencraft.kap_lib.registry.ModAttributes;
+import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -23,8 +23,8 @@ public class OverloadEnchantment extends StatBoostEnchantment implements ModEnch
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
         return multimap -> {
-            multimap.put(ModAttributes.DRAW_SPEED.get(), AttributeHelper.createModifier("Overload Enchantment", AttributeModifier.Operation.ADDITION, -2 * level));
-            multimap.put(ModAttributes.CRIT_DAMAGE.get(), AttributeHelper.createModifier("Overload Enchantment", AttributeModifier.Operation.ADDITION, level));
+            multimap.put(ExtraAttributes.DRAW_SPEED.get(), AttributeHelper.createModifier("Overload Enchantment", AttributeModifier.Operation.ADDITION, -2 * level));
+            multimap.put(ExtraAttributes.CRIT_DAMAGE.get(), AttributeHelper.createModifier("Overload Enchantment", AttributeModifier.Operation.ADDITION, level));
         };
     }
 

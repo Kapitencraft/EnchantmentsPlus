@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.StatBoostEnchantment;
 import net.kapitencraft.kap_lib.helpers.AttributeHelper;
-import net.kapitencraft.kap_lib.registry.ModAttributes;
+import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -25,7 +25,7 @@ public class NecroticTouchEnchantment extends StatBoostEnchantment implements IW
 
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
-        return multimap -> multimap.put(ModAttributes.LIVE_STEAL.get(), AttributeHelper.createModifier("Necrotic Touch Enchantment", AttributeModifier.Operation.ADDITION, level));
+        return multimap -> multimap.put(ExtraAttributes.LIVE_STEAL.get(), AttributeHelper.createModifier("Necrotic Touch Enchantment", AttributeModifier.Operation.ADDITION, level));
     }
 
     @Override

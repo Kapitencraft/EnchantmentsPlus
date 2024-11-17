@@ -1,7 +1,7 @@
 package net.kapitencraft.enchantments_plus.util;
 
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
-import net.kapitencraft.kap_lib.registry.ModAttributes;
+import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -53,7 +53,7 @@ public class Util {
         if (!arrowStack.isEmpty() && arrowStack.getItem() instanceof ArrowItem arrowItem) {
             AbstractArrow arrow = arrowItem.createArrow(level, arrowStack, archer);
             arrow.shootFromRotation(archer, rotX, rotY, 0.0F, 5, 1.0F);
-            arrow.setBaseDamage(archer.getAttributeValue(ModAttributes.RANGED_DAMAGE.get()));
+            arrow.setBaseDamage(archer.getAttributeValue(ExtraAttributes.RANGED_DAMAGE.get()));
             arrow.setKnockback(kb);
             arrow.setCritArrow(crit);
             registerEnchant(bow, arrow);

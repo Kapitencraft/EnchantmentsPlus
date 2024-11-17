@@ -164,12 +164,26 @@ dependencies {
     // The group id is ignored when searching -- in this case, it is "blank"
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 
-    implementation fg.deobf("maven.modrinth:kap_lib:mc${minecraft_version}-${kap_lib_version}")
+    implementation fg.deobf("maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}-FML${forge_version}")
 
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+}
+
+tasks.register('autoPublish', JavaExec) {
+    mainClass = 'net.kapitencraft.kap_lib.publish.AutoPublisher'
+
+    classpath = sourceSets.main.runtimeClasspath
+
+    args = [
+            mod_id,
+            mod_name,
+            mod_version,
+            minecraft_version,
+            forge_version
+    ]
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

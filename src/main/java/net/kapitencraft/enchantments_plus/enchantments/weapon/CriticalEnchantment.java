@@ -3,7 +3,7 @@ package net.kapitencraft.enchantments_plus.enchantments.weapon;
 import com.google.common.collect.Multimap;
 import net.kapitencraft.kap_lib.enchantments.abstracts.WeaponStatBoostEnchantment;
 import net.kapitencraft.kap_lib.helpers.AttributeHelper;
-import net.kapitencraft.kap_lib.registry.ModAttributes;
+import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,7 +18,7 @@ public class CriticalEnchantment extends WeaponStatBoostEnchantment {
 
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
-        return multimap -> multimap.put(ModAttributes.CRIT_DAMAGE.get(), AttributeHelper.createModifier("Critical Enchantment", AttributeModifier.Operation.ADDITION, level * 10));
+        return multimap -> multimap.put(ExtraAttributes.CRIT_DAMAGE.get(), AttributeHelper.createModifier("Critical Enchantment", AttributeModifier.Operation.ADDITION, level * 10));
     }
 
     @Override
