@@ -1,13 +1,9 @@
 {
-  "type": "kap_lib:ench_add_item",
+  "type": "enchantments_plus:scavenger",
   "conditions": [
     {
       "condition": "kap_lib:table_type",
       "type": "entities"
     }
-  ],
-  "enchantment": "enchantments_plus:scavenger",
-  "chance": 0.1,
-  "provider": "ench * 2",
-  "item": "minecraft:emerald"
+  ]
 }

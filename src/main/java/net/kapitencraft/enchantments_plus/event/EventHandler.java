@@ -16,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -44,7 +45,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EventHandler {
 
     @SubscribeEvent
-    public void onLivingTick(LivingEvent.LivingTickEvent event) {
+    public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity living = event.getEntity();
         int i = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.BASALT_WALKER.get(), living);
         if (i > 0) {
@@ -71,7 +72,6 @@ public class EventHandler {
         ServerLevel serverLevel = level instanceof ServerLevel serverLevel1 ? serverLevel1 : null;
         if (serverLevel == null) return;
         ServerPlayer serverPlayer = (ServerPlayer) player;
-        LootParams.Builder context = new LootParams.Builder(serverLevel).withParameter(LootContextParams.ORIGIN, new Vec3(pos.getX(), pos.getY(), pos.getZ())).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, mainHandItem).withOptionalParameter(LootContextParams.THIS_ENTITY, serverPlayer);
         if (block instanceof CropBlock || block instanceof NetherWartBlock) {
             IntegerProperty ageProperty = block instanceof CropBlock cropBlock ?  cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
             if (state.getValue(ageProperty) < MathHelper.getLargest(ageProperty.getPossibleValues())) {
@@ -79,13 +79,14 @@ public class EventHandler {
                     event.setCanceled(true);
                     return;
                 }
-            } else {
             }
 
             if (mainHandItem.getEnchantmentLevel(ModEnchantments.REPLENISH.get()) > 0) {
                 event.setCanceled(true);
+                //TODO make sure telekinesis still works
                 Block.dropResources(state, level, pos);
-                state.setValue(ageProperty, 0);
+                mainHandItem.mineBlock(level, state, pos, player);
+                state = state.setValue(ageProperty, 0);
                 level.setBlockAndUpdate(pos, state);
             }
         }

@@ -1,8 +1,8 @@
 package net.kapitencraft.enchantments_plus.enchantments.armor;
 
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtendedCalculationEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IToolEnchantment;
-import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantmentCategories;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +16,7 @@ public class ThornyEnchantment extends ExtendedCalculationEnchantment implements
     }
 
     public ThornyEnchantment() {
-        super(Rarity.RARE, ModEnchantmentCategories.SHIELD, MiscHelper.WEAPON_SLOT, CalculationType.ALL, ProcessPriority.HIGHEST);
+        super(Rarity.RARE, ExtraEnchantmentCategories.SHIELD, MiscHelper.WEAPON_SLOT, CalculationType.ALL, ProcessPriority.HIGHEST);
     }
 
     @Override

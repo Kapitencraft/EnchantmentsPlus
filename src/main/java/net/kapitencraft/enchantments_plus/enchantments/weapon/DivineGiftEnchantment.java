@@ -1,19 +1,21 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon;
 
 import com.google.common.collect.Multimap;
-import net.kapitencraft.kap_lib.enchantments.abstracts.WeaponStatBoostEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.StatBoostEnchantment;
 import net.kapitencraft.kap_lib.helpers.AttributeHelper;
 import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 import java.util.function.Consumer;
 
-public class DivineGiftEnchantment extends WeaponStatBoostEnchantment {
+public class DivineGiftEnchantment extends StatBoostEnchantment implements IWeaponEnchantment {
     public DivineGiftEnchantment() {
-        super(Rarity.VERY_RARE);
+        super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, DEFAULT_SLOT);
     }
 
     @Override

@@ -3,8 +3,8 @@ package net.kapitencraft.enchantments_plus.enchantments.weapon;
 import net.kapitencraft.enchantments_plus.data_gen.ModDamageTypes;
 import net.kapitencraft.enchantments_plus.registry.ModMobEffects;
 import net.kapitencraft.kap_lib.enchantments.abstracts.CountEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
-import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantmentCategories;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.util.particle_help.animation.IAnimatable;
 import net.kapitencraft.kap_lib.util.particle_help.animation.elements.OrbitAnimationElement;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class InfernoEnchantment extends CountEnchantment implements IUltimateEnchantment {
     public InfernoEnchantment() {
-        super(Rarity.VERY_RARE, ModEnchantmentCategories.ALL_WEAPONS, MiscHelper.WEAPON_SLOT, "infernoMap", CountType.NORMAL, CalculationType.ALL, ProcessPriority.LOWEST);
+        super(Rarity.VERY_RARE, ExtraEnchantmentCategories.ALL_WEAPONS, MiscHelper.WEAPON_SLOT, "infernoMap", CountType.NORMAL, CalculationType.ALL, ProcessPriority.LOWEST);
     }
 
     @Override

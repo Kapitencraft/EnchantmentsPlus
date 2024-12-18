@@ -29,11 +29,11 @@ public class LightningLordEnchantment extends CountEnchantment {
     @Override
     protected double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
         if (attacker.level() instanceof ServerLevel serverLevel) {
-            LightningBolt entityToSpawn = EntityType.LIGHTNING_BOLT.create(serverLevel);
-            assert entityToSpawn != null;
-            entityToSpawn.moveTo(Vec3.atBottomCenterOf(attacked.getOnPos()));
-            entityToSpawn.setVisualOnly(true);
-            serverLevel.addFreshEntity(entityToSpawn);
+            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(serverLevel);
+            assert lightning != null;
+            lightning.moveTo(Vec3.atBottomCenterOf(attacked.getOnPos()));
+            lightning.setVisualOnly(true);
+            serverLevel.addFreshEntity(lightning);
         }
         damageAmount *= (1 + level * 0.1);
         return damageAmount;

@@ -54,8 +54,10 @@ public class EnchantmentsPlusMod
         ModMobEffects.REGISTRY.register(modEventBus);
         ModLootTableModifiers.REGISTRY.register(modEventBus);
 
-        ((ForgeRegistry<Enchantment>) ForgeRegistries.ENCHANTMENTS).addAlias(new ResourceLocation("uniquemagic", "timber"), new ResourceLocation(MOD_ID, "lumberjack"));
-
         //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
+
+    public static ResourceLocation res(String val) {
+        return new ResourceLocation(MOD_ID, val);
     }
 }
