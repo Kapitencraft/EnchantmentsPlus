@@ -4,6 +4,7 @@ import net.kapitencraft.enchantments_plus.enchantments.HealthMendingEnchantment;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.enchantments_plus.enchantments.armor.BasaltWalkerEnchantment;
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ModBowEnchantment;
 import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
@@ -16,6 +17,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -32,6 +34,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.EnderManAngerEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
@@ -51,7 +54,6 @@ public class EventHandler {
         if (i > 0) {
             BasaltWalkerEnchantment.onEntityMoved(living, living.blockPosition(), i);
         }
-
     }
 
     @SubscribeEvent
@@ -101,8 +103,8 @@ public class EventHandler {
                         state1 -> true, pos1 -> brokenBlocks.getIntValue() > integer);
             });
         }
-        MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), integer -> {
-            MathHelper.add(event::getExpToDrop, event::setExpToDrop, integer);
+        MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel -> {
+            MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel);
         });
         if (mainHandItem.getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
             addXp(player, event.getExpToDrop());
@@ -135,8 +137,22 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public void onModifyFishingHookStats(ModifyFishingHookStatsEvent event) {
+    public static void onModifyFishingHookStats(ModifyFishingHookStatsEvent event) {
         event.hookSpeed.addAddition(event.fishingRod.getEnchantmentLevel(ModEnchantments.FLASH.get()));
+    }
+
+    @SubscribeEvent
+    public static void registerJoinEventData(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof AbstractArrow arrow) {
+            if (arrow.getOwner() instanceof LivingEntity entity) {
+                MiscHelper.getEnchantmentLevelAndDo(entity.getUseItem(), ModEnchantments.OVERLOAD.get(),
+                        level -> arrow.getPersistentData().putInt("OverloadLvl", level)
+                );
+                MiscHelper.getEnchantmentLevelAndDo(entity.getUseItem(), ModEnchantments.WIND_BLESSING.get(),
+                        level -> arrow.setNoGravity(true)
+                );
+            }
+        }
     }
 
 

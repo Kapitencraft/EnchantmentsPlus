@@ -70,5 +70,6 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> TELEKINESIS = register("telekinesis", TelekinesisEnchantment::new);
     RegistryObject<Enchantment> REPLENISH = register("replenish", ReplenishEnchantment::new);
     RegistryObject<Enchantment> YEET_THORNS = register("yeet_thorns", YeetThornsEnchantment::new);
+    RegistryObject<Enchantment> WIND_BLESSING = register("wind_blessing", WindBlessingEnchantment::new);
 
 }
