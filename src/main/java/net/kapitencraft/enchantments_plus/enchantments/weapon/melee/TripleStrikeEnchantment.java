@@ -5,11 +5,13 @@ import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
-public class TripleStrikeEnchantment extends CountEnchantment {
+public class TripleStrikeEnchantment extends Enchantment implements CountEnchantment {
     public TripleStrikeEnchantment() {
-        super(Rarity.UNCOMMON, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT, "TripleStrikeMap", CountType.EXCEPT, CalculationType.ALL, ProcessPriority.HIGHEST);
+        super(Rarity.UNCOMMON, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT);
     }
 
     @Override
@@ -28,12 +30,22 @@ public class TripleStrikeEnchantment extends CountEnchantment {
     }
 
     @Override
-    protected int getCountAmount(int level) {
+    public String mapName() {
+        return "TripleStrikeMap";
+    }
+
+    @Override
+    public CountType countType() {
+        return CountType.EXCEPT;
+    }
+
+    @Override
+    public int getCountAmount(int level) {
         return 3;
     }
 
     @Override
-    protected double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
+    public double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
         damageAmount *= (1 + 0.2 * level);
         return damageAmount;
     }
@@ -42,5 +54,15 @@ public class TripleStrikeEnchantment extends CountEnchantment {
     @Override
     public String[] getDescriptionMods(int level) {
         return new String[] {level*20 + "%"};
+    }
+
+    @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.HIGHEST;
     }
 }

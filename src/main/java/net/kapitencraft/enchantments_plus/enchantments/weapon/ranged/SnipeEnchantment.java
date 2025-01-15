@@ -7,13 +7,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-public class SnipeEnchantment extends ModBowEnchantment implements IWeaponEnchantment {
+public class SnipeEnchantment extends Enchantment implements ModBowEnchantment, IWeaponEnchantment {
 
     public SnipeEnchantment() {
-        super(Rarity.RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND}, "Snipe");
+        super(Rarity.RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -30,12 +32,12 @@ public class SnipeEnchantment extends ModBowEnchantment implements IWeaponEnchan
     }
 
     @Override
-    public float execute(LivingEntity target, CompoundTag tag, ExecuteType type, float oldDamage, AbstractArrow arrow) {
-        if (type == ExecuteType.HIT) {
+    public float execute(int level, @Nullable LivingEntity target, CompoundTag tag, ExePhase type, float oldDamage, AbstractArrow arrow) {
+        if (type == ExePhase.HIT) {
             Vec3 start = new Vec3(tag.getDouble("LaunchX"), tag.getDouble("LaunchY"), tag.getDouble("LaunchZ"));
             Vec3 targetPos = arrow.position();
             double distance = start.distanceTo(targetPos);
-            return (float) (oldDamage * (1 + (distance / 10) * 0.01 * getLevel(tag)));
+            return (float) (oldDamage * (1 + (distance / 10) * 0.01 * level));
         }
         return oldDamage;
     }

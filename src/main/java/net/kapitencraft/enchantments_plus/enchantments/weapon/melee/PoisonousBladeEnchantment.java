@@ -5,11 +5,13 @@ import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
-public class PoisonousBladeEnchantment extends EffectApplicationEnchantment implements IWeaponEnchantment {
+public class PoisonousBladeEnchantment extends Enchantment implements EffectApplicationEnchantment, IWeaponEnchantment {
     public PoisonousBladeEnchantment() {
-        super(Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND}, CalculationType.ONLY_MELEE);
+        super(Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND});
     }
 
 
@@ -19,17 +21,22 @@ public class PoisonousBladeEnchantment extends EffectApplicationEnchantment impl
     }
 
     @Override
-    protected MobEffect getEffect() {
+    public MobEffect getEffect() {
         return MobEffects.POISON;
     }
 
     @Override
-    protected int getChance(int level) {
+    public int getChance(int level) {
         return 100;
     }
 
     @Override
-    protected int getScale() {
+    public int getScale() {
         return 5;
+    }
+
+    @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ONLY_MELEE;
     }
 }

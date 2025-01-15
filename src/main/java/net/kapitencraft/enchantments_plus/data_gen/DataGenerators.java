@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators {
 
     @SubscribeEvent
-    public void onGatherData(GatherDataEvent event) {
+    public static void onGatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper helper = event.getExistingFileHelper();

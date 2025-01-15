@@ -10,12 +10,19 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class CriticalEnchantment extends StatBoostEnchantment implements IWeaponEnchantment {
+public class CriticalEnchantment extends Enchantment implements StatBoostEnchantment, IWeaponEnchantment {
     public CriticalEnchantment() {
         super(Rarity.COMMON, ExtraEnchantmentCategories.ALL_WEAPONS, DEFAULT_SLOT);
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(DEFAULT_SLOT);
     }
 
     @Override

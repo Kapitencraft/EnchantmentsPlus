@@ -6,11 +6,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.Nullable;
 
-public class FrozenArrowsEnchantment extends ModBowEnchantment {
+public class FrozenArrowsEnchantment extends Enchantment implements ModBowEnchantment {
     public FrozenArrowsEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.BOW, MiscHelper.WEAPON_SLOT, "FrozenArrow");
+        super(Rarity.VERY_RARE, EnchantmentCategory.BOW, MiscHelper.WEAPON_SLOT);
     }
 
     @Override
@@ -19,14 +21,14 @@ public class FrozenArrowsEnchantment extends ModBowEnchantment {
     }
 
     @Override
-    public int getMaxLevel() {
-        return 3;
+    public float execute(int level, @Nullable LivingEntity target, CompoundTag tag, ExePhase type, float oldDamage, AbstractArrow arrow) {
+        if (type == ExePhase.HIT && target != null) target.setTicksFrozen(level * 40);
+        return oldDamage;
     }
 
     @Override
-    public float execute(LivingEntity target, CompoundTag tag, ExecuteType type, float oldDamage, AbstractArrow arrow) {
-        if (type == ExecuteType.HIT) target.setTicksFrozen(getLevel(tag) * 40);
-        return oldDamage;
+    public int getMaxLevel() {
+        return 3;
     }
 
     @Override

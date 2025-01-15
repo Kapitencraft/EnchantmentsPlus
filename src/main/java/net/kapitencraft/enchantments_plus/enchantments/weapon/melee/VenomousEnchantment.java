@@ -10,15 +10,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class VenomousEnchantment extends ExtendedCalculationEnchantment implements IWeaponEnchantment {
+public class VenomousEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IWeaponEnchantment {
     public static final UUID ID = UUID.fromString("c3f0728b-ecd3-487b-9e5b-a55ae35241c0");
     public static final String TIMER_ID = "VenomousTimer";
     public VenomousEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT, CalculationType.ALL, ProcessPriority.LOWEST);
+        super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT);
     }
 
     @Override
@@ -28,11 +30,21 @@ public class VenomousEnchantment extends ExtendedCalculationEnchantment implemen
 
 
     @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.LOWEST;
+    }
+
+    @Override
     public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
         AttributeInstance speed = attacked.getAttribute(Attributes.MOVEMENT_SPEED);
         assert speed != null;
         try {
-            speed.addTransientModifier(TimedModifier.addModifier(TIMER_ID, -0.05 * level, AttributeModifier.Operation.MULTIPLY_TOTAL, 100, attacked, Attributes.MOVEMENT_SPEED));
+            speed.addTransientModifier(new TimedModifier(TIMER_ID, -0.05 * level, AttributeModifier.Operation.MULTIPLY_TOTAL, 100));
         } catch (Throwable ignored) {}
         return damage;
     }

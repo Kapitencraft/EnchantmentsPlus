@@ -9,11 +9,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class RejuvenateEnchantment extends ArmorStatBoostEnchantment {
+public class RejuvenateEnchantment extends Enchantment implements ArmorStatBoostEnchantment {
     public RejuvenateEnchantment() {
         super(Rarity.UNCOMMON, EnchantmentCategory.WEARABLE, MiscHelper.ARMOR_EQUIPMENT);
     }
@@ -31,5 +33,10 @@ public class RejuvenateEnchantment extends ArmorStatBoostEnchantment {
     @Override
     public String[] getDescriptionMods(int level) {
         return new String[] {"+" + level*2};
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(MiscHelper.ARMOR_EQUIPMENT);
     }
 }

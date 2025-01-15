@@ -9,13 +9,19 @@ import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.util.Reference;
+import net.kapitencraft.kap_lib.util.attribute.TimedModifier;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.HoeItem;
@@ -33,12 +39,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.EnderManAngerEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -75,8 +79,9 @@ public class EventHandler {
         if (serverLevel == null) return;
         ServerPlayer serverPlayer = (ServerPlayer) player;
         if (block instanceof CropBlock || block instanceof NetherWartBlock) {
+            int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
             IntegerProperty ageProperty = block instanceof CropBlock cropBlock ?  cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
-            if (state.getValue(ageProperty) < MathHelper.getLargest(ageProperty.getPossibleValues())) {
+            if (state.getValue(ageProperty) < max) {
                 if (mainHandItem.getEnchantmentLevel(ModEnchantments.DELICATE.get()) > 0) {
                     event.setCanceled(true);
                     return;
@@ -160,5 +165,40 @@ public class EventHandler {
     public static void healthRegenRegister(LivingHealEvent event) {
         LivingEntity living = event.getEntity();
         if (living instanceof Player player) event.setAmount(HealthMendingEnchantment.repairPlayerItems(player, event.getAmount()));
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    @SubscribeEvent
+    public static void fogModifiers(ViewportEvent.RenderFog event) {
+        int enlightenmentLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.ENLIGHTENMENT.get(), Minecraft.getInstance().player);
+        if (enlightenmentLevel > 0) {
+            event.setCanceled(true);
+            event.setNearPlaneDistance(event.getNearPlaneDistance() * (1 + enlightenmentLevel * .4f));
+            event.setFarPlaneDistance(event.getFarPlaneDistance() * (1 + enlightenmentLevel * .4f));
+        }
+    }
+
+    @SubscribeEvent
+    public static void itemUseEvents(LivingEntityUseItemEvent event) {
+        if (event.getItem().isEdible()) {
+            int lvl = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.GLUTTONOUS.get(), event.getEntity());
+            if (lvl > 0) {
+                event.setDuration((int) (event.getDuration() * (1 - lvl * .1)));
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        DamageSource source = event.getSource();
+        if (!source.isIndirect() && source.getEntity() instanceof LivingEntity living) {
+            int lvl = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.BLOOD_THIRST.get(), living);
+            if (lvl > 0) {
+                AttributeInstance attack = living.getAttribute(Attributes.ATTACK_DAMAGE);
+                if (attack != null) {
+                    attack.addPermanentModifier(new TimedModifier("Blood Thirst", lvl / 100., AttributeModifier.Operation.MULTIPLY_BASE, lvl * 40));
+                }
+            }
+        }
     }
 }

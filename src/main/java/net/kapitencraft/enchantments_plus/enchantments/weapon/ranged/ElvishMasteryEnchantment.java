@@ -12,9 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class ElvishMasteryEnchantment extends StatBoostEnchantment implements IWeaponEnchantment {
+public class ElvishMasteryEnchantment extends Enchantment implements StatBoostEnchantment, IWeaponEnchantment {
     public ElvishMasteryEnchantment() {
         super(Enchantment.Rarity.RARE, EnchantmentCategory.BOW, DEFAULT_SLOT);
     }
@@ -22,6 +23,11 @@ public class ElvishMasteryEnchantment extends StatBoostEnchantment implements IW
     @Override
     public int getMaxLevel() {
         return 5;
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(DEFAULT_SLOT);
     }
 
     @Override

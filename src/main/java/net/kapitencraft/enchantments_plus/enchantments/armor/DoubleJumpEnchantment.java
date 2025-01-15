@@ -11,11 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class DoubleJumpEnchantment extends ArmorStatBoostEnchantment {
+public class DoubleJumpEnchantment extends Enchantment implements ArmorStatBoostEnchantment {
     public DoubleJumpEnchantment() {
-        super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR, EquipmentSlot.FEET);
+        super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[] {EquipmentSlot.FEET});
     }
 
     @Override
@@ -31,5 +32,10 @@ public class DoubleJumpEnchantment extends ArmorStatBoostEnchantment {
     @Override
     public String[] getDescriptionMods(int level) {
         return new String[] {"+" + level};
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(EquipmentSlot.FEET);
     }
 }

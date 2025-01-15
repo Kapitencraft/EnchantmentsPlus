@@ -8,12 +8,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-public class LightningLordEnchantment extends CountEnchantment {
+public class LightningLordEnchantment extends Enchantment implements CountEnchantment {
     public LightningLordEnchantment() {
-        super(Rarity.RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT, "lightningLordMap", CountType.NORMAL, CalculationType.ALL, ProcessPriority.LOW);
+        super(Rarity.RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT);
     }
 
     @Override
@@ -22,12 +24,22 @@ public class LightningLordEnchantment extends CountEnchantment {
     }
 
     @Override
-    protected int getCountAmount(int level) {
+    public String mapName() {
+        return "lightningLordMap";
+    }
+
+    @Override
+    public CountType countType() {
+        return CountType.NORMAL;
+    }
+
+    @Override
+    public int getCountAmount(int level) {
         return (int) (3 + level * 0.4);
     }
 
     @Override
-    protected double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
+    public double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
         if (attacker.level() instanceof ServerLevel serverLevel) {
             LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(serverLevel);
             assert lightning != null;
@@ -43,5 +55,15 @@ public class LightningLordEnchantment extends CountEnchantment {
     @Override
     public String[] getDescriptionMods(int level) {
         return new String[] {(int) (3 + level * 0.4) + "th", level*10 + "%"};
+    }
+
+    @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.HIGH;
     }
 }

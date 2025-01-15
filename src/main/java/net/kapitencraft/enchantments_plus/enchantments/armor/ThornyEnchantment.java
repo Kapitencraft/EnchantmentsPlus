@@ -7,8 +7,10 @@ import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import org.jetbrains.annotations.NotNull;
 
-public class ThornyEnchantment extends ExtendedCalculationEnchantment implements IToolEnchantment {
+public class ThornyEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IToolEnchantment {
 
     @Override
     public int getMaxLevel() {
@@ -16,7 +18,17 @@ public class ThornyEnchantment extends ExtendedCalculationEnchantment implements
     }
 
     public ThornyEnchantment() {
-        super(Rarity.RARE, ExtraEnchantmentCategories.SHIELD, MiscHelper.WEAPON_SLOT, CalculationType.ALL, ProcessPriority.HIGHEST);
+        super(Rarity.RARE, ExtraEnchantmentCategories.SHIELD, MiscHelper.WEAPON_SLOT);
+    }
+
+    @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.HIGHEST;
     }
 
     @Override

@@ -8,16 +8,27 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
-public class GiantKillerEnchantment extends ExtendedCalculationEnchantment implements IWeaponEnchantment {
+public class GiantKillerEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IWeaponEnchantment {
 
     public GiantKillerEnchantment() {
-        super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND}, CalculationType.ALL, ProcessPriority.HIGHEST);
+        super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
     public int getMaxLevel() {
         return 5;
+    }
+
+    @Override
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.HIGHEST;
     }
 
     @Override

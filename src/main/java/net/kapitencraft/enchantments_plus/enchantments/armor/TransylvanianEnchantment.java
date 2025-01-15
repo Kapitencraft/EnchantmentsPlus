@@ -5,11 +5,12 @@ import net.kapitencraft.kap_lib.enchantments.abstracts.IArmorEnchantment;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 import java.util.List;
 
-public class TransylvanianEnchantment extends ExtendedAbilityEnchantment implements IArmorEnchantment {
+public class TransylvanianEnchantment extends Enchantment implements ExtendedAbilityEnchantment, IArmorEnchantment {
     public TransylvanianEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, MiscHelper.ARMOR_EQUIPMENT);
     }

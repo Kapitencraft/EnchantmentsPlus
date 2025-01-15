@@ -16,15 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class Util {
 
-    public static void createLegolasExtraArrows(@NotNull ItemStack bow, @NotNull LivingEntity archer, int kb) {
-        int legolasLevel = bow.getEnchantmentLevel(ModEnchantments.LEGOLAS_EMULATION.get());
-        for (int j = 0; j < legolasLevel; j++) {
-            float yChange = (float) (Math.random() * (5 - legolasLevel) - (5. - legolasLevel) / 2);
-            float xChange = (float) (Math.random() * (5 - legolasLevel) - (5. - legolasLevel) / 2);
-            createArrowProperties(archer, true, bow, kb, archer.getXRot() + xChange, archer.getYRot() + yChange);
-        }
-    }
-
     private static boolean isInfinite(Player player, ItemStack itemStack, ItemStack bow) {
         boolean flag1 = player.getAbilities().instabuild || (itemStack.getItem() instanceof ArrowItem && ((ArrowItem)itemStack.getItem()).isInfinite(itemStack, bow, player));
         return flag1 || player.getAbilities().instabuild && (itemStack.is(Items.SPECTRAL_ARROW) || itemStack.is(Items.TIPPED_ARROW));

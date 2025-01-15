@@ -9,11 +9,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class NecroticTouchEnchantment extends StatBoostEnchantment implements IWeaponEnchantment {
+public class NecroticTouchEnchantment extends Enchantment implements StatBoostEnchantment, IWeaponEnchantment {
     public NecroticTouchEnchantment() {
         super(Rarity.COMMON, EnchantmentCategory.WEAPON, DEFAULT_SLOT);
     }
@@ -21,6 +23,11 @@ public class NecroticTouchEnchantment extends StatBoostEnchantment implements IW
     @Override
     public int getMaxLevel() {
         return 3;
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(DEFAULT_SLOT);
     }
 
     @Override

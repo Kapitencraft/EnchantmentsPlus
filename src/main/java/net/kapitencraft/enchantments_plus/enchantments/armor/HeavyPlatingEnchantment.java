@@ -15,10 +15,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.function.Consumer;
 
-public class TankEnchantment extends ArmorStatBoostEnchantment implements IUltimateEnchantment {
-    public TankEnchantment() {
+public class HeavyPlatingEnchantment extends Enchantment implements ArmorStatBoostEnchantment, IUltimateEnchantment {
+    public HeavyPlatingEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, MiscHelper.ARMOR_EQUIPMENT);
     }
 
@@ -45,5 +46,10 @@ public class TankEnchantment extends ArmorStatBoostEnchantment implements IUltim
             multimap.put(Attributes.MOVEMENT_SPEED, AttributeHelper.createModifierForSlot("Tank Enchantment", AttributeModifier.Operation.MULTIPLY_BASE, -level / 100., armorItem.getEquipmentSlot()));
             multimap.put(Attributes.ARMOR, AttributeHelper.createModifierForSlot("Tank Enchantment", AttributeModifier.Operation.ADDITION, level * 2, armorItem.getEquipmentSlot()));
         };
+    }
+
+    @Override
+    public List<EquipmentSlot> slots() {
+        return List.of(MiscHelper.ARMOR_EQUIPMENT);
     }
 }

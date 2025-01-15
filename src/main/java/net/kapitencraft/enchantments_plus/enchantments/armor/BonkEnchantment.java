@@ -16,14 +16,24 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-public class BonkEnchantment extends ExtendedCalculationEnchantment implements IUltimateEnchantment, IArmorEnchantment {
+public class BonkEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IUltimateEnchantment, IArmorEnchantment {
 
     public BonkEnchantment() {
-        super(DEFAULT_RARITY, EnchantmentCategory.ARMOR, DEFAULT_SLOTS, CalculationType.ALL, ProcessPriority.LOWEST);
+        super(DEFAULT_RARITY, EnchantmentCategory.ARMOR, DEFAULT_SLOTS);
     }
 
     @Override
-    protected double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.LOWEST;
+    }
+
+    @Override
+    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
         EquipmentSlot slot = MiscHelper.getSlotForStack(enchanted);
         if (slot.isArmor()) {
             Cooldown cooldown = Cooldowns.BONK_ENCHANTMENT.getOrCreate(slot, 1200);

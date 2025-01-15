@@ -35,6 +35,7 @@ public class ScavengerModifier extends ModLootModifier {
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         ServerLevel level = context.getLevel();
         LootTable table = level.getServer().getLootData().getLootTable(EnchantmentsPlusMod.res("scavenger_drops"));
+        if (!context.hasParam(LootContextParams.KILLER_ENTITY)) return generatedLoot;
         Entity entity = context.getParam(LootContextParams.KILLER_ENTITY);
         if (!(entity instanceof LivingEntity living)) return generatedLoot;
         ItemStack tool = living.getItemBySlot(EquipmentSlot.MAINHAND);

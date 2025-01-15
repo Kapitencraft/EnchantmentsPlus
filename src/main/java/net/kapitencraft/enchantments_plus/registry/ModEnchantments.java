@@ -27,11 +27,10 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> EXPERIENCED = register("experienced", ExperiencedEnchantment::new);
     RegistryObject<Enchantment> SMELTING_TOUCH = register("smelting_touch", SmeltingTouchEnchantment::new);
     RegistryObject<Enchantment> DELICATE = register("delicate", DelicateEnchantment::new);
-    RegistryObject<Enchantment> TANK = register("tank", TankEnchantment::new);
+    RegistryObject<Enchantment> HEAVY_PLATING = register("heavy_plating", HeavyPlatingEnchantment::new);
     RegistryObject<Enchantment> SCAVENGER = register("scavenger", ScavengerEnchantment::new);
     RegistryObject<Enchantment> ENDER_SLAYER = register("ender_slayer", EnderSlayerEnchantment::new);
     //RegistryObject<Enchantment> CHAIN_LIGHTNING = register("chain_lightning", ChainLightningEnchantment::new);
-    RegistryObject<Enchantment> STUNNING = register("stunning", StunningEnchantment::new);
     RegistryObject<Enchantment> COMBAT_KNOWLEDGE = register("combat_knowledge", CombatKnowledgeEnchantment::new);
     RegistryObject<Enchantment> TRANSYLVANIAN = register("transylvanian", TransylvanianEnchantment::new);
     RegistryObject<Enchantment> HEALTH_MENDING = register("health_mending", HealthMendingEnchantment::new);
@@ -40,7 +39,6 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> ENDER_FRIEND = register("ender_friend", EnderFriendEnchantment::new);
     RegistryObject<Enchantment> OVERLOAD = register("overload", OverloadEnchantment::new);
     RegistryObject<Enchantment> ELVISH_MASTERY = register("elvish_mastery", ElvishMasteryEnchantment::new);
-    RegistryObject<Enchantment> LEGOLAS_EMULATION = register("legolas_emulation", LegolasEmulationEnchantment::new);
     RegistryObject<Enchantment> FAST_ARROWS = register("fast_arrows", FastArrowsEnchantment::new);
     RegistryObject<Enchantment> GIANT_KILLER = register("giant_killer", GiantKillerEnchantment::new);
     RegistryObject<Enchantment> AIM = register("aim", AimEnchantment::new);
@@ -58,7 +56,7 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> LUMBERJACK = register("lumberjack", LumberjackEnchantment::new);
     RegistryObject<Enchantment> VEIN_MINER = register("vein_miner", VeinMinerEnchantment::new);
     RegistryObject<Enchantment> POISONOUS_BLADE = register("poisonous_blade", PoisonousBladeEnchantment::new);
-    RegistryObject<Enchantment> GLACIAL_BLADE = register("glacial_blade", GlacialTouchEnchantment::new);
+    RegistryObject<Enchantment> CHILLING = register("chilling", ChillingEnchantment::new);
     RegistryObject<Enchantment> LIGHTNING_LORD = register("lightning_lord", LightningLordEnchantment::new);
     RegistryObject<Enchantment> TRIPLE_STRIKE = register("triple_strike", TripleStrikeEnchantment::new);
     RegistryObject<Enchantment> BACK_STAB = register("back_stab", BackStabEnchantment::new);
@@ -71,5 +69,8 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> REPLENISH = register("replenish", ReplenishEnchantment::new);
     RegistryObject<Enchantment> YEET_THORNS = register("yeet_thorns", YeetThornsEnchantment::new);
     RegistryObject<Enchantment> WIND_BLESSING = register("wind_blessing", WindBlessingEnchantment::new);
-
+    RegistryObject<Enchantment> ENLIGHTENMENT = register("enlightenment", EnlightenmentEnchantment::new);
+    RegistryObject<Enchantment> GLUTTONOUS = register("gluttonous", GluttonousEnchantment::new);
+    RegistryObject<Enchantment> COMPACTING = register("compacting", CompactingEnchantment::new);
+    RegistryObject<Enchantment> BLOOD_THIRST = register("blood_thirst", BloodThirstEnchantment::new);
 }

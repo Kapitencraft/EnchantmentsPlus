@@ -7,11 +7,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 public class JusticeEnchantment extends Enchantment implements IWeaponEnchantment {
     public JusticeEnchantment() {
         super(Rarity.COMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
+
     @Override
     public float getDamageBonus(int level, MobType mobType, ItemStack enchantedItem) {
         if (mobType == MobType.ILLAGER) {
@@ -21,7 +23,12 @@ public class JusticeEnchantment extends Enchantment implements IWeaponEnchantmen
     }
 
     @Override
-    public boolean checkCompatibility(Enchantment p_44644_) {
-        return !(p_44644_ instanceof DamageEnchantment);
+    public boolean checkCompatibility(@NotNull Enchantment pOther) {
+        return !(pOther instanceof DamageEnchantment);
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 5;
     }
 }

@@ -1,6 +1,57 @@
-rocket arrows (ultimate, bow)
-    arrows leave fire trail and explode
-enlightenment (helmet)
-    decreases darkness effect and applies night vision
-compacting (tool, weapons)
-    compacts dropped items into blocks
+v2
+endurance (armor)
+    slowly regenerate health when worn
+volt surge (armor)
+    like thunderbold thorns
+harpoon (crossbow)
+    grappling hook.
+dragon breath (crossbow, ultimate)
+    no damage, but spawn dragon breath on impact
+warping (boots)
+    teleport around attacker, facing him (chance)
+two-handing (melee-weapons)
+    increase damage when offhand empty
+parrying (shield)
+    reduce block time, increase damage on next hit
+iron wall (shield)
+    motion block when blocking, but shield can't be disabled
+aura (chestplate)
+    active effects are shared with all entities in a radius
+block breather (helmet)
+    can breath in blocks
+insanity (helmet)
+    cursed visuals
+stone weaver (tools)
+    restore durability from mining stone
+shard breaker (tools)
+    gain chance for double drops from ice & glass
+edge precision (tools)
+    tools mine more effectively when aimed at the center of a block
+silent harvest (tools, weapons)
+    prevent break sounds
+magmatic touch (curse)
+    broken netherrack turns to lava
+momentum shift (leggings)
+    gain speed after being hit by projectile
+earthen shard (boots)
+    reduce damage when on stone, dirt, gravel or sand
+accuration (!NAME) (ultimate, tools)
+    chance to restore broken block
+sleepy (helmet)
+    you don't spawn phantoms
+insomnia (curse, helmet)
+    you can't sleep
+jumper (legs)
+    increase step height
+sand scourge (boots)
+    increase speed while on sand, gravel or soul sand
+tracking (bow)
+    after hit, arrows ricochet into other enemies
+piercing (trident)
+    melee- attacks pierce enemies
+
+[effects]
+stop vex wall parse
+stop enderman teleport
+cursed blood
+    disable healing

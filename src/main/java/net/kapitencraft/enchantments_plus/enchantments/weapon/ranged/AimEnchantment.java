@@ -8,13 +8,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 
-public class AimEnchantment extends ModBowEnchantment implements IWeaponEnchantment {
+public class AimEnchantment extends Enchantment implements ModBowEnchantment, IWeaponEnchantment {
     public AimEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND}, "Aim");
+        super(Rarity.VERY_RARE, EnchantmentCategory.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -28,9 +30,9 @@ public class AimEnchantment extends ModBowEnchantment implements IWeaponEnchantm
     }
 
     @Override
-    public float execute(LivingEntity target, CompoundTag tag, ExecuteType type, float oldDamage, AbstractArrow arrow) {
-        if (type == ExecuteType.TICK) {
-            MathHelper.getLivingAround(arrow, getLevel(tag) * 2).stream()
+    public float execute(int level, @Nullable LivingEntity livingEntity, CompoundTag compoundTag, ExePhase phase, float oldDamage, AbstractArrow arrow) {
+        if (phase == ExePhase.TICK) {
+            MathHelper.getLivingAround(arrow, level * 2).stream()
                     .filter(living -> arrow.getOwner() != living && !living.isDeadOrDying())
                     .sorted(Comparator.comparingDouble(value -> value.distanceTo(arrow)))
                     .findAny().ifPresent(living -> arrow.setDeltaMovement(MathHelper.clampLength(living.position().subtract(arrow.position()), arrow.getDeltaMovement().length())));

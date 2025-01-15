@@ -12,13 +12,23 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-public class ChainLightningEnchantment extends ExtendedCalculationEnchantment implements IUltimateEnchantment, IWeaponEnchantment {
+public class ChainLightningEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IUltimateEnchantment, IWeaponEnchantment {
     public ChainLightningEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT, CalculationType.ALL, ProcessPriority.LOWEST);
+        super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT);
     }
 
     @Override
-    protected double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public @NotNull CalculationType type() {
+        return CalculationType.ALL;
+    }
+
+    @Override
+    public @NotNull ProcessPriority priority() {
+        return ProcessPriority.LOWEST;
+    }
+
+    @Override
+    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
         if (MathHelper.chance(level * 1., attacker)) {
             //ChainLightningHelper.spawnLightnings(level, attacked, attacker, (float) damage);
         }
