@@ -22,7 +22,7 @@ public class FrozenArrowsEnchantment extends Enchantment implements ModBowEnchan
 
     @Override
     public float execute(int level, @Nullable LivingEntity target, CompoundTag tag, ExePhase type, float oldDamage, AbstractArrow arrow) {
-        if (type == ExePhase.HIT && target != null) target.setTicksFrozen(level * 40);
+        if (type == ExePhase.HIT && target != null) target.setTicksFrozen(target.getTicksFrozen() + level * 40);
         return oldDamage;
     }
 

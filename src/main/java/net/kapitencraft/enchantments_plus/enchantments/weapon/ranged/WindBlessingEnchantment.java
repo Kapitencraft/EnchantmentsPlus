@@ -7,6 +7,7 @@ import net.kapitencraft.kap_lib.client.particle.animation.finalizers.SetLifeTime
 import net.kapitencraft.kap_lib.client.particle.animation.spawners.RingSpawner;
 import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminator;
 import net.kapitencraft.kap_lib.client.particle.animation.util.pos_target.PositionTarget;
+import net.kapitencraft.kap_lib.client.particle.animation.util.rot_target.RotationTarget;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ModBowEnchantment;
@@ -62,6 +63,7 @@ public class WindBlessingEnchantment extends Enchantment implements StatBoostEnc
                             .rotPerTick(10)
                             .setParticle(new DustParticleOptions(Vec3.fromRGB24(0xFFFFFF).toVector3f(), .7f))
                             .setTarget(PositionTarget.entity(arrow))
+                            .rotation(RotationTarget.forEntity(arrow))
                             .axis(Direction.Axis.Z)
                             .spawnCount(2)
                             .radius(.2f)
