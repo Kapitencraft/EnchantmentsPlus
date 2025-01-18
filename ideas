@@ -29,7 +29,7 @@ edge precision (tools)
     tools mine more effectively when aimed at the center of a block
 silent harvest (tools, weapons)
     prevent break sounds
-magmatic touch (curse)
+magmatic touch (curse, tools)
     broken netherrack turns to lava
 momentum shift (leggings)
     gain speed after being hit by projectile
