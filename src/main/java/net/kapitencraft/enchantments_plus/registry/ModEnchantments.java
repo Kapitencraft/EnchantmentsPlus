@@ -44,6 +44,7 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> AIM = register("aim", AimEnchantment::new);
     RegistryObject<Enchantment> FROZEN_ARROWS = register("frozen_arrows", FrozenArrowsEnchantment::new);
     RegistryObject<Enchantment> INFERNO = register("inferno", InfernoEnchantment::new);
+    RegistryObject<Enchantment> EXTINGUISH = register("extinguish", ExtinguishEnchantment::new);
     RegistryObject<Enchantment> BASALT_WALKER = register("basalt_walker", BasaltWalkerEnchantment::new);
     RegistryObject<Enchantment> SNIPE = register("snipe", SnipeEnchantment::new);
     RegistryObject<Enchantment> REJUVENATE = register("rejuvenate", RejuvenateEnchantment::new);
@@ -67,10 +68,11 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> ARMOR_SHREDDING = register("armor_shredding", ArmorShreddingEnchantment::new);
     RegistryObject<Enchantment> TELEKINESIS = register("telekinesis", TelekinesisEnchantment::new);
     RegistryObject<Enchantment> REPLENISH = register("replenish", ReplenishEnchantment::new);
-    RegistryObject<Enchantment> YEET_THORNS = register("yeet_thorns", YeetThornsEnchantment::new);
     RegistryObject<Enchantment> WIND_BLESSING = register("wind_blessing", WindBlessingEnchantment::new);
     RegistryObject<Enchantment> ENLIGHTENMENT = register("enlightenment", EnlightenmentEnchantment::new);
     RegistryObject<Enchantment> GLUTTONOUS = register("gluttonous", GluttonousEnchantment::new);
     RegistryObject<Enchantment> COMPACTING = register("compacting", CompactingEnchantment::new);
     RegistryObject<Enchantment> BLOOD_THIRST = register("blood_thirst", BloodThirstEnchantment::new);
+    RegistryObject<Enchantment> RESILIENCE = register("resilience", ResilienceEnchantment::new);
+    RegistryObject<Enchantment> CHROMATIC = register("chromatic", ChromaticEnchantment::new);
 }

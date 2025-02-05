@@ -6,6 +6,6 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class EnderFriendEnchantment extends Enchantment {
     public EnderFriendEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{EquipmentSlot.HEAD});
+        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, new EquipmentSlot[]{EquipmentSlot.HEAD});
     }
 }

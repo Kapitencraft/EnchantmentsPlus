@@ -6,6 +6,7 @@ import net.kapitencraft.kap_lib.helpers.LootTableHelper;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.item.loot_table.IConditional;
 import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class TelekinesisModifier extends ModLootModifier implements IConditional {
     public static final Codec<TelekinesisModifier> CODEC = LootTableHelper.simpleCodec(TelekinesisModifier::new);
 
-    protected TelekinesisModifier(LootItemCondition[] conditionsIn) {
+    public TelekinesisModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
@@ -25,8 +26,10 @@ public class TelekinesisModifier extends ModLootModifier implements IConditional
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         Player source = LootTableHelper.getPlayerSource(context);
         if (source != null && source.getMainHandItem().getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
+            context.getLevel().getProfiler().push("telekinesis modifier");
             Inventory inventory = source.getInventory();
             generatedLoot.removeIf(inventory::add);
+            context.getLevel().getProfiler().pop();
         }
         return generatedLoot;
     }

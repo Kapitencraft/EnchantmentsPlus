@@ -44,13 +44,13 @@ public class VenomousEnchantment extends Enchantment implements ExtendedCalculat
         AttributeInstance speed = attacked.getAttribute(Attributes.MOVEMENT_SPEED);
         assert speed != null;
         try {
-            speed.addTransientModifier(new TimedModifier(TIMER_ID, -0.05 * level, AttributeModifier.Operation.MULTIPLY_TOTAL, 100));
+            speed.addTransientModifier(new TimedModifier(TIMER_ID, -0.05 * level, AttributeModifier.Operation.MULTIPLY_TOTAL, level * 20));
         } catch (Throwable ignored) {}
         return damage;
     }
 
     @Override
-    public String[] getDescriptionMods(int level) {
-        return new String[] {level * 5 + "%"};
+    public Object[] getDescriptionMods(int level) {
+        return new Object[] {level * 2 + "%", level};
     }
 }

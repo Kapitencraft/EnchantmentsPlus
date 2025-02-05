@@ -8,6 +8,7 @@ import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -27,7 +28,7 @@ public class DivineGiftEnchantment extends Enchantment implements StatBoostEncha
 
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
-        return multimap -> multimap.put(ExtraAttributes.MAGIC_FIND.get(), AttributeHelper.createModifier("Divine Gift Enchantment", AttributeModifier.Operation.ADDITION, level * 2));
+        return multimap -> multimap.put(Attributes.LUCK, AttributeHelper.createModifier("Divine Gift Enchantment", AttributeModifier.Operation.ADDITION, level * 2));
     }
 
     @Override

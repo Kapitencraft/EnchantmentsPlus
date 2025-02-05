@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "enchantments_plus:block/fragile_basalt_top_1",
+    "side": "enchantments_plus:block/fragile_basalt_side_1"
+  }
+}

@@ -2,6 +2,7 @@ package net.kapitencraft.enchantments_plus.registry;
 
 import com.mojang.serialization.Codec;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
+import net.kapitencraft.enchantments_plus.enchantments.tools.ChromaticEnchantment;
 import net.kapitencraft.enchantments_plus.loot_table.modifier.*;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,4 +18,5 @@ public interface ModLootTableModifiers {
     RegistryObject<Codec<SmeltModifier>> SMELT = REGISTRY.register("smelt", ()-> SmeltModifier.CODEC);
     RegistryObject<Codec<ScavengerModifier>> SCAVENGER = REGISTRY.register("scavenger", ()-> ScavengerModifier.CODEC);
     RegistryObject<Codec<CompactModifier>> COMPACT = REGISTRY.register("compact", () -> CompactModifier.CODEC);
+    RegistryObject<Codec<ChromaticModifier>> CHROMATIC = REGISTRY.register("chromatic", () -> ChromaticModifier.CODEC);
 }

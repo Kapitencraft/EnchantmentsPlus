@@ -38,7 +38,8 @@ public class BonkEnchantment extends Enchantment implements ExtendedCalculationE
         if (slot.isArmor()) {
             Cooldown cooldown = Cooldowns.BONK_ENCHANTMENT.getOrCreate(slot, 1200);
             if (!cooldown.isActive(attacked)) {
-                ParticleHelper.sendParticles(attacked.level(), ParticleTypes.EXPLOSION, false, attacked.position(), 2, 0, 0, 0, 0);
+                ParticleHelper.sendParticles(attacked.level(), ParticleTypes.EXPLOSION, false, attacked.position().add(0, 1, 0), 2, 0, 0, 0, 0);
+                cooldown.applyCooldown(attacked, true);
                 return 0;
             }
         }

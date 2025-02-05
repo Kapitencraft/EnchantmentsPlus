@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 
 public class BasaltWalkerEnchantment extends Enchantment {
     public BasaltWalkerEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{EquipmentSlot.FEET});
+        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[]{EquipmentSlot.FEET});
     }
 
     @Override

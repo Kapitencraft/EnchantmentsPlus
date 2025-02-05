@@ -8,7 +8,12 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "AbstractArrowMixin"
+    "AbstractArrowMixin",
+    "EntityMixin",
+    "LivingEntityMixin",
+    "ShearsDispenseItemBehaviourMixin",
+    "ShearsItemMixin",
+    "SheepMixin"
   ],
   "client": [
     "LightTextureMixin"

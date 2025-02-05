@@ -30,13 +30,8 @@ public class TripleStrikeEnchantment extends Enchantment implements CountEnchant
     }
 
     @Override
-    public String mapName() {
-        return "TripleStrikeMap";
-    }
-
-    @Override
     public CountType countType() {
-        return CountType.EXCEPT;
+        return CountType.ONCE;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class SnipeEnchantment extends Enchantment implements ModBowEnchantment, 
             Vec3 start = new Vec3(tag.getDouble("LaunchX"), tag.getDouble("LaunchY"), tag.getDouble("LaunchZ"));
             Vec3 targetPos = arrow.position();
             double distance = start.distanceTo(targetPos);
-            return (float) (oldDamage * (1 + (distance / 10) * 0.01 * level));
+            return (float) (oldDamage * (1 + distance * 0.001 * level));
         }
         return oldDamage;
     }

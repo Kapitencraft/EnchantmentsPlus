@@ -33,4 +33,9 @@ public class ArmorShreddingEnchantment extends Enchantment  implements StatBoost
     public String[] getDescriptionMods(int level) {
         return new String[] {"+" + level};
     }
+
+    @Override
+    public int getMaxLevel() {
+        return 7;
+    }
 }

@@ -2,21 +2,19 @@ package net.kapitencraft.enchantments_plus.event;
 
 import net.kapitencraft.enchantments_plus.enchantments.HealthMendingEnchantment;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
-import net.kapitencraft.enchantments_plus.enchantments.armor.BasaltWalkerEnchantment;
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
-import net.kapitencraft.kap_lib.enchantments.abstracts.ModBowEnchantment;
 import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.util.Reference;
 import net.kapitencraft.kap_lib.util.attribute.TimedModifier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -24,10 +22,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -35,11 +33,6 @@ import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -50,15 +43,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class EventHandler {
-
-    @SubscribeEvent
-    public static void onLivingTick(LivingEvent.LivingTickEvent event) {
-        LivingEntity living = event.getEntity();
-        int i = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.BASALT_WALKER.get(), living);
-        if (i > 0) {
-            BasaltWalkerEnchantment.onEntityMoved(living, living.blockPosition(), i);
-        }
-    }
 
     @SubscribeEvent
     public static void endermanEvent(EnderManAngerEvent event) {
@@ -90,7 +74,6 @@ public class EventHandler {
 
             if (mainHandItem.getEnchantmentLevel(ModEnchantments.REPLENISH.get()) > 0) {
                 event.setCanceled(true);
-                //TODO make sure telekinesis still works
                 Block.dropResources(state, level, pos);
                 mainHandItem.mineBlock(level, state, pos, player);
                 state = state.setValue(ageProperty, 0);
@@ -108,9 +91,11 @@ public class EventHandler {
                         state1 -> true, pos1 -> brokenBlocks.getIntValue() > integer);
             });
         }
-        MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel -> {
-            MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel);
-        });
+        if (event.getExpToDrop() > 0) {
+            MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel -> {
+                MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel);
+            });
+        }
         if (mainHandItem.getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
             addXp(player, event.getExpToDrop());
             event.setExpToDrop(0);
@@ -167,16 +152,7 @@ public class EventHandler {
         if (living instanceof Player player) event.setAmount(HealthMendingEnchantment.repairPlayerItems(player, event.getAmount()));
     }
 
-    @SuppressWarnings("DataFlowIssue")
-    @SubscribeEvent
-    public static void fogModifiers(ViewportEvent.RenderFog event) {
-        int enlightenmentLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.ENLIGHTENMENT.get(), Minecraft.getInstance().player);
-        if (enlightenmentLevel > 0) {
-            event.setCanceled(true);
-            event.setNearPlaneDistance(event.getNearPlaneDistance() * (1 + enlightenmentLevel * .4f));
-            event.setFarPlaneDistance(event.getFarPlaneDistance() * (1 + enlightenmentLevel * .4f));
-        }
-    }
+
 
     @SubscribeEvent
     public static void itemUseEvents(LivingEntityUseItemEvent event) {
@@ -198,6 +174,28 @@ public class EventHandler {
                 if (attack != null) {
                     attack.addPermanentModifier(new TimedModifier("Blood Thirst", lvl / 100., AttributeModifier.Operation.MULTIPLY_BASE, lvl * 40));
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMobEffectAdded(MobEffectEvent.Added event) {
+        int resilienceLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.RESILIENCE.get(), event.getEntity());
+        if (resilienceLevel > 0) {
+            MobEffectInstance instance = event.getEffectInstance();
+            instance.duration = (int) (instance.duration * (1 - resilienceLevel * .2));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onShieldBlock(ShieldBlockEvent event) {
+        Entity attacker = event.getDamageSource().getEntity();
+        if (attacker != null) {
+            LivingEntity target = event.getEntity();
+            int thornyLvl = target.getUseItem().getEnchantmentLevel(ModEnchantments.THORNY.get());
+            if (thornyLvl > 0) {
+                attacker.hurt(attacker.damageSources().thorns(target), ThornsEnchantment.getDamage(thornyLvl, target.getRandom()));
+                target.getUseItem().hurtAndBreak(2, target, living -> living.broadcastBreakEvent(target.getUsedItemHand()));
             }
         }
     }

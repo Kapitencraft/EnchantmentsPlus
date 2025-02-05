@@ -12,14 +12,16 @@ import java.util.List;
 
 public class TransylvanianEnchantment extends Enchantment implements ExtendedAbilityEnchantment, IArmorEnchantment {
     public TransylvanianEnchantment() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, MiscHelper.ARMOR_EQUIPMENT);
+        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_HEAD, MiscHelper.ARMOR_EQUIPMENT);
     }
 
     @Override
     public void onTick(LivingEntity source, int level) {
-        List<LivingEntity> livings = MathHelper.getLivingAround(source, level * 1.5);
-        livings = livings.stream().filter(living -> living.is(source)).toList();
-        source.heal(livings.size() / 2f);
+        if (!source.level().isClientSide() && source.tickCount % 20 == 0) {
+            List<LivingEntity> livings = MathHelper.getLivingAround(source, level * 1.5);
+            livings = livings.stream().filter(living -> !living.is(source)).toList();
+            source.heal(livings.size() / 2f);
+        }
     }
 
     @Override

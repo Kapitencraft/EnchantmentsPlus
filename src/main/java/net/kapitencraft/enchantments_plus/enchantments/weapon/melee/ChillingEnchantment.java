@@ -35,13 +35,8 @@ public class ChillingEnchantment extends Enchantment implements ExtendedCalculat
 
     @Override
     public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
-        int secondsRandom = KapLibMod.RANDOM_SOURCE.nextIntBetweenInclusive(1, level);
+        int secondsRandom = attacked.level().getRandom().nextIntBetweenInclusive(1, level);
         MathHelper.add(attacked::getTicksFrozen, attacked::setTicksFrozen, secondsRandom * 20);
         return damage;
-    }
-
-    @Override
-    public String[] getDescriptionMods(int level) {
-        return new String[0];
     }
 }

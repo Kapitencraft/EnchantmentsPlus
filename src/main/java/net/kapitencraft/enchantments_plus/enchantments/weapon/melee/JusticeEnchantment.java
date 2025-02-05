@@ -1,6 +1,7 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon.melee;
 
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
+import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-public class JusticeEnchantment extends Enchantment implements IWeaponEnchantment {
+public class JusticeEnchantment extends Enchantment implements IWeaponEnchantment, ModEnchantment {
     public JusticeEnchantment() {
         super(Rarity.COMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
     }
@@ -30,5 +31,10 @@ public class JusticeEnchantment extends Enchantment implements IWeaponEnchantmen
     @Override
     public int getMaxLevel() {
         return 5;
+    }
+
+    @Override
+    public Object[] getDescriptionMods(int level) {
+        return new Object[] {level * 2.5};
     }
 }

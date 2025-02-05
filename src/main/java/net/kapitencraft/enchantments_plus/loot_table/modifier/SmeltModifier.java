@@ -21,7 +21,7 @@ import java.util.Optional;
 public class SmeltModifier extends ModLootModifier implements IConditional {
     public static final Codec<SmeltModifier> CODEC = LootTableHelper.simpleCodec(SmeltModifier::new);
     private LootContext context = null;
-    protected SmeltModifier(LootItemCondition[] conditionsIn) {
+    public SmeltModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
@@ -29,9 +29,11 @@ public class SmeltModifier extends ModLootModifier implements IConditional {
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LivingEntity source = LootTableHelper.getLivingSource(context);
         if (source != null && source.getMainHandItem().getEnchantmentLevel(ModEnchantments.SMELTING_TOUCH.get()) > 0) {
+            context.getLevel().getProfiler().push("smelt modifier");
             this.context = context;
             generatedLoot = new ObjectArrayList<>(generatedLoot.stream().map(this::run).toList());
             this.context = null;
+            context.getLevel().getProfiler().pop();
         }
         return generatedLoot;
     }

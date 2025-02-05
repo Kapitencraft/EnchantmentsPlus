@@ -62,6 +62,9 @@ public class OverloadEnchantment extends Enchantment implements StatBoostEnchant
 
     @Override
     public float execute(int level, @Nullable LivingEntity target, CompoundTag tag, ExePhase type, float oldDamage, AbstractArrow arrow) {
+        if (target != null && target.getRandom().nextDouble() < .1) {
+            oldDamage *= (1 + level * .1f);
+        }
         return oldDamage;
     }
 

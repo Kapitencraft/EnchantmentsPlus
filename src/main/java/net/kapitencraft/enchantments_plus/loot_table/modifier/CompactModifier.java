@@ -21,15 +21,16 @@ import java.util.Iterator;
 public class CompactModifier extends ModLootModifier implements IConditional {
     public static final Codec<CompactModifier> CODEC = LootTableHelper.simpleCodec(CompactModifier::new);
 
-    protected CompactModifier(LootItemCondition[] conditionsIn) {
+    public CompactModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
-    @SuppressWarnings({"DataFlowIssue", "UnnecessaryLocalVariable"})
+    @SuppressWarnings({"DataFlowIssue"})
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LivingEntity living = LootTableHelper.getLivingSource(context);
-        if (living != null && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.COMPACTING.get(), living) > 0)
+        if (living != null && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.COMPACTING.get(), living) > 0) {
+            context.getLevel().getProfiler().push("compact modifier");
             for (int i = 0; i < generatedLoot.size(); i++) {
                 ItemStack stack = generatedLoot.get(i);
                 Compacting.Result compactResult = Compacting.tryCompact(stack.getItem(), context.getLevel());
@@ -56,7 +57,9 @@ public class CompactModifier extends ModLootModifier implements IConditional {
                         if (!handled) generatedLoot.add(outputResult);
                     }
                 }
+                context.getLevel().getProfiler().pop();
             }
+        }
         return generatedLoot;
     }
 

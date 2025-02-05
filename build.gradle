@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 
-version = mod_version
+version = "v${mod_version}-mc${minecraft_version}-FML${forge_version}"
 group = mod_group_id
 
 base {
@@ -197,7 +197,7 @@ tasks.named('processResources', ProcessResources).configure {
             forge_version: forge_version, forge_version_range: forge_version_range,
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
+            mod_authors: mod_authors, mod_description: mod_description, kap_lib_version: kap_lib_version
     ]
     inputs.properties replaceProperties
 

@@ -26,7 +26,7 @@ public class RejuvenateEnchantment extends Enchantment implements ArmorStatBoost
 
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getArmorModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
-        return multimap -> multimap.put(ExtraAttributes.HEALTH_REGEN.get(), AttributeHelper.createModifierForSlot("rejuvenate", AttributeModifier.Operation.ADDITION, level * 2, slot));
+        return multimap -> multimap.put(ExtraAttributes.VITALITY.get(), AttributeHelper.createModifierForSlot("rejuvenate", AttributeModifier.Operation.ADDITION, level * 2, slot));
     }
 
 

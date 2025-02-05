@@ -27,7 +27,7 @@ public class ScavengerModifier extends ModLootModifier {
 
     public static final Codec<ScavengerModifier> CODEC = RecordCodecBuilder.create(scavengerModifiersInstance -> codecStart(scavengerModifiersInstance).apply(scavengerModifiersInstance, ScavengerModifier::new));
 
-    protected ScavengerModifier(LootItemCondition[] conditionsIn) {
+    public ScavengerModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
@@ -41,11 +41,13 @@ public class ScavengerModifier extends ModLootModifier {
         ItemStack tool = living.getItemBySlot(EquipmentSlot.MAINHAND);
         int lvl = tool.getEnchantmentLevel(ModEnchantments.SCAVENGER.get());
         if (lvl > 0) {
+            context.getLevel().getProfiler().push("scavenger modifier");
             if (Mth.randomBetweenInclusive(level.random, 1, 5) <= lvl) {
                 LootParams.Builder builder = new LootParams.Builder(level);
                 LootTableHelper.copy(builder, context, LootContextParams.THIS_ENTITY, LootContextParams.KILLER_ENTITY);
                 generatedLoot.addAll(table.getRandomItems(builder.create(PARAM_SET)));
             }
+            context.getLevel().getProfiler().pop();
         }
         return generatedLoot;
     }

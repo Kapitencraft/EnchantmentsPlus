@@ -22,5 +22,8 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeServer(), new ModRegistryDataGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(output));
     }
 }

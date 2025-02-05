@@ -10,6 +10,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
@@ -31,11 +32,17 @@ public class AimEnchantment extends Enchantment implements ModBowEnchantment, IW
 
     @Override
     public float execute(int level, @Nullable LivingEntity livingEntity, CompoundTag compoundTag, ExePhase phase, float oldDamage, AbstractArrow arrow) {
-        if (phase == ExePhase.TICK) {
+        if (!arrow.onGround() && phase == ExePhase.TICK && !arrow.getDeltaMovement().equals(Vec3.ZERO)) {
             MathHelper.getLivingAround(arrow, level * 2).stream()
                     .filter(living -> arrow.getOwner() != living && !living.isDeadOrDying())
                     .sorted(Comparator.comparingDouble(value -> value.distanceTo(arrow)))
-                    .findAny().ifPresent(living -> arrow.setDeltaMovement(MathHelper.clampLength(living.position().subtract(arrow.position()), arrow.getDeltaMovement().length())));
+                    .findAny().ifPresent(
+                            living -> arrow.setDeltaMovement(
+                                    MathHelper.clampLength(
+                                            living.getEyePosition().subtract(arrow.position()),
+                                            arrow.getDeltaMovement().length())
+                            )
+                    );
         }
         return oldDamage;
     }
@@ -49,5 +56,10 @@ public class AimEnchantment extends Enchantment implements ModBowEnchantment, IW
     @Override
     public Object[] getDescriptionMods(int level) {
         return new Object[] {2*level};
+    }
+
+    @Override
+    public boolean isTreasureOnly() {
+        return true;
     }
 }

@@ -18,13 +18,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class ReplenishModifier extends ModLootModifier implements IConditional {
     public static final Codec<ReplenishModifier> CODEC = LootTableHelper.simpleCodec(ReplenishModifier::new);
-    protected ReplenishModifier(LootItemCondition[] conditionsIn) {
+    public ReplenishModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LootContextReader.simple(context, BlockState.class, LootContextParams.BLOCK_STATE).ifPresent(state -> {
+            context.getLevel().getProfiler().push("replenish modifier");
             if (state.is(BlockTags.CROPS)) {
                 Item item = state.getBlock().asItem();
                 for (ItemStack stack : generatedLoot) {
@@ -34,6 +35,7 @@ public class ReplenishModifier extends ModLootModifier implements IConditional {
                     }
                 }
             }
+            context.getLevel().getProfiler().pop();
         });
         return generatedLoot;
     }
