@@ -28,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +37,11 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,11 +62,20 @@ public class EventHandler {
         Player player = event.getPlayer();
         ItemStack mainHandItem = player.getMainHandItem();
         BlockState state = event.getState();
-        Block block = state.getBlock(); Level level = player.level(); final BlockPos pos = event.getPos();
+        Block block = state.getBlock();
+        Level level = player.level();
+        final BlockPos pos = event.getPos();
 
         ServerLevel serverLevel = level instanceof ServerLevel serverLevel1 ? serverLevel1 : null;
         if (serverLevel == null) return;
         ServerPlayer serverPlayer = (ServerPlayer) player;
+
+        if (mainHandItem.getEnchantmentLevel(ModEnchantments.MAGMATIC.get()) > 0 && state.is(Blocks.NETHERRACK)) {
+            event.setCanceled(true);
+            level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
+            return;
+        }
+
         if (block instanceof CropBlock || block instanceof NetherWartBlock) {
             int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
             IntegerProperty ageProperty = block instanceof CropBlock cropBlock ?  cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
@@ -92,9 +106,9 @@ public class EventHandler {
             });
         }
         if (event.getExpToDrop() > 0) {
-            MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel -> {
-                MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel);
-            });
+            MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel ->
+                    MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel)
+            );
         }
         if (mainHandItem.getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
             addXp(player, event.getExpToDrop());
@@ -117,7 +131,6 @@ public class EventHandler {
     private static void addXp(Player player, int amount) {
         player.giveExperiencePoints(MiscHelper.repairPlayerItems(player, amount, Enchantments.MENDING));
     }
-
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void tickVeinMiner(TickEvent.ServerTickEvent event) {
@@ -165,6 +178,12 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
+
+    }
+
+
+    @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         DamageSource source = event.getSource();
         if (!source.isIndirect() && source.getEntity() instanceof LivingEntity living) {
@@ -199,4 +218,15 @@ public class EventHandler {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onPlayerSpawnPhantoms(PlayerSpawnPhantomsEvent event) {
+        if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.SLEEPY.get(), event.getEntity()) > 0) event.setResult(Event.Result.DENY);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
+        if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.INSOMNIA.get(), event.getEntity()) > 0) event.setResult(Player.BedSleepingProblem.NOT_SAFE);
+    }
+
 }

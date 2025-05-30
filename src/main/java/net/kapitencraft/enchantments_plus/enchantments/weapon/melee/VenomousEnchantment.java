@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public class VenomousEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IWeaponEnchantment {
-    public static final UUID ID = UUID.fromString("c3f0728b-ecd3-487b-9e5b-a55ae35241c0");
     public static final String TIMER_ID = "VenomousTimer";
     public VenomousEnchantment() {
         super(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, MiscHelper.WEAPON_SLOT);
@@ -40,7 +39,7 @@ public class VenomousEnchantment extends Enchantment implements ExtendedCalculat
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackStrenghtScale) {
         AttributeInstance speed = attacked.getAttribute(Attributes.MOVEMENT_SPEED);
         assert speed != null;
         try {

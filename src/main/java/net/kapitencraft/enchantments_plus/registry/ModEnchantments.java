@@ -14,9 +14,9 @@ import net.kapitencraft.enchantments_plus.enchantments.weapon.melee.*;
 import net.kapitencraft.enchantments_plus.enchantments.weapon.ranged.*;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public interface ModEnchantments {
     DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, EnchantmentsPlusMod.MOD_ID);
-
     private static RegistryObject<Enchantment> register(String name, Supplier<Enchantment> supplier) {
         return REGISTRY.register(name, supplier);
     }
@@ -30,7 +30,7 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> HEAVY_PLATING = register("heavy_plating", HeavyPlatingEnchantment::new);
     RegistryObject<Enchantment> SCAVENGER = register("scavenger", ScavengerEnchantment::new);
     RegistryObject<Enchantment> ENDER_SLAYER = register("ender_slayer", EnderSlayerEnchantment::new);
-    //RegistryObject<Enchantment> CHAIN_LIGHTNING = register("chain_lightning", ChainLightningEnchantment::new);
+    RegistryObject<Enchantment> CHAIN_LIGHTNING = register("chain_lightning", ChainLightningEnchantment::new);
     RegistryObject<Enchantment> COMBAT_KNOWLEDGE = register("combat_knowledge", CombatKnowledgeEnchantment::new);
     RegistryObject<Enchantment> TRANSYLVANIAN = register("transylvanian", TransylvanianEnchantment::new);
     RegistryObject<Enchantment> HEALTH_MENDING = register("health_mending", HealthMendingEnchantment::new);
@@ -75,4 +75,13 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> BLOOD_THIRST = register("blood_thirst", BloodThirstEnchantment::new);
     RegistryObject<Enchantment> RESILIENCE = register("resilience", ResilienceEnchantment::new);
     RegistryObject<Enchantment> CHROMATIC = register("chromatic", ChromaticEnchantment::new);
+    RegistryObject<Enchantment> VOLT_SURGE = register("volt_surge", VoltSurgeEnchantment::new);
+    RegistryObject<Enchantment> TWO_HANDED = register("two_handed", TwoHandedEnchantment::new);
+    RegistryObject<Enchantment> MAGMATIC = register("magmatic", MagmaticCurseEnchantment::new);
+    RegistryObject<Enchantment> BLOCK_BREATHER = register("block_breather", BlockBreatherEnchantment::new);
+    RegistryObject<Enchantment> SLEEPY = register("sleepy", SleepyEnchantment::new);
+    RegistryObject<Enchantment> INSOMNIA = register("insomnia", InsomniaCurseEnchantment::new);
+    RegistryObject<Enchantment> JUMPER = register("jumper", JumperEnchantment::new);
+    RegistryObject<Enchantment> PRECISION = register("precision", PrecisionEnchantment::new);
+    RegistryObject<Enchantment> ENDURANCE = register("endurance", EnduranceEnchantment::new);
 }

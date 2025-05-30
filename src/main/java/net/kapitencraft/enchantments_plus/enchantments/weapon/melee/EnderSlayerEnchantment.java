@@ -2,6 +2,7 @@ package net.kapitencraft.enchantments_plus.enchantments.weapon.melee;
 
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtendedCalculationEnchantment;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
+import net.kapitencraft.kap_lib.tags.ExtraTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.EnderMan;
@@ -28,8 +29,8 @@ public class EnderSlayerEnchantment extends Enchantment implements ExtendedCalcu
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
-        return (attacked instanceof EnderMan || attacked instanceof Endermite) ? damage * (1 + level / 4f) : damage;
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackStrenghtScale) {
+        return attacked.getType().is(ExtraTags.EntityTypes.ENDER_MOBS) ? damage * (1 + level / 4f) : damage;
     }
 
     @Override

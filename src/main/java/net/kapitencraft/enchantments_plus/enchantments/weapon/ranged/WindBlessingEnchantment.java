@@ -6,8 +6,8 @@ import net.kapitencraft.kap_lib.client.particle.animation.core.ParticleAnimation
 import net.kapitencraft.kap_lib.client.particle.animation.finalizers.SetLifeTimeFinalizer;
 import net.kapitencraft.kap_lib.client.particle.animation.spawners.RingSpawner;
 import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminator;
-import net.kapitencraft.kap_lib.client.particle.animation.util.pos_target.PositionTarget;
-import net.kapitencraft.kap_lib.client.particle.animation.util.rot_target.RotationTarget;
+import net.kapitencraft.kap_lib.client.util.pos_target.PositionTarget;
+import net.kapitencraft.kap_lib.client.util.rot_target.RotationTarget;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ModBowEnchantment;
@@ -28,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -61,7 +62,7 @@ public class WindBlessingEnchantment extends Enchantment implements StatBoostEnc
                     .terminatedWhen(EntityRemovedTerminator.builder(arrow))
                     .spawn(RingSpawner.noHeight()
                             .rotPerTick(10)
-                            .setParticle(new DustParticleOptions(Vec3.fromRGB24(0xFFFFFF).toVector3f(), .7f))
+                            .setParticle(new DustParticleOptions(new Vector3f(1, 1, 1), .7f))
                             .setTarget(PositionTarget.entity(arrow))
                             .rotation(RotationTarget.forEntity(arrow))
                             .axis(Direction.Axis.Z)

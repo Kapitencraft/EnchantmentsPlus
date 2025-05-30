@@ -12,7 +12,6 @@ import net.kapitencraft.kap_lib.client.particle.animation.terminators.TimedTermi
 import net.kapitencraft.kap_lib.enchantments.abstracts.CountEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
-import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.registry.ExtraMobEffects;
 import net.minecraft.core.particles.ParticleTypes;
@@ -40,8 +39,8 @@ public class InfernoEnchantment extends Enchantment implements CountEnchantment,
     }
 
     @Override
-    public double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
-        if (!source.getMsgId().equals("inferno")) {
+    public float mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damageAmount, int curTick, DamageSource source, float attackDamageScale) {
+        if (attackDamageScale == 1 && !source.getMsgId().equals("inferno")) {
             attacker.level().getProfiler().push("inferno enchantment");
             int extinguishLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EXTINGUISH.get(), attacked);
             if (attacked.level() instanceof ServerLevel sL) {
@@ -52,7 +51,7 @@ public class InfernoEnchantment extends Enchantment implements CountEnchantment,
                                 .heightPerTick(.02f)
                                 .rotPerTick(3)
                         ).terminatedWhen(new EitherTerminator.Builder()
-                                .addTerminator(
+                                .addTerminators(
                                         TimedTerminator.seconds(5),
                                         EntityRemovedTerminator.builder(attacked)
                                 )
@@ -62,7 +61,7 @@ public class InfernoEnchantment extends Enchantment implements CountEnchantment,
 
             }
             int extinguishDamageReduction = extinguishLevel == 0 ? 0 : ExtinguishEnchantment.BASE_DAMAGE_REDUCTION + extinguishLevel * 15;
-            attack(attacked, attacker, 0, (float) (damageAmount * (100 + level * 25 - extinguishDamageReduction) / 100));
+            attack(attacked, attacker, 0, damageAmount * (100 + level * 25 - extinguishDamageReduction) / 100);
             MiscHelper.maxEffectDuration(attacked, ExtraMobEffects.STUN.get(), 100);
             attacker.level().getProfiler().pop();
         }

@@ -44,7 +44,7 @@ public class ScavengerModifier extends ModLootModifier {
             context.getLevel().getProfiler().push("scavenger modifier");
             if (Mth.randomBetweenInclusive(level.random, 1, 5) <= lvl) {
                 LootParams.Builder builder = new LootParams.Builder(level);
-                LootTableHelper.copy(builder, context, LootContextParams.THIS_ENTITY, LootContextParams.KILLER_ENTITY);
+                LootTableHelper.copy(builder, context, LootContextParams.THIS_ENTITY);
                 generatedLoot.addAll(table.getRandomItems(builder.create(PARAM_SET)));
             }
             context.getLevel().getProfiler().pop();

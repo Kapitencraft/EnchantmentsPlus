@@ -3,8 +3,7 @@ package net.kapitencraft.enchantments_plus.enchantments.weapon;
 import com.google.common.collect.Multimap;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.StatBoostEnchantment;
-import net.kapitencraft.kap_lib.helpers.AttributeHelper;
-import net.kapitencraft.kap_lib.registry.ExtraAttributes;
+import net.kapitencraft.kap_lib.item.BaseAttributeUUIDs;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -28,7 +27,7 @@ public class DivineGiftEnchantment extends Enchantment implements StatBoostEncha
 
     @Override
     public Consumer<Multimap<Attribute, AttributeModifier>> getModifiers(int level, ItemStack enchanted, EquipmentSlot slot) {
-        return multimap -> multimap.put(Attributes.LUCK, AttributeHelper.createModifier("Divine Gift Enchantment", AttributeModifier.Operation.ADDITION, level * 2));
+        return multimap -> multimap.put(Attributes.LUCK, new AttributeModifier(BaseAttributeUUIDs.LUCK, "Divine Gift Enchantment", level * 2, AttributeModifier.Operation.ADDITION));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class DivineGiftEnchantment extends Enchantment implements StatBoostEncha
     }
 
     @Override
-    public String[] getDescriptionMods(int level) {
-        return new String[] {"+" + level*2};
+    public Object[] getDescriptionMods(int level) {
+        return new Object[] {level*2};
     }
 }

@@ -1,0 +1,2 @@
+added Jumper, Endurance, Block Breather, Insomnia, Sleepy, Volt Surge, Precision and Chain Lightning Enchantments
+moved to KapLib v1.24.1

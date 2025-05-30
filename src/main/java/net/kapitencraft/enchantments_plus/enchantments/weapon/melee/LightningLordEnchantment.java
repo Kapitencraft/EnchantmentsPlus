@@ -24,11 +24,6 @@ public class LightningLordEnchantment extends Enchantment implements CountEnchan
     }
 
     @Override
-    public String mapName() {
-        return "lightningLordMap";
-    }
-
-    @Override
     public CountType countType() {
         return CountType.NORMAL;
     }
@@ -39,15 +34,15 @@ public class LightningLordEnchantment extends Enchantment implements CountEnchan
     }
 
     @Override
-    public double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
-        if (attacker.level() instanceof ServerLevel serverLevel) {
+    public float mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damageAmount, int curTick, DamageSource source, float attackStrengthScale) {
+        if (attackStrengthScale == 1 && attacker.level() instanceof ServerLevel serverLevel) {
             LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(serverLevel);
             assert lightning != null;
             lightning.moveTo(Vec3.atBottomCenterOf(attacked.getOnPos()));
             lightning.setVisualOnly(true);
             serverLevel.addFreshEntity(lightning);
+            damageAmount *= (1 + level * 0.1f);
         }
-        damageAmount *= (1 + level * 0.1);
         return damageAmount;
     }
 

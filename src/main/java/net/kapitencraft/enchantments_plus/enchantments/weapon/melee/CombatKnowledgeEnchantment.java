@@ -32,8 +32,8 @@ public class CombatKnowledgeEnchantment extends Enchantment implements ExtendedC
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
-        return MathHelper.chance(level * 0.001, attacker) ? Float.MAX_VALUE : damage;
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackDamageScale) {
+        return attackDamageScale == 1 && MathHelper.chance(level * 0.001, attacker) ? Float.MAX_VALUE : damage;
     }
 
     @Override

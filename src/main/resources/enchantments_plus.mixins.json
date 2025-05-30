@@ -9,6 +9,8 @@
   },
   "mixins": [
     "AbstractArrowMixin",
+    "BowItemMixin",
+    "CrossbowItemMixin",
     "EntityMixin",
     "LivingEntityMixin",
     "ShearsDispenseItemBehaviourMixin",

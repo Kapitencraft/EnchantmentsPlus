@@ -32,7 +32,7 @@ public class GiantKillerEnchantment extends Enchantment implements ExtendedCalcu
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackStrengthScale) {
         double MoreHpPercent = attacked.getHealth() / attacker.getHealth();
         return  (float) (damage * (1 + Math.min(MoreHpPercent * level * 0.01, 0.5)));
     }

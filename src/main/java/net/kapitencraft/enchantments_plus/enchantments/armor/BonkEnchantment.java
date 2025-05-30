@@ -33,7 +33,7 @@ public class BonkEnchantment extends Enchantment implements ExtendedCalculationE
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackDamageScale) {
         EquipmentSlot slot = MiscHelper.getSlotForStack(enchanted);
         if (slot.isArmor()) {
             Cooldown cooldown = Cooldowns.BONK_ENCHANTMENT.getOrCreate(slot, 1200);

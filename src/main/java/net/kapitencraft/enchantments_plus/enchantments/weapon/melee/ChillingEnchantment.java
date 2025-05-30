@@ -1,6 +1,5 @@
 package net.kapitencraft.enchantments_plus.enchantments.weapon.melee;
 
-import net.kapitencraft.kap_lib.KapLibMod;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtendedCalculationEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IWeaponEnchantment;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
@@ -34,7 +33,7 @@ public class ChillingEnchantment extends Enchantment implements ExtendedCalculat
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackDamageScale) {
         int secondsRandom = attacked.level().getRandom().nextIntBetweenInclusive(1, level);
         MathHelper.add(attacked::getTicksFrozen, attacked::setTicksFrozen, secondsRandom * 20);
         return damage;

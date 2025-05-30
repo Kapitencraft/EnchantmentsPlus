@@ -11,6 +11,7 @@ import net.minecraft.world.damagesource.DamageType;
 public interface ModDamageTypes {
 
     ResourceKey<DamageType> INFERNO = createKey("inferno");
+    ResourceKey<DamageType> CHAIN_LIGHTNING = createKey("chain_lightning");
 
     private static ResourceKey<DamageType> createKey(String name) {
         return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(EnchantmentsPlusMod.MOD_ID, name));
@@ -18,5 +19,6 @@ public interface ModDamageTypes {
 
     static void bootstrap(BootstapContext<DamageType> context) {
         context.register(INFERNO, new DamageType("inferno", 0.02f, DamageEffects.BURNING));
+        context.register(CHAIN_LIGHTNING, new DamageType("chain_lightning", .1f));
     }
 }

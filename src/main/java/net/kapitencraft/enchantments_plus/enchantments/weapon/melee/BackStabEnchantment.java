@@ -27,9 +27,9 @@ public class BackStabEnchantment extends Enchantment implements ExtendedCalculat
     }
 
     @Override
-    public double execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damage, DamageSource source) {
+    public float execute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damage, DamageSource source, float attackDamageScale) {
         if (MathHelper.isBehind(attacker, attacked)) {
-            return damage * (1 + level * 0.25);
+            return damage * (1 + level * 0.25f);
         }
         return damage;
     }

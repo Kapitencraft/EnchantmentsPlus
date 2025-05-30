@@ -40,8 +40,8 @@ public class TripleStrikeEnchantment extends Enchantment implements CountEnchant
     }
 
     @Override
-    public double mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, double damageAmount, int curTick, DamageSource source) {
-        damageAmount *= (1 + 0.2 * level);
+    public float mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damageAmount, int curTick, DamageSource source, float attackStrenghtScale) {
+        damageAmount *= (1 + 0.2f * level);
         return damageAmount;
     }
 
