@@ -1,0 +1,8 @@
+// 1.20.1	2025-02-01T22:12:46.303497	Global Loot Modifiers : enchantments_plus
+52405ed556a485e122c351ab0995baa5f6efed0d data/enchantments_plus/loot_modifiers/chromatic.json
+f4bf1c31f0fb7f1d6d3ca7a4a4562038a19aca01 data/enchantments_plus/loot_modifiers/compact.json
+0d745b2ba3e6ef1b3be8cca74666f2029d3d7f56 data/enchantments_plus/loot_modifiers/replenish.json
+577ef8599f6219e782a8cefae0d32fea12b3c20d data/enchantments_plus/loot_modifiers/scavenger_drops.json
+26ba8d085ef54f14f4436a728d307e8e55f4f221 data/enchantments_plus/loot_modifiers/smelt.json
+25ea817c487d5c04a038a65bde7332103b29d6b1 data/enchantments_plus/loot_modifiers/telekinesis.json
+4c1e30c885692a12fa7704e7cc0d9e4b4c021b8c data/forge/loot_modifiers/global_loot_modifiers.json

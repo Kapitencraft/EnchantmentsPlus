@@ -1,7 +1,7 @@
 package net.kapitencraft.enchantments_plus.enchantments.tools;
 
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.Rarity;
 
 public class DelicateEnchantment extends FarmingToolEnchantment {
 
