@@ -1,6 +1,7 @@
 package net.kapitencraft.enchantments_plus.loot_table.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.kap_lib.helpers.LootTableHelper;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
@@ -13,13 +14,13 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class SmeltModifier extends ModLootModifier implements IConditional {
-    public static final Codec<SmeltModifier> CODEC = LootTableHelper.simpleCodec(SmeltModifier::new);
+    public static final MapCodec<SmeltModifier> CODEC = LootTableHelper.simpleCodec(SmeltModifier::new);
     private LootContext context = null;
     public SmeltModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -28,7 +29,7 @@ public class SmeltModifier extends ModLootModifier implements IConditional {
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LivingEntity source = LootTableHelper.getLivingSource(context);
-        if (source != null && source.getMainHandItem().getEnchantmentLevel(ModEnchantments.SMELTING_TOUCH.get()) > 0) {
+        if (source != null && source.getMainHandItem().getEnchantmentLevel(ModEnchantments.SMELTING_TOUCH) > 0) {
             context.getLevel().getProfiler().push("smelt modifier");
             this.context = context;
             generatedLoot = new ObjectArrayList<>(generatedLoot.stream().map(this::run).toList());
@@ -39,7 +40,7 @@ public class SmeltModifier extends ModLootModifier implements IConditional {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 

@@ -5,9 +5,9 @@ import net.kapitencraft.enchantments_plus.registry.ModBlocks;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.enchantments_plus.registry.ModLootTableModifiers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.javafmlmod.FMLJavaModLanguageProvider;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -19,9 +19,8 @@ public class EnchantmentsPlusMod
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public EnchantmentsPlusMod()
+    public EnchantmentsPlusMod(IEventBus modEventBus)
     {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModBlocks.REGISTRY.register(modEventBus);
         ModEnchantments.REGISTRY.register(modEventBus);

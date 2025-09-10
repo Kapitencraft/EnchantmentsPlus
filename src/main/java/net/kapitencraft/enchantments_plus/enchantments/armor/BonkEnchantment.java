@@ -1,19 +1,11 @@
 package net.kapitencraft.enchantments_plus.enchantments.armor;
 
-import net.kapitencraft.enchantments_plus.util.Cooldowns;
-import net.kapitencraft.kap_lib.cooldown.Cooldown;
-import net.kapitencraft.kap_lib.enchantments.abstracts.ExtendedCalculationEnchantment;
-import net.kapitencraft.kap_lib.enchantments.abstracts.IArmorEnchantment;
-import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
-import net.kapitencraft.kap_lib.helpers.ParticleHelper;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
 public class BonkEnchantment extends Enchantment implements ExtendedCalculationEnchantment, IUltimateEnchantment, IArmorEnchantment {

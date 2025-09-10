@@ -4,14 +4,14 @@ import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = EnchantmentsPlusMod.MOD_ID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = EnchantmentsPlusMod.MOD_ID)
 public class DataGenerators {
 
     @SubscribeEvent
@@ -19,11 +19,12 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper helper = event.getExistingFileHelper();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> registries = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new ModRegistryDataGen(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModRegistryDataGen(output, registries));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
-        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(output));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(output, registries));
+        generator.addProvider(event.includeServer(), new ModEnchantmentTagsProvider(output, registries, helper));
     }
 }

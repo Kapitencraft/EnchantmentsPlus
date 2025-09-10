@@ -7,7 +7,6 @@ import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.util.Reference;
-import net.kapitencraft.kap_lib.util.attribute.TimedModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -25,7 +24,6 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -34,19 +32,17 @@ import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.server.ServerStoppedEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class EventHandler {
 
     @SubscribeEvent
@@ -133,10 +129,8 @@ public class EventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void tickVeinMiner(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            VeinMinerHolder.tickAll();
-        }
+    public static void tickVeinMiner(ServerTickEvent.Post event) {
+        VeinMinerHolder.tickAll();
     }
 
     @SubscribeEvent
@@ -203,19 +197,6 @@ public class EventHandler {
         if (resilienceLevel > 0) {
             MobEffectInstance instance = event.getEffectInstance();
             instance.duration = (int) (instance.duration * (1 - resilienceLevel * .2));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onShieldBlock(ShieldBlockEvent event) {
-        Entity attacker = event.getDamageSource().getEntity();
-        if (attacker != null) {
-            LivingEntity target = event.getEntity();
-            int thornyLvl = target.getUseItem().getEnchantmentLevel(ModEnchantments.THORNY.get());
-            if (thornyLvl > 0) {
-                attacker.hurt(attacker.damageSources().thorns(target), ThornsEnchantment.getDamage(thornyLvl, target.getRandom()));
-                target.getUseItem().hurtAndBreak(2, target, living -> living.broadcastBreakEvent(target.getUsedItemHand()));
-            }
         }
     }
 

@@ -2,11 +2,11 @@ package net.kapitencraft.enchantments_plus.enchantments.tools;
 
 import net.kapitencraft.kap_lib.enchantments.abstracts.ModEnchantment;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class FlashEnchantment extends Enchantment implements ModEnchantment {
-
 
     public FlashEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.FISHING_ROD, MiscHelper.WEAPON_SLOT);

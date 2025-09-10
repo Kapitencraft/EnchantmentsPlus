@@ -1,6 +1,7 @@
 package net.kapitencraft.enchantments_plus.loot_table.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.helpers.LootTableHelper;
@@ -13,13 +14,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
 public class CompactModifier extends ModLootModifier implements IConditional {
-    public static final Codec<CompactModifier> CODEC = LootTableHelper.simpleCodec(CompactModifier::new);
+    public static final MapCodec<CompactModifier> CODEC = LootTableHelper.simpleCodec(CompactModifier::new);
 
     public CompactModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -49,7 +50,7 @@ public class CompactModifier extends ModLootModifier implements IConditional {
                         }
                         boolean handled = false;
                         for (ItemStack s : generatedLoot) {
-                            if (ItemStack.isSameItemSameTags(s, outputResult)) {
+                            if (ItemStack.isSameItemSameComponents(s, outputResult)) {
                                 handled = true;
                                 s.grow(outputResult.getCount());
                             }
@@ -64,7 +65,7 @@ public class CompactModifier extends ModLootModifier implements IConditional {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

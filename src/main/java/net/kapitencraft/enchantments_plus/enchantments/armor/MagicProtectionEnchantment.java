@@ -3,8 +3,8 @@ package net.kapitencraft.enchantments_plus.enchantments.armor;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.tags.ExtraTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
 public class MagicProtectionEnchantment extends Enchantment {

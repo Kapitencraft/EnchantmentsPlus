@@ -5,14 +5,14 @@ import net.kapitencraft.enchantments_plus.registry.ModBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ModBlockStateProvider extends BlockStateProvider {
-    private static final ResourceLocation BASALT_SIDE = new ResourceLocation("block/basalt_side");
-    private static final ResourceLocation BASALT_TOP = new ResourceLocation("block/basalt_top");
+    private static final ResourceLocation BASALT_SIDE = ResourceLocation.withDefaultNamespace("block/basalt_side");
+    private static final ResourceLocation BASALT_TOP = ResourceLocation.withDefaultNamespace("block/basalt_top");
 
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, EnchantmentsPlusMod.MOD_ID, exFileHelper);

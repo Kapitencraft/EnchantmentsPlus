@@ -1,6 +1,7 @@
 package net.kapitencraft.enchantments_plus.loot_table.modifier;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
@@ -19,13 +20,13 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ScavengerModifier extends ModLootModifier {
     private static final LootContextParamSet PARAM_SET = LootContextParamSet.builder().required(LootContextParams.THIS_ENTITY).required(LootContextParams.KILLER_ENTITY).build();
 
-    public static final Codec<ScavengerModifier> CODEC = RecordCodecBuilder.create(scavengerModifiersInstance -> codecStart(scavengerModifiersInstance).apply(scavengerModifiersInstance, ScavengerModifier::new));
+    public static final MapCodec<ScavengerModifier> CODEC = RecordCodecBuilder.mapCodec(scavengerModifiersInstance -> codecStart(scavengerModifiersInstance).apply(scavengerModifiersInstance, ScavengerModifier::new));
 
     public ScavengerModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -53,7 +54,7 @@ public class ScavengerModifier extends ModLootModifier {
     }
 
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }
