@@ -84,4 +84,5 @@ public interface ModEnchantments {
     RegistryObject<Enchantment> JUMPER = register("jumper", JumperEnchantment::new);
     RegistryObject<Enchantment> PRECISION = register("precision", PrecisionEnchantment::new);
     RegistryObject<Enchantment> ENDURANCE = register("endurance", EnduranceEnchantment::new);
+    RegistryObject<Enchantment> SILENT_HARVEST = register("silent_harvest", SilentHarvestEnchantment::new);
 }

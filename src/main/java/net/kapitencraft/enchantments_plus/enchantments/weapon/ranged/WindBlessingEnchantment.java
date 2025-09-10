@@ -5,7 +5,7 @@ import net.kapitencraft.kap_lib.client.particle.animation.activation_triggers.En
 import net.kapitencraft.kap_lib.client.particle.animation.core.ParticleAnimation;
 import net.kapitencraft.kap_lib.client.particle.animation.finalizers.SetLifeTimeFinalizer;
 import net.kapitencraft.kap_lib.client.particle.animation.spawners.RingSpawner;
-import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminator;
+import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminatorTrigger;
 import net.kapitencraft.kap_lib.client.util.pos_target.PositionTarget;
 import net.kapitencraft.kap_lib.client.util.rot_target.RotationTarget;
 import net.kapitencraft.kap_lib.enchantments.abstracts.IUltimateEnchantment;
@@ -59,7 +59,7 @@ public class WindBlessingEnchantment extends Enchantment implements StatBoostEnc
         arrow.setNoGravity(true);
         if (owner.level() instanceof ServerLevel sL) {
             ParticleAnimation.builder()
-                    .terminatedWhen(EntityRemovedTerminator.builder(arrow))
+                    .terminatedWhen(EntityRemovedTerminatorTrigger.create(arrow))
                     .spawn(RingSpawner.noHeight()
                             .rotPerTick(10)
                             .setParticle(new DustParticleOptions(new Vector3f(1, 1, 1), .7f))
