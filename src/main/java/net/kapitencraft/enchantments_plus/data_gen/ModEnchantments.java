@@ -65,6 +65,19 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> HEAVY_PLATING = key("heavy_plating");
     ResourceKey<Enchantment> INSOMNIA = key("insomnia");
     ResourceKey<Enchantment> LONG_LEGS = key("long_legs");
+    ResourceKey<Enchantment> MAGIC_PROTECTION = key("magic_protection");
+    ResourceKey<Enchantment> PROTECTIVE_COVER = key("protective_cover");
+    ResourceKey<Enchantment> REJUVENATE = key("rejuvenate");
+    ResourceKey<Enchantment> RESILIENCE = key("resilience");
+    ResourceKey<Enchantment> SLEEPY = key("sleepy");
+    ResourceKey<Enchantment> THORNY = key("thorny");
+    ResourceKey<Enchantment> TRANSYLVANIAN = key("transylvanian");
+    ResourceKey<Enchantment> TRUE_PROTECTION = key("true_protection");
+    ResourceKey<Enchantment> VOLT_SURGE = key("volt_surge");
+    ResourceKey<Enchantment> CHROMATIC = key("chromatic");
+    ResourceKey<Enchantment> DELICATE = key("delicate");
+    ResourceKey<Enchantment> FLASH = key("flash");
+    ResourceKey<Enchantment> LUMBERJACK = key("lumberjack");
 
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res(name));
@@ -405,7 +418,7 @@ public interface ModEnchantments {
         ).withEffect(ModEnchantmentEffectComponents.CHROMATIC.get()));
         register(context, DELICATE, Enchantment.enchantment(
                 Enchantment.definition(
-                        items.getOrThrow(Tags.Items.),
+                        items.getOrThrow(ModTags.Items.FARMING_ENCHANTABLE),
                         2,
                         1,
                         Enchantment.constantCost(12),
@@ -436,9 +449,50 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.MAINHAND
                 )
         )); //TODO add effect?
-        register(context, );
-
-
+        register(context, MAGMATIC, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        2,
+                        1,
+                        Enchantment.constantCost(16),
+                        Enchantment.constantCost(20),
+                        8,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.MAGMATIC.get()));
+        register(context, REPLENISH, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.FARMING_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(22),
+                        Enchantment.constantCost(30),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.REPLENISH.get()));
+        register(context, SILENT_HARVEST, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(17),
+                        Enchantment.constantCost(20),
+                        6,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.SILENT_HARVEST.get()));
+        register(context, SMELTING_TOUCH, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.MINING_LOOT_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(20),
+                        Enchantment.constantCost(25),
+                        8,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.SMELTING_TOUCH.get()));
 
         register(context, PRECISION, Enchantment.enchantment(
                 Enchantment.definition(

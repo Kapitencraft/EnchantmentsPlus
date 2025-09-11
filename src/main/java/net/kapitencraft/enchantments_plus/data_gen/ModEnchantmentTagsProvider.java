@@ -25,6 +25,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.ENDURANCE,
                 ModEnchantments.ENLIGHTENMENT,
                 ModEnchantments,
+                ModEnchantments,
                 ModEnchantments
         );
         tag(ExtraTags.Enchantments.ULTIMATE).add(
