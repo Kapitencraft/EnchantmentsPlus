@@ -1,12 +1,11 @@
 package net.kapitencraft.enchantments_plus.loot_table.modifier;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.kapitencraft.enchantments_plus.loot_table.LootTableHelper;
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -24,7 +23,7 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ScavengerModifier extends ModLootModifier {
-    private static final LootContextParamSet PARAM_SET = LootContextParamSet.builder().required(LootContextParams.THIS_ENTITY).required(LootContextParams.KILLER_ENTITY).build();
+    private static final LootContextParamSet PARAM_SET = LootContextParamSet.builder().required(LootContextParams.THIS_ENTITY).required(LootContextParams.ATTACKING_ENTITY).build();
 
     public static final MapCodec<ScavengerModifier> CODEC = RecordCodecBuilder.mapCodec(scavengerModifiersInstance -> codecStart(scavengerModifiersInstance).apply(scavengerModifiersInstance, ScavengerModifier::new));
 
@@ -34,19 +33,20 @@ public class ScavengerModifier extends ModLootModifier {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        ServerLevel level = context.getLevel();
-        LootTable table = level.getServer().getLootData().getLootTable(EnchantmentsPlusMod.res("scavenger_drops"));
-        if (!context.hasParam(LootContextParams.KILLER_ENTITY)) return generatedLoot;
-        Entity entity = context.getParam(LootContextParams.KILLER_ENTITY);
+        if (!context.hasParam(LootContextParams.ATTACKING_ENTITY)) return generatedLoot;
+        Entity entity = context.getParam(LootContextParams.ATTACKING_ENTITY);
         if (!(entity instanceof LivingEntity living)) return generatedLoot;
         ItemStack tool = living.getItemBySlot(EquipmentSlot.MAINHAND);
-        int lvl = tool.getEnchantmentLevel(ModEnchantments.SCAVENGER.get());
+        ServerLevel level = context.getLevel();
+        int lvl = tool.getEnchantmentLevel(level.registryAccess().holderOrThrow(ModEnchantments.SCAVENGER));
         if (lvl > 0) {
             context.getLevel().getProfiler().push("scavenger modifier");
             if (Mth.randomBetweenInclusive(level.random, 1, 5) <= lvl) {
+                LootTable table = level.getServer().reloadableRegistries().getLootTable(EnchantmentsPlusMod.SCAVENGER_DROPS);
                 LootParams.Builder builder = new LootParams.Builder(level);
-                LootTableHelper.copy(builder, context, LootContextParams.THIS_ENTITY);
-                generatedLoot.addAll(table.getRandomItems(builder.create(PARAM_SET)));
+                LootTableHelper.copy(builder, context, LootContextParams.THIS_ENTITY, LootContextParams.ATTACKING_ENTITY);
+                LootParams params = builder.create(PARAM_SET);
+                generatedLoot.addAll(table.getRandomItems(params));
             }
             context.getLevel().getProfiler().pop();
         }

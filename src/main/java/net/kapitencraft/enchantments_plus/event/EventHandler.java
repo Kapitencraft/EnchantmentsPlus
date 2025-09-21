@@ -1,29 +1,31 @@
 package net.kapitencraft.enchantments_plus.event;
 
-import net.kapitencraft.enchantments_plus.enchantments.HealthMendingEnchantment;
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
+import net.kapitencraft.enchantments_plus.data_gen.ModDamageTypes;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
+import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
+import net.kapitencraft.kap_lib.client.particle.LightningParticleOptions;
 import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
+import net.kapitencraft.kap_lib.helpers.EnchantmentHelperExtras;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
-import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.util.Reference;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -32,15 +34,21 @@ import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent;
+import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EventBusSubscriber
 public class EventHandler {
@@ -48,7 +56,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void endermanEvent(EnderManAngerEvent event) {
         Player player = event.getPlayer();
-        if (player.getItemBySlot(EquipmentSlot.HEAD).getEnchantmentLevel(ModEnchantments.ENDER_FRIEND.get()) > 0) {
+        if (EnchantmentHelper.has(player.getItemBySlot(EquipmentSlot.HEAD), ModEnchantmentEffectComponents.ENDER_FRIEND.get())) {
             event.setCanceled(true);
         }
     }
@@ -66,7 +74,7 @@ public class EventHandler {
         if (serverLevel == null) return;
         ServerPlayer serverPlayer = (ServerPlayer) player;
 
-        if (mainHandItem.getEnchantmentLevel(ModEnchantments.MAGMATIC.get()) > 0 && state.is(Blocks.NETHERRACK)) {
+        if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.MAGMATIC.get()) && state.is(Blocks.NETHERRACK)) {
             event.setCanceled(true);
             level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
             return;
@@ -76,13 +84,13 @@ public class EventHandler {
             int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
             IntegerProperty ageProperty = block instanceof CropBlock cropBlock ?  cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
             if (state.getValue(ageProperty) < max) {
-                if (mainHandItem.getEnchantmentLevel(ModEnchantments.DELICATE.get()) > 0) {
+                if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.DELICATE.get())) {
                     event.setCanceled(true);
                     return;
                 }
             }
 
-            if (mainHandItem.getEnchantmentLevel(ModEnchantments.REPLENISH.get()) > 0) {
+            if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.REPLENISH.get())) {
                 event.setCanceled(true);
                 Block.dropResources(state, level, pos);
                 mainHandItem.mineBlock(level, state, pos, player);
@@ -90,34 +98,99 @@ public class EventHandler {
                 level.setBlockAndUpdate(pos, state);
             }
         }
-        if (mainHandItem.getEnchantmentLevel(ModEnchantments.LUMBERJACK.get()) > 0 && state.is(BlockTags.LOGS)) {
+        if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.LUMBERJACK.get()) && state.is(BlockTags.LOGS)) {
             VeinMinerHolder.create(pos, serverPlayer, block, pos1 -> {}, state1 -> true, pos1 -> false);
         }
         if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) {
-            MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.VEIN_MINER.get(), integer -> {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(level.registryAccess(), mainHandItem, ModEnchantments.VEIN_MINER, integer -> {
                 Reference<Integer> brokenBlocks = Reference.of(-1);
                 VeinMinerHolder.create(pos, serverPlayer, block,
                         pos1 -> MathHelper.up1(brokenBlocks),
                         state1 -> true, pos1 -> brokenBlocks.getIntValue() > integer);
             });
         }
-        if (event.getExpToDrop() > 0) {
-            MiscHelper.getEnchantmentLevelAndDo(mainHandItem, ModEnchantments.EXPERIENCED.get(), enchLevel ->
-                    MathHelper.add(event::getExpToDrop, event::setExpToDrop, enchLevel)
-            );
-        }
-        if (mainHandItem.getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
-            addXp(player, event.getExpToDrop());
-            event.setExpToDrop(0);
+    }
+
+    @SubscribeEvent
+    public static void onLivingDamagePre(LivingDamageEvent.Pre event) {
+        DamageSource source = event.getSource();
+        LivingEntity attacked = event.getEntity();
+        if (source.getEntity() instanceof LivingEntity attacker) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.GIANT_KILLER, i -> {
+                double moreHpPercent = attacked.getHealth() / attacker.getHealth();
+                event.setNewDamage((float) (event.getNewDamage() * (1 + Math.min(moreHpPercent * i * 0.01, 0.5))));
+            });
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.COMBAT_KNOWLEDGE, level -> {
+                if (source.getDirectEntity() == attacker && MathHelper.chance(.001, attacker)) {
+                    event.setNewDamage(Float.MAX_VALUE);
+                }
+            });
         }
     }
+
+
+    @SubscribeEvent
+    public static void onBlockDrops(BlockDropsEvent event) {
+        if (event.getBreaker() instanceof Player player) {
+            ItemStack mainHandItem = event.getTool();
+            RegistryAccess access = player.registryAccess();
+            if (event.getDroppedExperience() > 0) {
+                EnchantmentHelperExtras.getEnchantmentLevelAndDo(access, mainHandItem, ModEnchantments.EXPERIENCED, enchLevel ->
+                        MathHelper.add(event::getDroppedExperience, event::setDroppedExperience, enchLevel)
+                );
+            }
+            if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.TELEKINESIS.get())) {
+                addXp(player, event.getDroppedExperience());
+                event.setDroppedExperience(0);
+            }
+        }
+    }
+
+    //region chain lightning
+    @SubscribeEvent
+    public static void onLivingDamagePost(LivingDamageEvent.Post event) {
+        LivingEntity attacked = event.getEntity();
+        DamageSource source = event.getSource();
+        LivingEntity attacker = source.isDirect() ? source.getDirectEntity() instanceof LivingEntity living ? living : null : null;
+        float damage = event.getOriginalDamage();
+        if (attacker != null && !attacker.level().isClientSide()) {
+            ServerLevel level = (ServerLevel) attacker.level();
+            int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(level.registryAccess().holderOrThrow(ModEnchantments.CHAIN_LIGHTNING), attacker);
+            LivingEntity target;
+            List<LivingEntity> previous = new ArrayList<>();
+            if (level.getRandom().nextFloat() < enchantmentLevel * .02f) {
+                for (int i = 0; i < enchantmentLevel; i++) {
+                    target = selectTarget(enchantmentLevel, level, attacked, attacker, previous);
+                    if (target == null) break;
+                    previous.add(target);
+                    target.hurt(attacked.damageSources().source(ModDamageTypes.CHAIN_LIGHTNING, attacker), enchantmentLevel * .05f * damage);
+                    level.sendParticles(new LightningParticleOptions(attacked.getEyePosition(), target.getEyePosition(), 5, 100, .4f, .2f), target.getX(), target.getY(), target.getZ(), 1, 0, 0, 0, 0);
+                    attacked = target;
+                }
+            }
+        }
+    }
+
+    private static LivingEntity selectTarget(int enchLevel, Level level, LivingEntity origin, LivingEntity attacker, List<LivingEntity> previous) {
+        List<LivingEntity> livings = level.getEntitiesOfClass(
+                LivingEntity.class,
+                origin.getBoundingBox().inflate(enchLevel * 2),
+                living1 -> {
+                    if (living1 == attacker || previous.contains(living1)) return false;
+                    BlockHitResult result = living1.level().clip(new ClipContext(origin.getEyePosition(), living1.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, attacker));
+                    return result.getType() == HitResult.Type.MISS;
+                }
+        );
+        return MathHelper.pickRandom(livings, origin.getRandom());
+    }
+    //endregion
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void telekinesisXpRegister(LivingExperienceDropEvent event) {
         Player attacker = event.getAttackingPlayer();
         if (attacker != null) {
             ItemStack mainHand = attacker.getMainHandItem();
-            if (mainHand.getEnchantmentLevel(ModEnchantments.TELEKINESIS.get()) > 0) {
+            if (EnchantmentHelper.has(mainHand, ModEnchantmentEffectComponents.TELEKINESIS.get())) {
                 addXp(attacker, event.getDroppedExperience());
                 event.setCanceled(true);
             }
@@ -125,7 +198,7 @@ public class EventHandler {
     }
 
     private static void addXp(Player player, int amount) {
-        player.giveExperiencePoints(MiscHelper.repairPlayerItems(player, amount, Enchantments.MENDING));
+        player.giveExperiencePoints(EnchantmentHelperExtras.repairPlayerItems(player, amount, EnchantmentEffectComponents.REPAIR_WITH_XP));
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -135,79 +208,56 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onModifyFishingHookStats(ModifyFishingHookStatsEvent event) {
-        event.hookSpeed.addAddition(event.fishingRod.getEnchantmentLevel(ModEnchantments.FLASH.get()));
+        event.hookSpeed.addAddition(event.fishingRod.getEnchantmentLevel(event.player.registryAccess().holderOrThrow(ModEnchantments.FLASH)));
     }
-
-    @SubscribeEvent
-    public static void registerJoinEventData(EntityJoinLevelEvent event) {
-        if (event.getEntity() instanceof AbstractArrow arrow) {
-            if (arrow.getOwner() instanceof LivingEntity entity) {
-                MiscHelper.getEnchantmentLevelAndDo(entity.getUseItem(), ModEnchantments.OVERLOAD.get(),
-                        level -> arrow.getPersistentData().putInt("OverloadLvl", level)
-                );
-                MiscHelper.getEnchantmentLevelAndDo(entity.getUseItem(), ModEnchantments.WIND_BLESSING.get(),
-                        level -> arrow.setNoGravity(true)
-                );
-            }
-        }
-    }
-
 
     @SubscribeEvent
     public static void healthRegenRegister(LivingHealEvent event) {
         LivingEntity living = event.getEntity();
-        if (living instanceof Player player) event.setAmount(HealthMendingEnchantment.repairPlayerItems(player, event.getAmount()));
-    }
-
-
-
-    @SubscribeEvent
-    public static void itemUseEvents(LivingEntityUseItemEvent event) {
-        if (event.getItem().isEdible()) {
-            int lvl = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.GLUTTONOUS.get(), event.getEntity());
-            if (lvl > 0) {
-                event.setDuration((int) (event.getDuration() * (1 - lvl * .1)));
-            }
+        if (living instanceof Player player) {
+            float amount = event.getAmount();
+            amount =  EnchantmentHelperExtras.repairPlayerItems(player, (int) amount, ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()) + amount % 1;
+            event.setAmount(amount);
         }
     }
 
     @SubscribeEvent
-    public static void onServerStopped(ServerStoppedEvent event) {
-
+    public static void itemUseEvents(LivingEntityUseItemEvent event) {
+        if (event.getItem().getFoodProperties(event.getEntity()) != null) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.GLUTTONOUS, i -> event.setDuration((int) (event.getDuration() * (1 - i * .1))));
+        }
     }
-
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         DamageSource source = event.getSource();
-        if (!source.isIndirect() && source.getEntity() instanceof LivingEntity living) {
-            int lvl = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.BLOOD_THIRST.get(), living);
-            if (lvl > 0) {
+        if (source.isDirect() && source.getEntity() instanceof LivingEntity living) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(living, ModEnchantments.BLOOD_THIRST, integer -> {
                 AttributeInstance attack = living.getAttribute(Attributes.ATTACK_DAMAGE);
                 if (attack != null) {
-                    attack.addPermanentModifier(new TimedModifier("Blood Thirst", lvl / 100., AttributeModifier.Operation.MULTIPLY_BASE, lvl * 40));
+                    //attack.addPermanentModifier(new TimedModifier("Blood Thirst", integer / 100., AttributeModifier.Operation.ADD_MULTIPLIED_BASE, integer * 40));
                 }
-            }
+            });
         }
     }
 
     @SubscribeEvent
     public static void onMobEffectAdded(MobEffectEvent.Added event) {
-        int resilienceLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.RESILIENCE.get(), event.getEntity());
-        if (resilienceLevel > 0) {
-            MobEffectInstance instance = event.getEffectInstance();
-            instance.duration = (int) (instance.duration * (1 - resilienceLevel * .2));
+        if (!event.getEffectInstance().getEffect().value().isBeneficial()) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.RESILIENCE, integer -> {
+                MobEffectInstance instance = event.getEffectInstance();
+                instance.duration = instance.mapDuration(i -> (int) (i * (1 - integer * .2)));
+            });
         }
     }
 
     @SubscribeEvent
     public static void onPlayerSpawnPhantoms(PlayerSpawnPhantomsEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.SLEEPY.get(), event.getEntity()) > 0) event.setResult(Event.Result.DENY);
+        EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.SLEEPY, i -> event.setResult(PlayerSpawnPhantomsEvent.Result.DENY));
     }
 
     @SubscribeEvent
-    public static void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
-        if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.INSOMNIA.get(), event.getEntity()) > 0) event.setResult(Player.BedSleepingProblem.NOT_SAFE);
+    public static void onPlayerSleepInBed(CanPlayerSleepEvent event) {
+        EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.INSOMNIA, i -> event.setProblem(Player.BedSleepingProblem.NOT_SAFE));
     }
-
 }

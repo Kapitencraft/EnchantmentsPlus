@@ -1,0 +1,42 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchantments_plus.wind_blessing"
+  },
+  "effects": {
+    "kap_lib:projectile_spawn": [
+      {
+        "effect": {
+          "type": "enchantments_plus:wind_blessing",
+          "wind_blessing": {}
+        }
+      }
+    ],
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 10.0,
+          "per_level_above_first": 10.0
+        },
+        "attribute": "kap_lib:generic.projectile_speed",
+        "id": "enchantments_plus:wind_blessing_enchantment",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/bow",
+  "weight": 1
+}

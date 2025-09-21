@@ -1,0 +1,29 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchantments_plus.snipe"
+  },
+  "effects": {
+    "kap_lib:bow_tick": [
+      {
+        "effect": {
+          "type": "enchantments_plus:snipe"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/bow",
+  "weight": 2
+}

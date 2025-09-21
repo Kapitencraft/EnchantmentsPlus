@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchantments_plus.health_mending"
+  },
+  "effects": {
+    "enchantments_plus:health_mending": {}
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/durability",
+  "weight": 1
+}

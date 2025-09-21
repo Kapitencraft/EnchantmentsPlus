@@ -1,0 +1,11 @@
+{
+  "entries": [
+    "enchantments_plus:chromatic",
+    "enchantments_plus:compact",
+    "enchantments_plus:replenish",
+    "enchantments_plus:scavenger_drops",
+    "enchantments_plus:smelt",
+    "enchantments_plus:telekinesis"
+  ],
+  "replace": false
+}

@@ -3,7 +3,7 @@ package net.kapitencraft.enchantments_plus.loot_table.modifier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.kapitencraft.kap_lib.helpers.LootTableHelper;
 import net.kapitencraft.kap_lib.item.Compacting;
 import net.kapitencraft.kap_lib.item.loot_table.IConditional;
@@ -30,7 +30,7 @@ public class CompactModifier extends ModLootModifier implements IConditional {
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LivingEntity living = LootTableHelper.getLivingSource(context);
-        if (living != null && EnchantmentHelper.getEnchantmentLevel(ModEnchantments.COMPACTING.get(), living) > 0) {
+        if (living != null && EnchantmentHelper.getEnchantmentLevel(living.registryAccess().holderOrThrow(ModEnchantments.COMPACTING), living) > 0) {
             context.getLevel().getProfiler().push("compact modifier");
             for (int i = 0; i < generatedLoot.size(); i++) {
                 ItemStack stack = generatedLoot.get(i);

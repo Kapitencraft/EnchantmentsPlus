@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.mixin.classes;
 
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -14,7 +14,7 @@ public class EntityMixin {
     @ModifyVariable(method = "setRemainingFireTicks", at = @At("HEAD"), argsOnly = true)
     private int getReducedFireTicks(int in) {
         if (((Entity) (Object) this) instanceof LivingEntity living) {
-            return (int) (in * (1 - EnchantmentHelper.getEnchantmentLevel(ModEnchantments.EXTINGUISH.get(), living) * .2));
+            return (int) (in * (1 - EnchantmentHelper.getEnchantmentLevel(living.registryAccess().holderOrThrow(ModEnchantments.EXTINGUISH), living) * .2));
         }
         return in;
     }

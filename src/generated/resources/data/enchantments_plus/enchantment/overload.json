@@ -1,0 +1,60 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchantments_plus.overload"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -2.0,
+          "per_level_above_first": -2.0
+        },
+        "attribute": "kap_lib:generic.draw_speed",
+        "id": "enchantments_plus:overload_enchantment",
+        "operation": "add_value"
+      },
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 1.0,
+          "per_level_above_first": 1.0
+        },
+        "attribute": "kap_lib:generic.crit_damage",
+        "id": "enchantments_plus:overload_enchantment",
+        "operation": "add_value"
+      }
+    ],
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": {
+            "type": "minecraft:linear",
+            "base": 1.1,
+            "per_level_above_first": 0.1
+          }
+        },
+        "requirements": {
+          "chance": 0.1,
+          "condition": "minecraft:random_chance"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/bow",
+  "weight": 5
+}

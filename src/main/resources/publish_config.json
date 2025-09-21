@@ -6,12 +6,12 @@
   "mod_name": "${mod_name}",
   "mod_version": "${mod_version}",
   "mc_version": "${minecraft_version}",
-  "fml_version": "${forge_version}",
+  "fml_version": "${neo_version}",
   "dependencies": [
     {
-      "version_name": "v${kap_lib_version}-mc${minecraft_version}-FML${forge_version}",
+      "version_name": "v${kap_lib_version}-mc${minecraft_version}",
       "project_id": "IrKTRsiH",
-      "dependency_type": "required"
+      "dependency_type": "embedded"
     }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "translate": "enchantment.enchantments_plus.scavenger"
+  },
+  "max_cost": {
+    "base": 2,
+    "per_level_above_first": 8
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 12
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#enchantments_plus:all_weapons_enchantable",
+  "weight": 2
+}

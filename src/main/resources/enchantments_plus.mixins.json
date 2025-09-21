@@ -12,6 +12,7 @@
     "BlockMixin",
     "BowItemMixin",
     "CrossbowItemMixin",
+    "EnchantmentHelperMixin",
     "EntityMixin",
     "LivingEntityMixin",
     "ShearsDispenseItemBehaviourMixin",

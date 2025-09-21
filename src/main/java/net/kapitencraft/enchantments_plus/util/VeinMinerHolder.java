@@ -47,15 +47,14 @@ public class VeinMinerHolder {
 
     public boolean tick() {
         ItemStack mainHandItem = this.serverPlayer.getMainHandItem();
-        BlockPos extraPos = iterator.get(0);
-        iterator.remove(0);
+        BlockPos extraPos = iterator.getFirst();
+        iterator.removeFirst();
         for (BlockPos blockPos : Values()) {
             if (!(blockPos.getX() != 0 && blockPos.getY() != 0 && blockPos.getZ() != 0)) {
                 BlockPos pos1 = new BlockPos(blockPos.getX() + extraPos.getX(), blockPos.getY() + extraPos.getY(), blockPos.getZ() + extraPos.getZ());
                 BlockState state = this.serverPlayer.level().getBlockState(pos1);
                 if (block == state.getBlock() && shouldMine.test(state)) {
-                    mainHandItem.hurtAndBreak(1, serverPlayer,
-                            serverPlayer1 -> serverPlayer1.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                    mainHandItem.hurtAndBreak(1, serverPlayer, EquipmentSlot.MAINHAND);
                     if (mainHandItem.isEmpty()) {
                         return true;
                     }

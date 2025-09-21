@@ -1,21 +1,19 @@
 package net.kapitencraft.enchantments_plus.data_gen;
 
-import io.netty.util.Recycler;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
 import net.kapitencraft.enchantments_plus.ModTags;
-import net.kapitencraft.enchantments_plus.enchantments.components.Endurance;
-import net.kapitencraft.enchantments_plus.enchantments.components.ProtectiveCover;
-import net.kapitencraft.enchantments_plus.enchantments.components.Transylvanian;
+import net.kapitencraft.enchantments_plus.enchantments.components.*;
+import net.kapitencraft.enchantments_plus.loot_table.condition.AttackerEmptyOffhandCondition;
+import net.kapitencraft.enchantments_plus.loot_table.condition.BehindEntityCondition;
 import net.kapitencraft.enchantments_plus.registry.ModBlocks;
+import net.kapitencraft.enchantments_plus.registry.ModCooldowns;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;
-import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEntityEffects;
-import net.kapitencraft.kap_lib.helpers.EnchantmentHelper;
+import net.kapitencraft.kap_lib.helpers.EnchantmentHelperExtras;
+import net.kapitencraft.kap_lib.item.loot_table.conditions.CooldownInactiveCondition;
 import net.kapitencraft.kap_lib.registry.ExtraAttributes;
+import net.kapitencraft.kap_lib.registry.ExtraEnchantmentEffectComponents;
 import net.kapitencraft.kap_lib.tags.ExtraTags;
-import net.minecraft.advancements.critereon.DamageSourcePredicate;
-import net.minecraft.advancements.critereon.EntityFlagsPredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.TagPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Vec3i;
@@ -25,9 +23,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -42,19 +40,16 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 import net.neoforged.neoforge.common.Tags;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.Optional;
 
 public interface ModEnchantments {
     ResourceKey<Enchantment> BASALT_WALKER = key("basalt_walker");
     ResourceKey<Enchantment> BLOCK_BREATHER = key("block_breather");
-    ResourceKey<Enchantment> KANGAROO = key("kangaroo");
+    ResourceKey<Enchantment> BONK = key("bonk");
     ResourceKey<Enchantment> ENDER_FRIEND = key("ender_friend");
     ResourceKey<Enchantment> ENDURANCE = key("endurance");
     ResourceKey<Enchantment> ENLIGHTENMENT = key("enlightenment");
@@ -64,6 +59,7 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> GROWTH = key("growth");
     ResourceKey<Enchantment> HEAVY_PLATING = key("heavy_plating");
     ResourceKey<Enchantment> INSOMNIA = key("insomnia");
+    ResourceKey<Enchantment> KANGAROO = key("kangaroo");
     ResourceKey<Enchantment> LONG_LEGS = key("long_legs");
     ResourceKey<Enchantment> MAGIC_PROTECTION = key("magic_protection");
     ResourceKey<Enchantment> PROTECTIVE_COVER = key("protective_cover");
@@ -78,6 +74,42 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> DELICATE = key("delicate");
     ResourceKey<Enchantment> FLASH = key("flash");
     ResourceKey<Enchantment> LUMBERJACK = key("lumberjack");
+    ResourceKey<Enchantment> MAGMATIC = key("magmatic");
+    ResourceKey<Enchantment> REPLENISH = key("replenish");
+    ResourceKey<Enchantment> SILENT_HARVEST = key("silent_harvest");
+    ResourceKey<Enchantment> SMELTING_TOUCH = key("smelting_touch");
+    ResourceKey<Enchantment> VEIN_MINER = key("vein_miner");
+    ResourceKey<Enchantment> BACK_STAB = key("back_stab");
+    ResourceKey<Enchantment> BLOOD_THIRST = key("blood_thirst");
+    ResourceKey<Enchantment> CHILLING = key("chilling");
+    ResourceKey<Enchantment> COMBAT_KNOWLEDGE = key("combat_knowledge");
+    ResourceKey<Enchantment> ENDER_SLAYER = key("ender_slayer");
+    ResourceKey<Enchantment> GIANT_KILLER = key("giant_killer");
+    ResourceKey<Enchantment> JUSTICE = key("justice");
+    ResourceKey<Enchantment> LIGHTNING_LORD = key("lightning_lord");
+    ResourceKey<Enchantment> NECROTIC_TOUCH = key("necrotic_touch");
+    ResourceKey<Enchantment> POISONOUS_BLADE = key("poisonous_blade");
+    ResourceKey<Enchantment> TRIPLE_STRIKE = key("triple_strike");
+    ResourceKey<Enchantment> VENOMOUS = key("venomous");
+    ResourceKey<Enchantment> ARMOR_SHREDDING = key("armor_shredding");
+    ResourceKey<Enchantment> CHAIN_LIGHTNING = key("chain_lightning");
+    ResourceKey<Enchantment> AIM = key("aim");
+    ResourceKey<Enchantment> ELVISH_MASTERY = key("elvish_mastery");
+    ResourceKey<Enchantment> FAST_ARROWS = key("fast_arrows");
+    ResourceKey<Enchantment> FROZEN_ARROWS = key("frozen_arrows");
+    ResourceKey<Enchantment> OVERLOAD = key("overload");
+    ResourceKey<Enchantment> PRECISION = key("precision");
+    ResourceKey<Enchantment> SNIPE = key("snipe");
+    ResourceKey<Enchantment> WIND_BLESSING = key("wind_blessing");
+    ResourceKey<Enchantment> CRITICAl = key("critical");
+    ResourceKey<Enchantment> DIVINE_GIFT = key("divine_gift");
+    ResourceKey<Enchantment> INFERNO = key("inferno");
+    ResourceKey<Enchantment> SCAVENGER = key("scavenger");
+    ResourceKey<Enchantment> TWO_HANDED = key("two_handed");
+    ResourceKey<Enchantment> COMPACTING = key("compacting");
+    ResourceKey<Enchantment> EXPERIENCED = key("experienced");
+    ResourceKey<Enchantment> HEALTH_MENDING = key("health_mending");
+    ResourceKey<Enchantment> TELEKINESIS = key("telekinesis");
 
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res(name));
@@ -133,6 +165,21 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.HEAD
                 )
         ).withEffect(ModEnchantmentEffectComponents.BREATH_BLOCK.get()));
+        register(context, BONK, EnchantmentHelperExtras.ultimate(
+                enchantments,
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(10),
+                        Enchantment.constantCost(20),
+                        4,
+                        EquipmentSlotGroup.ARMOR
+                )
+        ).withEffect(EnchantmentEffectComponents.DAMAGE_IMMUNITY,
+                DamageImmunity.INSTANCE,
+                () -> new CooldownInactiveCondition(ModCooldowns.BONK.value())
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.VICTIM, EnchantmentTarget.VICTIM, new ActivateCooldown(ModCooldowns.BONK.value(), true)));
         register(context, KANGAROO, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE),
@@ -178,7 +225,7 @@ public interface ModEnchantments {
                         3,
                         EquipmentSlotGroup.HEAD
                 )
-        ).withEffect(ModEnchantmentEffectComponents.ENLIGHTENMENT.get()));
+        ));
         register(context, EXTINGUISH, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
@@ -205,7 +252,7 @@ public interface ModEnchantments {
         ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
                 EnchantmentsPlusMod.res("firm_stand_enchantment"), Attributes.KNOCKBACK_RESISTANCE, LevelBasedValue.perLevel(.04f), AttributeModifier.Operation.ADD_VALUE
         )));
-        register(context, GLUTTONOUS, EnchantmentHelper.ultimate(
+        register(context, GLUTTONOUS, EnchantmentHelperExtras.ultimate(
                 enchantments,
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.HEAD_ARMOR_ENCHANTABLE),
@@ -216,7 +263,7 @@ public interface ModEnchantments {
                         8,
                         EquipmentSlotGroup.HEAD
                 )
-        )); //TODO add effect?
+        ));
         register(context, GROWTH, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
@@ -230,7 +277,7 @@ public interface ModEnchantments {
         ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
                 EnchantmentsPlusMod.res("growth_enchantment"), Attributes.MAX_HEALTH, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
         )));
-        register(context, HEAVY_PLATING, EnchantmentHelper.ultimate(
+        register(context, HEAVY_PLATING, EnchantmentHelperExtras.ultimate(
                 enchantments,
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
@@ -256,7 +303,7 @@ public interface ModEnchantments {
                         10,
                         EquipmentSlotGroup.HEAD
                 )
-        ).withEffect(ModEnchantmentEffectComponents.INSOMNIA.get()));
+        ));
         register(context, LONG_LEGS, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.LEG_ARMOR_ENCHANTABLE),
@@ -322,7 +369,7 @@ public interface ModEnchantments {
                         8,
                         EquipmentSlotGroup.CHEST
                 )
-        )); //TODO add effect?
+        ));
         register(context, SLEEPY, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.HEAD_ARMOR_ENCHANTABLE),
@@ -333,7 +380,7 @@ public interface ModEnchantments {
                         4,
                         EquipmentSlotGroup.HEAD
                 )
-        ).withEffect(ModEnchantmentEffectComponents.SLEEPY.get()));
+        ));
         register(context, THORNY, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ModTags.Items.SHIELD_ENCHANTABLE),
@@ -437,7 +484,7 @@ public interface ModEnchantments {
                         5,
                         EquipmentSlotGroup.MAINHAND
                 )
-        )); //TODO add effect?
+        ));
         register(context, LUMBERJACK, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.AXES),
@@ -448,7 +495,7 @@ public interface ModEnchantments {
                         4,
                         EquipmentSlotGroup.MAINHAND
                 )
-        )); //TODO add effect?
+        ).withEffect(ModEnchantmentEffectComponents.LUMBERJACK.get()));
         register(context, MAGMATIC, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
@@ -492,8 +539,270 @@ public interface ModEnchantments {
                         8,
                         EquipmentSlotGroup.MAINHAND
                 )
-        ).withEffect(ModEnchantmentEffectComponents.SMELTING_TOUCH.get()));
-
+        ));
+        register(context, VEIN_MINER, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(5, 10),
+                        Enchantment.dynamicCost(12, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        //endregion
+        //region weapon/melee
+        register(context, BACK_STAB, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(6, 10),
+                        6,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.DAMAGE,
+                new MultiplyValue(LevelBasedValue.perLevel(1.25f, .25f)),
+                BehindEntityCondition::new
+        ));
+        register(context, BLOOD_THIRST, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.ATTACKER,
+                new ApplyTimedModifier(EnchantmentsPlusMod.res("blood_thirst"), LevelBasedValue.perLevel(40), Attributes.ATTACK_DAMAGE, LevelBasedValue.perLevel(.01f), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+        ));
+        register(context, CHILLING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        6,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new IncreaseFreeze(LevelBasedValue.perLevel(25))));
+        register(context, COMBAT_KNOWLEDGE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        register(context, ENDER_SLAYER, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        5,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(1, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.DAMAGE,
+                new MultiplyValue(LevelBasedValue.perLevel(1.25f, .25f)),
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(ModTags.EntityTypes.SENSITIVE_TO_ENDER_SLAYER))
+                )
+        ));
+        register(context, GIANT_KILLER, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(1, 10),
+                        5,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        register(context, JUSTICE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        10,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.DAMAGE,
+                new AddValue(LevelBasedValue.perLevel(2.5f)),
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(ModTags.EntityTypes.SENSITIVE_TO_JUSTICE))
+                )
+        ));
+        register(context, LIGHTNING_LORD, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new LightningLord()));
+        register(context, NECROTIC_TOUCH, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        10,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("necrotic_touch_enchantment"), ExtraAttributes.LIVE_STEAL, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, POISONOUS_BLADE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new ApplyMobEffect(
+                HolderSet.direct(MobEffects.POISON),
+                LevelBasedValue.perLevel(5),
+                LevelBasedValue.perLevel(5),
+                LevelBasedValue.constant(1),
+                LevelBasedValue.constant(1)
+        )));
+        register(context, TRIPLE_STRIKE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        5,
+                        4,
+                        Enchantment.dynamicCost(5, 20),
+                        Enchantment.dynamicCost(10, 40),
+                        5,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new TripleStrike()));
+        register(context, VENOMOUS, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM,
+                new ApplyTimedModifier(EnchantmentsPlusMod.res("venomous_enchantment"), LevelBasedValue.perLevel(20), Attributes.MOVEMENT_SPEED, LevelBasedValue.perLevel(-0.05f), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)));
+        register(context, ARMOR_SHREDDING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        7,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("armor_shredding_enchantment"), ExtraAttributes.ARMOR_SHREDDER, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, CHAIN_LIGHTNING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(5, 10),
+                        Enchantment.dynamicCost(10, 10),
+                        6,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        //endregion
+        //region weapon/ranged
+        register(context, AIM, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.BOW.get(), new Aim()));
+        register(context, ELVISH_MASTERY, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("elvish_mastery_enchantment"), ExtraAttributes.DRAW_SPEED, LevelBasedValue.perLevel(7.5f), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, FAST_ARROWS, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("fast_arrows_enchantment"), ExtraAttributes.PROJECTILE_SPEED, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, FROZEN_ARROWS, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        1,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new IncreaseFreeze(LevelBasedValue.perLevel(40))));
+        register(context, OVERLOAD, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        5,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("overload_enchantment"), ExtraAttributes.DRAW_SPEED, LevelBasedValue.perLevel(-2), AttributeModifier.Operation.ADD_VALUE
+        )).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("overload_enchantment"), ExtraAttributes.CRIT_DAMAGE, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
+        )).withEffect(EnchantmentEffectComponents.DAMAGE,
+                new MultiplyValue(LevelBasedValue.perLevel(1.1f, .1f)),
+                LootItemRandomChanceCondition.randomChance(.1f)
+        ));
         register(context, PRECISION, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
@@ -505,6 +814,149 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.MAINHAND
                 )
         ));
+        register(context, SNIPE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.BOW.get(), new Snipe()));
+        register(context, WIND_BLESSING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                        1,
+                        3,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        2,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.BOW_SPAWN.get(), new WindBlessing())
+                .withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                        EnchantmentsPlusMod.res("wind_blessing_enchantment"), ExtraAttributes.PROJECTILE_SPEED, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE
+                ))
+        );
+        //endregion
+        //region weapon
+        register(context, CRITICAl, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        10,
+                        5,
+                        Enchantment.dynamicCost(1, 5),
+                        Enchantment.dynamicCost(5, 8),
+                        2,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("critical_enchantment"), ExtraAttributes.CRIT_DAMAGE, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, DIVINE_GIFT, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        1,
+                        3,
+                        Enchantment.dynamicCost(10, 15),
+                        Enchantment.dynamicCost(10, 20),
+                        8,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("divine_gift_enchantment"), Attributes.LUCK, LevelBasedValue.perLevel(2), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, INFERNO, EnchantmentHelperExtras.ultimate(
+                enchantments,
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(12, 15),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new Inferno()));
+        register(context, SCAVENGER, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(5, 12),
+                        Enchantment.dynamicCost(2, 8),
+                        6,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        register(context, TWO_HANDED, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        5,
+                        3,
+                        Enchantment.dynamicCost(1, 7),
+                        Enchantment.dynamicCost(4, 8),
+                        2,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.DAMAGE,
+                new MultiplyValue(LevelBasedValue.perLevel(1.2f, .2f)),
+                AttackerEmptyOffhandCondition::new
+        ));
+        //endregion
+        //region misc
+        register(context, COMPACTING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        5,
+                        1,
+                        Enchantment.constantCost(12),
+                        Enchantment.constantCost(20),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ));
+        register(context, EXPERIENCED, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(1, 10),
+                        Enchantment.dynamicCost(5, 10),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("experienced_enchantment"), ExtraAttributes.WISDOM, LevelBasedValue.perLevel(2), AttributeModifier.Operation.ADD_VALUE
+        )));
+        register(context, HEALTH_MENDING, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(30),
+                        Enchantment.constantCost(50),
+                        2,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()));
+        register(context, TELEKINESIS, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        1,
+                        1,
+                        Enchantment.constantCost(20),
+                        Enchantment.constantCost(30),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(ModEnchantmentEffectComponents.TELEKINESIS.get()));
+        //endregion
     }
 
     private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {

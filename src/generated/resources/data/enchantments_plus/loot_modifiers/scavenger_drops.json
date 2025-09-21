@@ -1,4 +1,12 @@
 {
   "type": "enchantments_plus:scavenger",
-  "conditions": []
+  "conditions": [
+    {
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "neoforge:loot_table_id",
+        "loot_table_id": "enchantments_plus:scavenger_drops"
+      }
+    }
+  ]
 }

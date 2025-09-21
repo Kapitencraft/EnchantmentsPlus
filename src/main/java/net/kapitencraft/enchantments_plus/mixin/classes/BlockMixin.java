@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.mixin.classes;
 
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
+import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -19,7 +19,7 @@ public abstract class BlockMixin {
 
     @Redirect(method = "playerWillDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;spawnDestroyParticles(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"))
     private void suppressHarvestClientEffects(Block instance, Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState) {
-        if (pPlayer.getMainHandItem().getEnchantmentLevel(ModEnchantments.SILENT_HARVEST.get()) > 0) return;
+        if (EnchantmentHelper.has(pPlayer.getMainHandItem(), ModEnchantmentEffectComponents.SILENT_HARVEST.get())) return;
         spawnDestroyParticles(pLevel, pPlayer, pPos, pState);
     }
 }

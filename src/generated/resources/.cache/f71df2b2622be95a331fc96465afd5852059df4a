@@ -1,0 +1,5 @@
+// 1.21.1	2025-09-12T23:43:53.0255433	Tags for minecraft:item mod id enchantments_plus
+182988082cc27a257150bd96b19b8fd145e12f54 data/enchantments_plus/tags/item/all_weapons_enchantable.json
+f36065130af20e40c235084df4ad5cc27c659d75 data/enchantments_plus/tags/item/farming_enchantable.json
+c3065bd709f0177e9c42b7c00553cb3519e51203 data/enchantments_plus/tags/item/movement_armor_enchantable.json
+1f682ba07abf1279ecfe5260e0283610c2c1718f data/enchantments_plus/tags/item/shield_enchantable.json

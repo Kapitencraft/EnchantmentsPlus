@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FragileBasaltBlock extends FrostedIceBlock {
     public FragileBasaltBlock() {
-        super(Properties.copy(Blocks.BASALT).randomTicks());
+        super(Properties.ofFullCopy(Blocks.BASALT).randomTicks());
     }
 
     @Override

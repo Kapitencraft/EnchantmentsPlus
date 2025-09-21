@@ -1,0 +1,38 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchantments_plus.two_handed"
+  },
+  "effects": {
+    "minecraft:damage": [
+      {
+        "effect": {
+          "type": "minecraft:multiply",
+          "factor": {
+            "type": "minecraft:linear",
+            "base": 1.2,
+            "per_level_above_first": 0.2
+          }
+        },
+        "requirements": {
+          "condition": "enchantments_plus:offhand_empty",
+          "empty_offhand": {}
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 4,
+    "per_level_above_first": 8
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 7
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#enchantments_plus:all_weapons_enchantable",
+  "weight": 5
+}

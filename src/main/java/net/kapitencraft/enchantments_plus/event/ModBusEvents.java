@@ -1,10 +1,10 @@
 package net.kapitencraft.enchantments_plus.event;
 
 import net.kapitencraft.kap_lib.event.custom.RegisterUpdateCheckersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class ModBusEvents {
 
     @SubscribeEvent

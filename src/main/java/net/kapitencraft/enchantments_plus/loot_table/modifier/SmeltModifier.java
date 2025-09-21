@@ -3,14 +3,16 @@ package net.kapitencraft.enchantments_plus.loot_table.modifier;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.kapitencraft.kap_lib.helpers.LootTableHelper;
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.item.loot_table.IConditional;
 import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -29,7 +31,7 @@ public class SmeltModifier extends ModLootModifier implements IConditional {
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LivingEntity source = LootTableHelper.getLivingSource(context);
-        if (source != null && source.getMainHandItem().getEnchantmentLevel(ModEnchantments.SMELTING_TOUCH) > 0) {
+        if (source != null && source.getMainHandItem().getEnchantmentLevel(source.registryAccess().holderOrThrow(ModEnchantments.SMELTING_TOUCH)) > 0) {
             context.getLevel().getProfiler().push("smelt modifier");
             this.context = context;
             generatedLoot = new ObjectArrayList<>(generatedLoot.stream().map(this::run).toList());
@@ -46,9 +48,9 @@ public class SmeltModifier extends ModLootModifier implements IConditional {
 
     private ItemStack run(ItemStack unSmelt) {
         if (!unSmelt.isEmpty()) {
-            Optional<SmeltingRecipe> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(unSmelt), context.getLevel());
+            Optional<RecipeHolder<SmeltingRecipe>> optional = context.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(unSmelt), context.getLevel());
             if (optional.isPresent()) {
-                ItemStack itemstack = optional.get().getResultItem(context.getLevel().registryAccess());
+                ItemStack itemstack = optional.get().value().getResultItem(context.getLevel().registryAccess());
                 if (!itemstack.isEmpty()) {
                     ItemStack itemstack1 = itemstack.copy();
                     itemstack1.setCount(unSmelt.getCount() * itemstack.getCount()); //Forge: Support smelting returning multiple

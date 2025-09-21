@@ -1,6 +1,7 @@
 package net.kapitencraft.enchantments_plus.enchantments.components;
 
 import com.mojang.serialization.MapCodec;
+import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEntityEffects;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +24,6 @@ public class ProtectiveCover implements EnchantmentEntityEffect {
 
     @Override
     public MapCodec<? extends EnchantmentEntityEffect> codec() {
-        return null;
+        return ModEnchantmentEntityEffects.PROTECTIVE_COVER.get();
     }
 }

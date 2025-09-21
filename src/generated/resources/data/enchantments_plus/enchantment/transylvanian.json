@@ -1,0 +1,29 @@
+{
+  "anvil_cost": 6,
+  "description": {
+    "translate": "enchantment.enchantments_plus.transylvanian"
+  },
+  "effects": {
+    "minecraft:tick": [
+      {
+        "effect": {
+          "type": "enchantments_plus:transylvanian"
+        }
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 6,
+    "per_level_above_first": 10
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#minecraft:enchantable/armor",
+  "weight": 1
+}

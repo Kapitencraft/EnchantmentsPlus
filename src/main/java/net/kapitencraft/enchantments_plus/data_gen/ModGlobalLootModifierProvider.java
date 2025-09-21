@@ -6,7 +6,9 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.neoforged.neoforge.common.conditions.NotCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
@@ -43,7 +45,9 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         ));
         this.add("compact", new CompactModifier(new LootItemCondition[0]));
         this.add("replenish", new ReplenishModifier(new LootItemCondition[0]));
-        this.add("scavenger_drops", new ScavengerModifier(new LootItemCondition[0]));
+        this.add("scavenger_drops", new ScavengerModifier(new LootItemCondition[]{
+                new InvertedLootItemCondition(LootTableIdCondition.builder(EnchantmentsPlusMod.SCAVENGER_DROPS.location()).build())
+        }));
         this.add("smelt", new SmeltModifier(new LootItemCondition[0]));
         this.add("telekinesis", new TelekinesisModifier(new LootItemCondition[0]));
     }

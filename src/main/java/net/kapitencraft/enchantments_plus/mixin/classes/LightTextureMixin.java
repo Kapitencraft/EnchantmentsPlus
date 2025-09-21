@@ -1,21 +1,12 @@
 package net.kapitencraft.enchantments_plus.mixin.classes;
 
-import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
-import net.kapitencraft.kap_lib.helpers.MiscHelper;
+import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.core.Holder;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -26,14 +17,18 @@ public class LightTextureMixin {
 
     @Redirect(method = "calculateDarknessScale", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F"))
     private float reduceDarkness(float a, float b, LivingEntity pLiving) {
-        int enlightenmentLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.ENLIGHTENMENT.get(), pLiving);
+        int enlightenmentLevel = getEnlightenmentLevel(pLiving);
         return Math.max(a, b - (enlightenmentLevel * .2f));
     }
 
-    @SuppressWarnings("DataFlowIssue")
+    @Unique
+    private static int getEnlightenmentLevel(LivingEntity living) {
+        return EnchantmentHelper.getEnchantmentLevel(living.registryAccess().holderOrThrow(ModEnchantments.ENLIGHTENMENT), living);
+    }
+
     @ModifyVariable(method = "updateLightTexture", at = @At("LOAD"), ordinal = 7)
     private float increaseNightVision(float value) {
-        int enlightenmentLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.ENLIGHTENMENT.get(), this.minecraft.player);
+        int enlightenmentLevel = getEnlightenmentLevel(this.minecraft.player);
         return value + enlightenmentLevel * .2f;
     }
 }

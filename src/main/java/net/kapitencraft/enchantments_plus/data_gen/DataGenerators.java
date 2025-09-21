@@ -11,7 +11,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = EnchantmentsPlusMod.MOD_ID)
+@EventBusSubscriber(modid = EnchantmentsPlusMod.MOD_ID)
 public class DataGenerators {
 
     @SubscribeEvent
@@ -21,10 +21,11 @@ public class DataGenerators {
         ExistingFileHelper helper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> registries = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new ModRegistryDataGen(output, registries));
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(output));
+        registries = generator.addProvider(event.includeServer(), new ModRegistryDataGen(output, registries)).getRegistryProvider();
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, helper));
         generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(output, registries));
         generator.addProvider(event.includeServer(), new ModEnchantmentTagsProvider(output, registries, helper));
+        generator.addProvider(event.includeServer(), new ModItemTagsProvider(output, registries, helper));
+        generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(output, registries, helper));
     }
 }

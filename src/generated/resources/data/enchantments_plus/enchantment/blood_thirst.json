@@ -1,0 +1,44 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchantments_plus.blood_thirst"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "attacker",
+        "effect": {
+          "type": "enchantments_plus:apply_timed_modifier",
+          "amount": {
+            "type": "minecraft:linear",
+            "base": 0.01,
+            "per_level_above_first": 0.01
+          },
+          "attribute": "minecraft:generic.attack_damage",
+          "duration": {
+            "type": "minecraft:linear",
+            "base": 40.0,
+            "per_level_above_first": 40.0
+          },
+          "location": "enchantments_plus:blood_thirst",
+          "operation": "add_multiplied_base"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 5,
+    "per_level_above_first": 10
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/weapon",
+  "weight": 1
+}

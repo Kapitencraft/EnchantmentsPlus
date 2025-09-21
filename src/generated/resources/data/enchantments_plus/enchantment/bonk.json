@@ -1,0 +1,43 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchantments_plus.bonk"
+  },
+  "effects": {
+    "minecraft:damage_immunity": [
+      {
+        "effect": {},
+        "requirements": {
+          "condition": "kap_lib:cooldown_inactive",
+          "cooldown": "enchantments_plus:bonk"
+        }
+      }
+    ],
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "enchantments_plus:activate_cooldown",
+          "cooldown": "enchantments_plus:bonk",
+          "reduceWithTime": true
+        },
+        "enchanted": "victim"
+      }
+    ]
+  },
+  "exclusive_set": "#kap_lib:ultimate",
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "armor"
+  ],
+  "supported_items": "#minecraft:enchantable/armor",
+  "weight": 1
+}

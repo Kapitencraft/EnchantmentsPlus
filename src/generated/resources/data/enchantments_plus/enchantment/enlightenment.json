@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 3,
+  "description": {
+    "translate": "enchantment.enchantments_plus.enlightenment"
+  },
+  "effects": {
+    "enchantments_plus:enlightenment": {}
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 12
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 8,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "head"
+  ],
+  "supported_items": "#minecraft:enchantable/head_armor",
+  "weight": 1
+}

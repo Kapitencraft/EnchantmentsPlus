@@ -1,0 +1,32 @@
+{
+  "anvil_cost": 4,
+  "description": {
+    "translate": "enchantment.enchantments_plus.inferno"
+  },
+  "effects": {
+    "kap_lib:count": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "enchantments_plus:inferno"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "exclusive_set": "#kap_lib:ultimate",
+  "max_cost": {
+    "base": 12,
+    "per_level_above_first": 15
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#enchantments_plus:all_weapons_enchantable",
+  "weight": 1
+}

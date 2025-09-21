@@ -1,0 +1,35 @@
+{
+  "anvil_cost": 5,
+  "description": {
+    "translate": "enchantment.enchantments_plus.firm_stand"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.04,
+          "per_level_above_first": 0.04
+        },
+        "attribute": "minecraft:generic.knockback_resistance",
+        "id": "enchantments_plus:firm_stand_enchantment",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 15
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 8,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "feet",
+    "legs"
+  ],
+  "supported_items": "#enchantments_plus:movement_armor_enchantable",
+  "weight": 10
+}
