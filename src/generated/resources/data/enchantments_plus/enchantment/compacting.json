@@ -3,9 +3,6 @@
   "description": {
     "translate": "enchantment.enchantments_plus.compacting"
   },
-  "effects": {
-    "enchantments_plus:compacting": {}
-  },
   "max_cost": {
     "base": 20,
     "per_level_above_first": 0
