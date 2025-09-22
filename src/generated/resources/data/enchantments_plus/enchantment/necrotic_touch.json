@@ -11,7 +11,7 @@
           "base": 1.0,
           "per_level_above_first": 1.0
         },
-        "attribute": "kap_lib:generic.live_steal",
+        "attribute": "kap_lib:generic.life_steal",
         "id": "enchantments_plus:necrotic_touch_enchantment",
         "operation": "add_value"
       }

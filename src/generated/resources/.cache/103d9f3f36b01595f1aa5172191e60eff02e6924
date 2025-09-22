@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-21T14:40:01.3020849	Registries
+// 1.21.1	2025-09-22T18:30:58.3928032	Registries
 3fc7f6e350b074892c8344083340a54faf8c1866 data/enchantments_plus/damage_type/chain_lightning.json
 86148d6f3478b9f54b7cf8cf1353a11d6912e75c data/enchantments_plus/damage_type/inferno.json
 91932c3bfa18b95799c6e90d522298d4ad16e0ac data/enchantments_plus/enchantment/aim.json
@@ -41,7 +41,7 @@ f2702ba976e2264fd262c85dc05ae47585281edf data/enchantments_plus/enchantment/ligh
 cc269ded946d558befec50255736b2f41c682fbe data/enchantments_plus/enchantment/lumberjack.json
 4f5ce0c797f07e7b4e19f7c1335db09f6fb0a2a6 data/enchantments_plus/enchantment/magic_protection.json
 80b6d209609a242fd97eb2963375937c02f47424 data/enchantments_plus/enchantment/magmatic.json
-966e76d0e73b5f2941050ebc39756f1ae7131c20 data/enchantments_plus/enchantment/necrotic_touch.json
+7b4edae4f2cb96eff82a49662635a2ff51f38d6d data/enchantments_plus/enchantment/necrotic_touch.json
 793e84f8244118275aa8b6d4354ad3f8e7a6e753 data/enchantments_plus/enchantment/overload.json
 64700ab891d68bf84e6754797172c5882bb24437 data/enchantments_plus/enchantment/poisonous_blade.json
 a8068f04d4e4c858bec9d788c24c2837fc024589 data/enchantments_plus/enchantment/precision.json

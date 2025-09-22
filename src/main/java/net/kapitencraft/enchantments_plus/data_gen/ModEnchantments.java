@@ -669,7 +669,7 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.MAINHAND
                 )
         ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
-                EnchantmentsPlusMod.res("necrotic_touch_enchantment"), ExtraAttributes.LIVE_STEAL, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
+                EnchantmentsPlusMod.res("necrotic_touch_enchantment"), ExtraAttributes.LIFE_STEAL, LevelBasedValue.perLevel(1), AttributeModifier.Operation.ADD_VALUE
         )));
         register(context, POISONOUS_BLADE, Enchantment.enchantment(
                 Enchantment.definition(
