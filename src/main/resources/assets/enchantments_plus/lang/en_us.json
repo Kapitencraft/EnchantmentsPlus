@@ -107,8 +107,6 @@
   "enchantment.enchantments_plus.resilience.desc": "reduces stun effect duration by %1$s",
   "enchantment.enchantments_plus.scavenger": "Scavenger",
   "enchantment.enchantments_plus.scavenger.desc": "grants a %1$s chance to drop a emerald from mob kills",
-  "enchantment.enchantments_plus.silent_harvest": "Silent Harvest",
-  "enchantment.enchantments_plus.silent_harvest.desc": "prevents block destruction sound and particles",
   "enchantment.enchantments_plus.smelting_touch": "Smelting Touch",
   "enchantment.enchantments_plus.smelting_touch.desc": "smelts drops instantly",
   "enchantment.enchantments_plus.snipe": "Snipe",

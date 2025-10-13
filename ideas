@@ -13,6 +13,8 @@ shard breaker (tools)
     gain chance for double drops from ice & glass
 edge precision (tools)
     tools mine more effectively when aimed at the center of a block
+silent harvest (tools, weapons)
+    prevent break sounds
 momentum shift (leggings)
     gain speed after being hit by projectile
 earthen shard (boots)

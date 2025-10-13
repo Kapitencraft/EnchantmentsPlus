@@ -9,7 +9,6 @@
   },
   "mixins": [
     "AbstractArrowMixin",
-    "BlockMixin",
     "BowItemMixin",
     "CrossbowItemMixin",
     "EntityMixin",

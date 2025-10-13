@@ -9,7 +9,7 @@
   "fml_version": "${forge_version}",
   "dependencies": [
     {
-      "version_name": "v${kap_lib_version}-mc${minecraft_version}-FML${forge_version}",
+      "file_name": "kap_lib-v${kap_lib_version}-mc${minecraft_version}-FML${forge_version}",
       "project_id": "IrKTRsiH",
       "dependency_type": "required"
     }

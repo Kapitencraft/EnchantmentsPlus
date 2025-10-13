@@ -6,7 +6,8 @@ import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.client.particle.animation.core.ParticleAnimation;
 import net.kapitencraft.kap_lib.client.particle.animation.finalizers.EmptyFinalizer;
 import net.kapitencraft.kap_lib.client.particle.animation.spawners.RingSpawner;
-import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminatorTrigger;
+import net.kapitencraft.kap_lib.client.particle.animation.terminators.EitherTerminator;
+import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminator;
 import net.kapitencraft.kap_lib.client.particle.animation.terminators.TimedTerminator;
 import net.kapitencraft.kap_lib.enchantments.abstracts.CountEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
@@ -49,8 +50,12 @@ public class InfernoEnchantment extends Enchantment implements CountEnchantment,
                                 .setParticle(ParticleTypes.DRIPPING_LAVA)
                                 .heightPerTick(.02f)
                                 .rotPerTick(3)
-                        ).terminatedWhen(TimedTerminator.seconds(5))
-                        .terminatedWhen(EntityRemovedTerminatorTrigger.create(attacked))
+                        ).terminatedWhen(new EitherTerminator.Builder()
+                                .addTerminators(
+                                        TimedTerminator.seconds(5),
+                                        EntityRemovedTerminator.builder(attacked)
+                                )
+                        )
                         .finalizes(EmptyFinalizer.builder())
                         .sendToAllPlayers(sL);
 
