@@ -1,0 +1,41 @@
+{
+  "anvil_cost": 8,
+  "description": {
+    "translate": "enchantment.enchantments_plus.fatal_tempo"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "attacker",
+        "effect": {
+          "type": "enchantments_plus:apply_timed_modifier",
+          "amount": {
+            "type": "minecraft:linear",
+            "base": 10.0,
+            "per_level_above_first": 10.0
+          },
+          "attribute": "kap_lib:generic.ferocity",
+          "duration": 60.0,
+          "location": "enchantments_plus:fatal_tempo_enchantment",
+          "operation": "add_value"
+        },
+        "enchanted": "attacker"
+      }
+    ]
+  },
+  "exclusive_set": "#kap_lib:ultimate",
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 15
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 10
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#enchantments_plus:all_weapons_enchantable",
+  "weight": 1
+}

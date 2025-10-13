@@ -16,6 +16,7 @@
     "enchantments_plus:blood_thirst",
     "enchantments_plus:ender_slayer",
     "enchantments_plus:justice",
+    "enchantments_plus:first_strike",
     "enchantments_plus:triple_strike",
     "enchantments_plus:armor_shredding",
     "enchantments_plus:elvish_mastery",
@@ -27,6 +28,8 @@
     "enchantments_plus:two_handed",
     "enchantments_plus:compacting",
     "enchantments_plus:experienced",
-    "enchantments_plus:telekinesis"
+    "enchantments_plus:telekinesis",
+    "enchantments_plus:execute",
+    "enchantments_plus:prosecute"
   ]
 }

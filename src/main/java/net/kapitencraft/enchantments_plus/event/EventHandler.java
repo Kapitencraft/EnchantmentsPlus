@@ -116,9 +116,17 @@ public class EventHandler {
         DamageSource source = event.getSource();
         LivingEntity attacked = event.getEntity();
         if (source.getEntity() instanceof LivingEntity attacker) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.EXECUTE, integer -> {
+                float healthPercent = attacked.getHealth() / attacked.getMaxHealth();
+                event.setNewDamage(event.getNewDamage() * (1 + (1 - healthPercent) * integer * .1f));
+            });
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.PROSECUTE, integer -> {
+                float healthPercent = attacked.getHealth() / attacked.getMaxHealth();
+                event.setNewDamage(event.getNewDamage() * (1 + healthPercent * integer * .1f));
+            });
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.GIANT_KILLER, i -> {
-                double moreHpPercent = attacked.getHealth() / attacker.getHealth();
-                event.setNewDamage((float) (event.getNewDamage() * (1 + Math.min(moreHpPercent * i * 0.01, 0.5))));
+                float moreHpPercent = attacked.getHealth() / attacker.getHealth();
+                event.setNewDamage((float) (event.getNewDamage() * (1 + Math.min(moreHpPercent * i * 0.01f, 0.5))));
             });
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.COMBAT_KNOWLEDGE, level -> {
                 if (source.getDirectEntity() == attacker && MathHelper.chance(.001, attacker)) {

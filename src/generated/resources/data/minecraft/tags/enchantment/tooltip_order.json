@@ -1,11 +1,5 @@
 {
   "values": [
-    "enchantments_plus:bonk",
-    "enchantments_plus:gluttonous",
-    "enchantments_plus:heavy_plating",
-    "enchantments_plus:inferno",
-    "enchantments_plus:chain_lightning",
-    "enchantments_plus:wind_blessing",
-    "enchantments_plus:combat_knowledge"
+    "#kap_lib:ultimate"
   ]
 }

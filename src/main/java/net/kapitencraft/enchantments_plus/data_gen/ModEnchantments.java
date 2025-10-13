@@ -47,6 +47,7 @@ import net.neoforged.neoforge.common.Tags;
 import java.util.Optional;
 
 public interface ModEnchantments {
+    //region armor
     ResourceKey<Enchantment> BASALT_WALKER = key("basalt_walker");
     ResourceKey<Enchantment> BLOCK_BREATHER = key("block_breather");
     ResourceKey<Enchantment> BONK = key("bonk");
@@ -70,6 +71,8 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> TRANSYLVANIAN = key("transylvanian");
     ResourceKey<Enchantment> TRUE_PROTECTION = key("true_protection");
     ResourceKey<Enchantment> VOLT_SURGE = key("volt_surge");
+    //endregion
+    //region tool
     ResourceKey<Enchantment> CHROMATIC = key("chromatic");
     ResourceKey<Enchantment> DELICATE = key("delicate");
     ResourceKey<Enchantment> FLASH = key("flash");
@@ -79,6 +82,8 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> SILENT_HARVEST = key("silent_harvest");
     ResourceKey<Enchantment> SMELTING_TOUCH = key("smelting_touch");
     ResourceKey<Enchantment> VEIN_MINER = key("vein_miner");
+    //endregion
+    //region melee
     ResourceKey<Enchantment> BACK_STAB = key("back_stab");
     ResourceKey<Enchantment> BLOOD_THIRST = key("blood_thirst");
     ResourceKey<Enchantment> CHILLING = key("chilling");
@@ -89,10 +94,15 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> LIGHTNING_LORD = key("lightning_lord");
     ResourceKey<Enchantment> NECROTIC_TOUCH = key("necrotic_touch");
     ResourceKey<Enchantment> POISONOUS_BLADE = key("poisonous_blade");
+    ResourceKey<Enchantment> FIRST_STRIKE = key("first_strike");
     ResourceKey<Enchantment> TRIPLE_STRIKE = key("triple_strike");
     ResourceKey<Enchantment> VENOMOUS = key("venomous");
     ResourceKey<Enchantment> ARMOR_SHREDDING = key("armor_shredding");
     ResourceKey<Enchantment> CHAIN_LIGHTNING = key("chain_lightning");
+    ResourceKey<Enchantment> EXECUTE = key("execute");
+    ResourceKey<Enchantment> PROSECUTE = key("prosecute");
+    //endregion
+    //region ranged
     ResourceKey<Enchantment> AIM = key("aim");
     ResourceKey<Enchantment> ELVISH_MASTERY = key("elvish_mastery");
     ResourceKey<Enchantment> FAST_ARROWS = key("fast_arrows");
@@ -101,15 +111,21 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> PRECISION = key("precision");
     ResourceKey<Enchantment> SNIPE = key("snipe");
     ResourceKey<Enchantment> WIND_BLESSING = key("wind_blessing");
+    //endregion
+    //region weapon
     ResourceKey<Enchantment> CRITICAl = key("critical");
     ResourceKey<Enchantment> DIVINE_GIFT = key("divine_gift");
     ResourceKey<Enchantment> INFERNO = key("inferno");
     ResourceKey<Enchantment> SCAVENGER = key("scavenger");
     ResourceKey<Enchantment> TWO_HANDED = key("two_handed");
+    ResourceKey<Enchantment> FATAL_TEMPO = key("fatal_tempo");
+    //endregion
+    //region util
     ResourceKey<Enchantment> COMPACTING = key("compacting");
     ResourceKey<Enchantment> EXPERIENCED = key("experienced");
     ResourceKey<Enchantment> HEALTH_MENDING = key("health_mending");
     ResourceKey<Enchantment> TELEKINESIS = key("telekinesis");
+    //endregion
 
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res(name));
@@ -539,7 +555,7 @@ public interface ModEnchantments {
                         8,
                         EquipmentSlotGroup.MAINHAND
                 )
-        ));
+        ).exclusiveWith(enchantments.getOrThrow(ModTags.Enchantments.MINING_DROPS_EXCLUSIVE)));
         register(context, VEIN_MINER, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
@@ -688,6 +704,17 @@ public interface ModEnchantments {
                 LevelBasedValue.constant(1),
                 LevelBasedValue.constant(1)
         )));
+        register(context, FIRST_STRIKE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        5,
+                        4,
+                        Enchantment.dynamicCost(5, 20),
+                        Enchantment.dynamicCost(10, 40),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).exclusiveWith(enchantments.getOrThrow(ModTags.Enchantments.STRIKE_EXCLUSIVE)).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new FirstStrike()));
         register(context, TRIPLE_STRIKE, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
@@ -698,7 +725,7 @@ public interface ModEnchantments {
                         5,
                         EquipmentSlotGroup.MAINHAND
                 )
-        ).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new TripleStrike()));
+        ).exclusiveWith(enchantments.getOrThrow(ModTags.Enchantments.STRIKE_EXCLUSIVE)).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new TripleStrike()));
         register(context, VENOMOUS, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
@@ -735,6 +762,28 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.MAINHAND
                 )
         ));
+        register(context, EXECUTE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(4, 10),
+                        Enchantment.dynamicCost(5, 11),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).exclusiveWith(enchantments.getOrThrow(ModTags.Enchantments.EXECUTION_EXCLUSIVE)));
+        register(context, PROSECUTE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                        2,
+                        5,
+                        Enchantment.dynamicCost(4, 10),
+                        Enchantment.dynamicCost(5, 11),
+                        4,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).exclusiveWith(enchantments.getOrThrow(ModTags.Enchantments.EXECUTION_EXCLUSIVE)));
         //endregion
         //region weapon/ranged
         register(context, AIM, Enchantment.enchantment(
@@ -905,6 +954,19 @@ public interface ModEnchantments {
                 new MultiplyValue(LevelBasedValue.perLevel(1.2f, .2f)),
                 AttackerEmptyOffhandCondition::new
         ));
+        register(context, FATAL_TEMPO, EnchantmentHelperExtras.ultimate(enchantments,
+                Enchantment.definition(
+                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        1,
+                        5,
+                        Enchantment.dynamicCost(10, 10),
+                        Enchantment.dynamicCost(10, 15),
+                        8,
+                        EquipmentSlotGroup.MAINHAND
+                )
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.ATTACKER,
+                new ApplyTimedModifier(EnchantmentsPlusMod.res("fatal_tempo_enchantment"), LevelBasedValue.constant(60), ExtraAttributes.FEROCITY, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE))
+        );
         //endregion
         //region misc
         register(context, COMPACTING, Enchantment.enchantment(

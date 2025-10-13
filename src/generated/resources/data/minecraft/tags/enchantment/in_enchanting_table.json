@@ -12,6 +12,7 @@
     "enchantments_plus:ender_slayer",
     "enchantments_plus:justice",
     "enchantments_plus:armor_shredding",
+    "enchantments_plus:first_strike",
     "enchantments_plus:triple_strike",
     "enchantments_plus:elvish_mastery",
     "enchantments_plus:fast_arrows",
@@ -21,6 +22,8 @@
     "enchantments_plus:scavenger",
     "enchantments_plus:two_handed",
     "enchantments_plus:experienced",
-    "enchantments_plus:compacting"
+    "enchantments_plus:compacting",
+    "enchantments_plus:execute",
+    "enchantments_plus:prosecute"
   ]
 }

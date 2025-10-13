@@ -1,0 +1,5 @@
+added first strike enchantment increasing damage by 25% / level on the first hit
+added fatal tempo enchantment giving 10 ferocity / level and hit for 3 seconds
+fixed smelting touch being compatible with silk touch
+added execute and prosecute enchantments increasing damage for every % of hp the target is missing / has
+updated to KapLib 1.29.0

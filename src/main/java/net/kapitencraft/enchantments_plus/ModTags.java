@@ -11,6 +11,8 @@ public class ModTags {
 
     public interface Enchantments {
         TagKey<Enchantment> MINING_DROPS_EXCLUSIVE = TagKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res("exclusive_set/mining_drops"));
+        TagKey<Enchantment> STRIKE_EXCLUSIVE = TagKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res("strike_exclusive"));
+        TagKey<Enchantment> EXECUTION_EXCLUSIVE = TagKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res("execution_exclusive"));
     }
 
     public interface Items {

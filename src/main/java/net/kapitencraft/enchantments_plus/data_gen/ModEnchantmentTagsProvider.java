@@ -19,6 +19,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
         super(output, lookupProvider, EnchantmentsPlusMod.MOD_ID, existingFileHelper);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(EnchantmentTags.TREASURE).add(
@@ -55,6 +56,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.ENDER_SLAYER,
                 ModEnchantments.JUSTICE,
                 ModEnchantments.ARMOR_SHREDDING,
+                ModEnchantments.FIRST_STRIKE,
                 ModEnchantments.TRIPLE_STRIKE,
                 ModEnchantments.ELVISH_MASTERY,
                 ModEnchantments.FAST_ARROWS,
@@ -64,19 +66,18 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.SCAVENGER,
                 ModEnchantments.TWO_HANDED,
                 ModEnchantments.EXPERIENCED,
-                ModEnchantments.COMPACTING
+                ModEnchantments.COMPACTING,
+                ModEnchantments.EXECUTE,
+                ModEnchantments.PROSECUTE
         );
         tag(EnchantmentTags.TRADEABLE).add(
                 ModEnchantments.BLOCK_BREATHER,
-                ModEnchantments.BONK,
                 ModEnchantments.ENDER_FRIEND,
                 ModEnchantments.ENDURANCE,
                 ModEnchantments.ENLIGHTENMENT,
                 ModEnchantments.EXTINGUISH,
                 ModEnchantments.FIRM_STAND,
-                ModEnchantments.GLUTTONOUS,
                 ModEnchantments.GROWTH,
-                ModEnchantments.HEAVY_PLATING,
                 ModEnchantments.INSOMNIA,
                 ModEnchantments.KANGAROO,
                 ModEnchantments.LONG_LEGS,
@@ -103,6 +104,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.LIGHTNING_LORD,
                 ModEnchantments.NECROTIC_TOUCH,
                 ModEnchantments.POISONOUS_BLADE,
+                ModEnchantments.FIRST_STRIKE,
                 ModEnchantments.TRIPLE_STRIKE,
                 ModEnchantments.ARMOR_SHREDDING,
                 ModEnchantments.CHAIN_LIGHTNING,
@@ -141,6 +143,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.GIANT_KILLER,
                 ModEnchantments.LIGHTNING_LORD,
                 ModEnchantments.NECROTIC_TOUCH,
+                ModEnchantments.FIRST_STRIKE,
                 ModEnchantments.TRIPLE_STRIKE,
                 ModEnchantments.VENOMOUS,
                 ModEnchantments.ARMOR_SHREDDING,
@@ -195,6 +198,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.LIGHTNING_LORD,
                 ModEnchantments.NECROTIC_TOUCH,
                 ModEnchantments.POISONOUS_BLADE,
+                ModEnchantments.FIRST_STRIKE,
                 ModEnchantments.TRIPLE_STRIKE,
                 ModEnchantments.VENOMOUS,
                 ModEnchantments.ARMOR_SHREDDING,
@@ -215,7 +219,9 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.COMPACTING,
                 ModEnchantments.EXPERIENCED,
                 ModEnchantments.HEALTH_MENDING,
-                ModEnchantments.TELEKINESIS
+                ModEnchantments.TELEKINESIS,
+                ModEnchantments.EXECUTE,
+                ModEnchantments.PROSECUTE
         );
         tag(EnchantmentTags.ON_TRADED_EQUIPMENT).add(
                 ModEnchantments.BLOCK_BREATHER,
@@ -234,6 +240,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.BLOOD_THIRST,
                 ModEnchantments.ENDER_SLAYER,
                 ModEnchantments.JUSTICE,
+                ModEnchantments.FIRST_STRIKE,
                 ModEnchantments.TRIPLE_STRIKE,
                 ModEnchantments.ARMOR_SHREDDING,
                 ModEnchantments.ELVISH_MASTERY,
@@ -245,16 +252,12 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.TWO_HANDED,
                 ModEnchantments.COMPACTING,
                 ModEnchantments.EXPERIENCED,
-                ModEnchantments.TELEKINESIS
+                ModEnchantments.TELEKINESIS,
+                ModEnchantments.EXECUTE,
+                ModEnchantments.PROSECUTE
         );
-        tag(EnchantmentTags.TOOLTIP_ORDER).add(
-                ModEnchantments.BONK,
-                ModEnchantments.GLUTTONOUS,
-                ModEnchantments.HEAVY_PLATING,
-                ModEnchantments.INFERNO,
-                ModEnchantments.CHAIN_LIGHTNING,
-                ModEnchantments.WIND_BLESSING,
-                ModEnchantments.COMBAT_KNOWLEDGE
+        tag(EnchantmentTags.TOOLTIP_ORDER).addTags(
+                ExtraTags.Enchantments.ULTIMATE
         );
         tag(ExtraTags.Enchantments.ULTIMATE).add(
                 ModEnchantments.BONK,
@@ -263,7 +266,8 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.INFERNO,
                 ModEnchantments.CHAIN_LIGHTNING,
                 ModEnchantments.WIND_BLESSING,
-                ModEnchantments.COMBAT_KNOWLEDGE
+                ModEnchantments.COMBAT_KNOWLEDGE,
+                ModEnchantments.FATAL_TEMPO
         );
         tag(EnchantmentTags.CURSE).add(
                 ModEnchantments.INSOMNIA,
@@ -273,6 +277,14 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
         tag(ModTags.Enchantments.MINING_DROPS_EXCLUSIVE).add(
                 Enchantments.SILK_TOUCH,
                 ModEnchantments.SMELTING_TOUCH
+        );
+        tag(ModTags.Enchantments.STRIKE_EXCLUSIVE).add(
+                ModEnchantments.FIRST_STRIKE,
+                ModEnchantments.TRIPLE_STRIKE
+        );
+        tag(ModTags.Enchantments.EXECUTION_EXCLUSIVE).add(
+                ModEnchantments.EXECUTE,
+                ModEnchantments.PROSECUTE
         );
     }
 }

@@ -1,14 +1,14 @@
 {
-  "anvil_cost": 5,
+  "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.enchantments_plus.triple_strike"
+    "translate": "enchantment.enchantments_plus.first_strike"
   },
   "effects": {
     "kap_lib:count": [
       {
         "affected": "victim",
         "effect": {
-          "type": "enchantments_plus:triple_strike"
+          "type": "enchantments_plus:first_strike"
         },
         "enchanted": "attacker"
       }

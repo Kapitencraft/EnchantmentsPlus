@@ -3,6 +3,7 @@
   "description": {
     "translate": "enchantment.enchantments_plus.smelting_touch"
   },
+  "exclusive_set": "#enchantments_plus:exclusive_set/mining_drops",
   "max_cost": {
     "base": 25,
     "per_level_above_first": 0

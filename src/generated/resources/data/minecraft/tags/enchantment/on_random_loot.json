@@ -42,6 +42,7 @@
     "enchantments_plus:lightning_lord",
     "enchantments_plus:necrotic_touch",
     "enchantments_plus:poisonous_blade",
+    "enchantments_plus:first_strike",
     "enchantments_plus:triple_strike",
     "enchantments_plus:venomous",
     "enchantments_plus:armor_shredding",
@@ -62,6 +63,8 @@
     "enchantments_plus:compacting",
     "enchantments_plus:experienced",
     "enchantments_plus:health_mending",
-    "enchantments_plus:telekinesis"
+    "enchantments_plus:telekinesis",
+    "enchantments_plus:execute",
+    "enchantments_plus:prosecute"
   ]
 }

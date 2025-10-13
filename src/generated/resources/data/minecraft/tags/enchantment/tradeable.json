@@ -1,15 +1,12 @@
 {
   "values": [
     "enchantments_plus:block_breather",
-    "enchantments_plus:bonk",
     "enchantments_plus:ender_friend",
     "enchantments_plus:endurance",
     "enchantments_plus:enlightenment",
     "enchantments_plus:extinguish",
     "enchantments_plus:firm_stand",
-    "enchantments_plus:gluttonous",
     "enchantments_plus:growth",
-    "enchantments_plus:heavy_plating",
     "enchantments_plus:insomnia",
     "enchantments_plus:kangaroo",
     "enchantments_plus:long_legs",
@@ -36,6 +33,7 @@
     "enchantments_plus:lightning_lord",
     "enchantments_plus:necrotic_touch",
     "enchantments_plus:poisonous_blade",
+    "enchantments_plus:first_strike",
     "enchantments_plus:triple_strike",
     "enchantments_plus:armor_shredding",
     "enchantments_plus:chain_lightning",
