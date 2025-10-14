@@ -6,8 +6,7 @@ import net.kapitencraft.enchantments_plus.registry.ModEnchantments;
 import net.kapitencraft.kap_lib.client.particle.animation.core.ParticleAnimation;
 import net.kapitencraft.kap_lib.client.particle.animation.finalizers.EmptyFinalizer;
 import net.kapitencraft.kap_lib.client.particle.animation.spawners.RingSpawner;
-import net.kapitencraft.kap_lib.client.particle.animation.terminators.EitherTerminator;
-import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminator;
+import net.kapitencraft.kap_lib.client.particle.animation.terminators.EntityRemovedTerminatorTrigger;
 import net.kapitencraft.kap_lib.client.particle.animation.terminators.TimedTerminator;
 import net.kapitencraft.kap_lib.enchantments.abstracts.CountEnchantment;
 import net.kapitencraft.kap_lib.enchantments.abstracts.ExtraEnchantmentCategories;
@@ -16,7 +15,9 @@ import net.kapitencraft.kap_lib.helpers.MiscHelper;
 import net.kapitencraft.kap_lib.registry.ExtraMobEffects;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.fixes.EntityRidingToPassengersFix;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -50,12 +51,8 @@ public class InfernoEnchantment extends Enchantment implements CountEnchantment,
                                 .setParticle(ParticleTypes.DRIPPING_LAVA)
                                 .heightPerTick(.02f)
                                 .rotPerTick(3)
-                        ).terminatedWhen(new EitherTerminator.Builder()
-                                .addTerminators(
-                                        TimedTerminator.seconds(5),
-                                        EntityRemovedTerminator.builder(attacked)
-                                )
-                        )
+                        ).terminatedWhen(TimedTerminator.seconds(5))
+                        .terminatedWhen(EntityRemovedTerminatorTrigger.create(attacked))
                         .finalizes(EmptyFinalizer.builder())
                         .sendToAllPlayers(sL);
 

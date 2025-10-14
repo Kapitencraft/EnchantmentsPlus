@@ -22,6 +22,9 @@ public interface ModEnchantments {
     }
 
 
+    RegistryObject<Enchantment> EXECUTE = register("execute", ExecuteEnchantment::new);
+    RegistryObject<Enchantment> PROSECUTE = register("prosecute", ProsecuteEnchantment::new);
+    RegistryObject<Enchantment> FATAL_TEMPO = register("fatal_tempo", FatalTempoEnchantment::new);
     RegistryObject<Enchantment> FLASH = register("flash", FlashEnchantment::new);
     RegistryObject<Enchantment> BONK = register("bonk", BonkEnchantment::new);
     RegistryObject<Enchantment> EXPERIENCED = register("experienced", ExperiencedEnchantment::new);

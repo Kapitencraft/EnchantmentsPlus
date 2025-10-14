@@ -6,6 +6,7 @@ import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
 import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.helpers.MathHelper;
 import net.kapitencraft.kap_lib.helpers.MiscHelper;
+import net.kapitencraft.kap_lib.registry.ExtraAttributes;
 import net.kapitencraft.kap_lib.util.Reference;
 import net.kapitencraft.kap_lib.util.attribute.TimedModifier;
 import net.minecraft.core.BlockPos;
@@ -227,6 +228,20 @@ public class EventHandler {
     @SubscribeEvent
     public static void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
         if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.INSOMNIA.get(), event.getEntity()) > 0) event.setResult(Player.BedSleepingProblem.NOT_SAFE);
+    }
+
+    @SubscribeEvent
+    public void onLivingDamage(LivingDamageEvent event) {
+        DamageSource source = event.getSource();
+        if (!source.isIndirect() && source.getEntity() instanceof LivingEntity living) {
+            int lvl = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FATAL_TEMPO.get(), living);
+            if (lvl > 0) {
+                AttributeInstance attack = living.getAttribute(ExtraAttributes.FEROCITY.get());
+                if (attack != null) {
+                    attack.addPermanentModifier(new TimedModifier("Fatal Tempo", lvl / 10., AttributeModifier.Operation.MULTIPLY_BASE, lvl * 60));
+                }
+            }
+        }
     }
 
 }
