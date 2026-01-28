@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
 import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.kapitencraft.enchantments_plus.loot_table.LootTableHelper;
-import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
+import net.kapitencraft.kap_lib.loot.modifiers.ModLootModifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

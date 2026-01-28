@@ -2,10 +2,8 @@ package net.kapitencraft.enchantments_plus.loot_table.modifier;
 
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.kapitencraft.kap_lib.helpers.LootTableHelper;
-import net.kapitencraft.kap_lib.item.loot_table.IConditional;
-import net.kapitencraft.kap_lib.item.loot_table.LootContextReader;
-import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
+import net.kapitencraft.kap_lib.loot.IConditional;
+import net.kapitencraft.kap_lib.loot.modifiers.ModLootModifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,26 +15,25 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
 public class ReplenishModifier extends ModLootModifier implements IConditional {
-    public static final MapCodec<ReplenishModifier> CODEC = LootTableHelper.simpleCodec(ReplenishModifier::new);
+    public static final MapCodec<ReplenishModifier> CODEC = IConditional.simpleCodec(ReplenishModifier::new);
     public ReplenishModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        LootContextReader.simple(context, BlockState.class, LootContextParams.BLOCK_STATE).ifPresent(state -> {
+        BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+        if (state != null && state.is(BlockTags.CROPS)) {
             context.getLevel().getProfiler().push("replenish modifier");
-            if (state.is(BlockTags.CROPS)) {
-                Item item = state.getBlock().asItem();
-                for (ItemStack stack : generatedLoot) {
-                    if (stack.getItem() == item) {
-                        stack.shrink(1);
-                        break;
-                    }
+            Item item = state.getBlock().asItem();
+            for (ItemStack stack : generatedLoot) {
+                if (stack.getItem() == item) {
+                    stack.shrink(1);
+                    break;
                 }
             }
             context.getLevel().getProfiler().pop();
-        });
+        }
         return generatedLoot;
     }
 

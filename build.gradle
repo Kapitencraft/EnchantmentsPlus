@@ -11,7 +11,7 @@ base {
     archivesName = mod_id
 }
 
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+// Mojang ships Java 21 to end users in 1.21+, so your mod should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
@@ -90,9 +90,6 @@ repositories {
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
-    // flatDir {
-    //     dir 'libs'
-    // }
     exclusiveContent {
         forRepository {
             maven {
@@ -114,12 +111,46 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
+    //necessary KapLib modules: core, enchantment, particle, item, loot, cooldown, attribute, mob_effect
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}") {
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:core") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:attribute") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:cooldown") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:enchantment") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:item") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:loot") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:mob_effect") {
+        version {
+            prefer "${kap_lib_version}"
+        }
+    }
+    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:particle") {
         version {
             prefer "${kap_lib_version}"
         }

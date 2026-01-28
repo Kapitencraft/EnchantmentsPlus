@@ -3,17 +3,18 @@ package net.kapitencraft.enchantments_plus.loot_table.modifier;
 import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
-import net.kapitencraft.kap_lib.helpers.LootTableHelper;
-import net.kapitencraft.kap_lib.item.loot_table.IConditional;
-import net.kapitencraft.kap_lib.item.loot_table.modifiers.ModLootModifier;
+import net.kapitencraft.kap_lib.loot.IConditional;
+import net.kapitencraft.kap_lib.loot.modifiers.ModLootModifier;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 
 public class ChromaticModifier extends ModLootModifier implements IConditional {
-    public static final MapCodec<ChromaticModifier> CODEC = LootTableHelper.simpleCodec(ChromaticModifier::new);
+    public static final MapCodec<ChromaticModifier> CODEC = IConditional.simpleCodec(ChromaticModifier::new);
 
     public ChromaticModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -29,8 +30,8 @@ public class ChromaticModifier extends ModLootModifier implements IConditional {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> items, LootContext lootContext) {
-        LivingEntity living = LootTableHelper.getLivingSource(lootContext);
-        if (living != null) {
+        Entity entity = lootContext.getParamOrNull(LootContextParams.ATTACKING_ENTITY);
+        if (entity instanceof LivingEntity living) {
             int level = EnchantmentHelper.getEnchantmentLevel(living.registryAccess().holderOrThrow(ModEnchantments.CHROMATIC), living);
             if (level > 0) {
                 for (int i = 0; i < items.size(); i++) {

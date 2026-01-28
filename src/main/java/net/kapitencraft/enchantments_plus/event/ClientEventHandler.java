@@ -1,7 +1,7 @@
 package net.kapitencraft.enchantments_plus.event;
 
 import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
-import net.kapitencraft.kap_lib.helpers.EnchantmentHelperExtras;
+import net.kapitencraft.kap_lib.core.helpers.EnchantmentHelperExtras;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.neoforged.api.distmarker.Dist;

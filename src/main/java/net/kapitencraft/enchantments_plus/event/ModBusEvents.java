@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.event;
 
-import net.kapitencraft.kap_lib.event.custom.RegisterUpdateCheckersEvent;
+import net.kapitencraft.kap_lib.core.event.custom.RegisterUpdateCheckersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 

@@ -1,10 +1,9 @@
 package net.kapitencraft.enchantments_plus.enchantments.components;
 
 import com.mojang.serialization.MapCodec;
-import net.kapitencraft.kap_lib.enchantments.abstracts.EnchantmentBowEffect;
-import net.kapitencraft.kap_lib.helpers.MathHelper;
+import net.kapitencraft.kap_lib.core.helpers.MathHelper;
+import net.kapitencraft.kap_lib.enchantment.abstracts.EnchantmentBowEffect;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;

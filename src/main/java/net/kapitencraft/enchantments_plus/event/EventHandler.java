@@ -4,11 +4,11 @@ import net.kapitencraft.enchantments_plus.data_gen.ModDamageTypes;
 import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
-import net.kapitencraft.kap_lib.client.particle.LightningParticleOptions;
-import net.kapitencraft.kap_lib.event.custom.ModifyFishingHookStatsEvent;
-import net.kapitencraft.kap_lib.helpers.EnchantmentHelperExtras;
-import net.kapitencraft.kap_lib.helpers.MathHelper;
-import net.kapitencraft.kap_lib.util.Reference;
+import net.kapitencraft.kap_lib.core.helpers.EnchantmentHelperExtras;
+import net.kapitencraft.kap_lib.core.helpers.MathHelper;
+import net.kapitencraft.kap_lib.core.util.Reference;
+import net.kapitencraft.kap_lib.item.event.custom.ModifyFishingHookStatsEvent;
+import net.kapitencraft.kap_lib.particle.custom.LightningParticleOptions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
@@ -18,10 +18,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -39,7 +36,6 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent;
@@ -82,7 +78,7 @@ public class EventHandler {
 
         if (block instanceof CropBlock || block instanceof NetherWartBlock) {
             int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
-            IntegerProperty ageProperty = block instanceof CropBlock cropBlock ?  cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
+            IntegerProperty ageProperty = block instanceof CropBlock cropBlock ? cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
             if (state.getValue(ageProperty) < max) {
                 if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.DELICATE.get())) {
                     event.setCanceled(true);
@@ -99,13 +95,14 @@ public class EventHandler {
             }
         }
         if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.LUMBERJACK.get()) && state.is(BlockTags.LOGS)) {
-            VeinMinerHolder.create(pos, serverPlayer, block, pos1 -> {}, state1 -> true, pos1 -> false);
+            VeinMinerHolder.create(pos, serverPlayer, block, pos1 -> {
+            }, state1 -> true, pos1 -> false);
         }
         if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) {
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(level.registryAccess(), mainHandItem, ModEnchantments.VEIN_MINER, integer -> {
                 Reference<Integer> brokenBlocks = Reference.of(-1);
                 VeinMinerHolder.create(pos, serverPlayer, block,
-                        pos1 -> MathHelper.up1(brokenBlocks),
+                        pos1 -> brokenBlocks.setValue(brokenBlocks.getValue() + 1),
                         state1 -> true, pos1 -> brokenBlocks.getIntValue() > integer);
             });
         }
@@ -224,7 +221,7 @@ public class EventHandler {
         LivingEntity living = event.getEntity();
         if (living instanceof Player player) {
             float amount = event.getAmount();
-            amount =  EnchantmentHelperExtras.repairPlayerItems(player, (int) amount, ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()) + amount % 1;
+            amount = EnchantmentHelperExtras.repairPlayerItems(player, (int) amount, ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()) + amount % 1;
             event.setAmount(amount);
         }
     }
@@ -233,19 +230,6 @@ public class EventHandler {
     public static void itemUseEvents(LivingEntityUseItemEvent event) {
         if (event.getItem().getFoodProperties(event.getEntity()) != null) {
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.GLUTTONOUS, i -> event.setDuration((int) (event.getDuration() * (1 - i * .1))));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onLivingDeath(LivingDeathEvent event) {
-        DamageSource source = event.getSource();
-        if (source.isDirect() && source.getEntity() instanceof LivingEntity living) {
-            EnchantmentHelperExtras.getEnchantmentLevelAndDo(living, ModEnchantments.BLOOD_THIRST, integer -> {
-                AttributeInstance attack = living.getAttribute(Attributes.ATTACK_DAMAGE);
-                if (attack != null) {
-                    //attack.addPermanentModifier(new TimedModifier("Blood Thirst", integer / 100., AttributeModifier.Operation.ADD_MULTIPLIED_BASE, integer * 40));
-                }
-            });
         }
     }
 

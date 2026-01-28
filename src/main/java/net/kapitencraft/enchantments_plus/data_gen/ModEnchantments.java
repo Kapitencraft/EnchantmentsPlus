@@ -8,11 +8,11 @@ import net.kapitencraft.enchantments_plus.loot_table.condition.BehindEntityCondi
 import net.kapitencraft.enchantments_plus.registry.ModBlocks;
 import net.kapitencraft.enchantments_plus.registry.ModCooldowns;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;
-import net.kapitencraft.kap_lib.helpers.EnchantmentHelperExtras;
-import net.kapitencraft.kap_lib.item.loot_table.conditions.CooldownInactiveCondition;
-import net.kapitencraft.kap_lib.registry.ExtraAttributes;
-import net.kapitencraft.kap_lib.registry.ExtraEnchantmentEffectComponents;
-import net.kapitencraft.kap_lib.tags.ExtraTags;
+import net.kapitencraft.kap_lib.attribute.ExtraAttributes;
+import net.kapitencraft.kap_lib.cooldown.loot.CooldownInactiveCondition;
+import net.kapitencraft.kap_lib.core.helpers.EnchantmentHelperExtras;
+import net.kapitencraft.kap_lib.core.tags.ExtraTags;
+import net.kapitencraft.kap_lib.enchantment.ExtraEnchantmentEffectComponents;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;

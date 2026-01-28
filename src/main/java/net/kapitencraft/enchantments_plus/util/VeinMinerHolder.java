@@ -1,6 +1,6 @@
 package net.kapitencraft.enchantments_plus.util;
 
-import net.kapitencraft.kap_lib.config.ServerModConfig;
+import net.kapitencraft.kap_lib.core.config.ServerModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;

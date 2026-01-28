@@ -1,7 +1,7 @@
 package net.kapitencraft.enchantments_plus.enchantments.components;
 
 import com.mojang.serialization.MapCodec;
-import net.kapitencraft.kap_lib.enchantments.abstracts.EnchantmentCountEffect;
+import net.kapitencraft.kap_lib.enchantment.abstracts.EnchantmentCountEffect;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

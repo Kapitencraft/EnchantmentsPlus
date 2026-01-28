@@ -2,7 +2,7 @@ package net.kapitencraft.enchantments_plus.enchantments.components;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.kapitencraft.kap_lib.util.attribute.TimedModifierUtils;
+import net.kapitencraft.kap_lib.attribute.timed.TimedModifierUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

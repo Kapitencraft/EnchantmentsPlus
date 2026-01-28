@@ -1,15 +1,15 @@
 package net.kapitencraft.enchantments_plus.data_gen;
 
-import com.ibm.icu.impl.coll.BOCSU;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
 import net.kapitencraft.enchantments_plus.ModTags;
-import net.kapitencraft.kap_lib.tags.ExtraTags;
+import net.kapitencraft.kap_lib.core.tags.ExtraTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -21,7 +21,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(EnchantmentTags.TREASURE).add(
                 ModEnchantments.BASALT_WALKER,
                 ModEnchantments.BLOCK_BREATHER,

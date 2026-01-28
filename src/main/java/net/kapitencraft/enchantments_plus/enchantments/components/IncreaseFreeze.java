@@ -1,6 +1,5 @@
 package net.kapitencraft.enchantments_plus.enchantments.components;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.server.level.ServerLevel;
