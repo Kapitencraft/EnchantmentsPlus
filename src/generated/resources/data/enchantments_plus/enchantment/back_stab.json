@@ -16,7 +16,7 @@
         },
         "requirements": {
           "behind": {},
-          "condition": "enchantments_plus:behind"
+          "condition": "kap_lib:behind"
         }
       }
     ]

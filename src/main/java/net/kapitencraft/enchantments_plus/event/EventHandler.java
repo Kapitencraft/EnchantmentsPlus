@@ -38,6 +38,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
@@ -77,15 +78,7 @@ public class EventHandler {
         }
 
         if (block instanceof CropBlock || block instanceof NetherWartBlock) {
-            int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
             IntegerProperty ageProperty = block instanceof CropBlock cropBlock ? cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
-            if (state.getValue(ageProperty) < max) {
-                if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.DELICATE.get())) {
-                    event.setCanceled(true);
-                    return;
-                }
-            }
-
             if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.REPLENISH.get())) {
                 event.setCanceled(true);
                 Block.dropResources(state, level, pos);
@@ -107,6 +100,24 @@ public class EventHandler {
             });
         }
     }
+
+    @SubscribeEvent
+    public static void onPlayerBreakSpeed(PlayerEvent.BreakSpeed event) {
+        Player player = event.getEntity();
+        ItemStack mainHandItem = player.getMainHandItem();
+        BlockState state = event.getState();
+        Block block = state.getBlock();
+        if (block instanceof CropBlock || block instanceof NetherWartBlock) {
+            int max = block instanceof CropBlock cropBlock ? cropBlock.getMaxAge() : NetherWartBlock.MAX_AGE;
+            IntegerProperty ageProperty = block instanceof CropBlock cropBlock ? cropBlock.getAgeProperty() : BlockStateProperties.AGE_3;
+            if (state.getValue(ageProperty) < max) {
+                if (EnchantmentHelper.has(mainHandItem, ModEnchantmentEffectComponents.DELICATE.get())) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public static void onLivingDamagePre(LivingDamageEvent.Pre event) {

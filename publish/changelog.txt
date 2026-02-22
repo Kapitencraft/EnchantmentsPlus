@@ -1,0 +1,3 @@
+# Changes
+
+delicate enchantment now uses break speed instead of block break event, suppressing block particles and sounds

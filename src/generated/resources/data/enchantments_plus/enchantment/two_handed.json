@@ -15,7 +15,7 @@
           }
         },
         "requirements": {
-          "condition": "enchantments_plus:offhand_empty",
+          "condition": "kap_lib:offhand_empty",
           "empty_offhand": {}
         }
       }

@@ -1,17 +1,26 @@
 {
-  "author": "Kapitencraft",
-  "author_email": "kapitencraft@gmail.com",
-  "project_id": "qXXsseLn",
-  "mod_id": "${mod_id}",
-  "mod_name": "${mod_name}",
-  "mod_version": "${mod_version}",
+  "modrinth_id": "qXXsseLn",
+  "author": {
+    "name": "Kapitencraft",
+    "email": "kapitencraft@gmail.com"
+  },
+  "mod": {
+    "id": "${mod_id}",
+    "name": "${mod_name}",
+    "version": "${mod_version}",
+    "artifact_version": "v${mod_version}-mc${minecraft_version}"
+  },
   "mc_version": "${minecraft_version}",
   "loader_version": "${neo_version}",
   "dependencies": [
     {
       "version_name": "v${kap_lib_version}-mc${minecraft_version}",
-      "project_id": "IrKTRsiH",
+      "modrinth_id": "IrKTRsiH",
       "dependency_type": "embedded"
     }
-  ]
+  ],
+  "changelog": {
+    "format": "md",
+    "style": "none"
+  }
 }

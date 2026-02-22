@@ -24,7 +24,6 @@ public class EnchantmentsPlusMod {
         ModEnchantmentCountEffects.REGISTRY.register(modEventBus);
         ModBowEffects.REGISTRY.register(modEventBus);
         ModCooldowns.REGISTRY.register(modEventBus);
-        ModLootItemConditions.REGISTRY.register(modEventBus);
         ModLootTableModifiers.REGISTRY.register(modEventBus);
 
         container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
