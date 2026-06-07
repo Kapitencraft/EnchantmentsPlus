@@ -14,11 +14,14 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -36,6 +39,8 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -262,5 +267,35 @@ public class EventHandler {
     @SubscribeEvent
     public static void onPlayerSleepInBed(CanPlayerSleepEvent event) {
         EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.INSOMNIA, i -> event.setProblem(Player.BedSleepingProblem.NOT_SAFE));
+    }
+
+    @SubscribeEvent
+    public static void onLivingShieldBlock(LivingShieldBlockEvent event) {
+        LivingEntity entity = event.getEntity();
+        ItemStack item = entity.getUseItem();
+        if (item.canPerformAction(ItemAbilities.SHIELD_BLOCK)) {
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(
+                    entity.level().registryAccess(),
+                    item,
+                    ModEnchantments.FORTRESS,
+                    i -> {
+                        boolean fortress = isDamageSourceBlockedFortress(entity, event.getDamageSource());
+                        if (fortress) {
+                            event.setBlocked(true);
+
+                        }
+                    }
+            );
+        }
+    }
+
+    /**
+     * Determines whether the entity can block the damage source based on the damage source's location, whether the damage source is blockable, and whether the entity is blocking.
+     */
+    public static boolean isDamageSourceBlockedFortress(LivingEntity target, DamageSource source) {
+        Entity entity = source.getDirectEntity();
+        boolean flag = entity instanceof AbstractArrow abstractarrow && abstractarrow.getPierceLevel() > 0;
+
+        return !source.is(DamageTypeTags.BYPASSES_SHIELD) && target.isBlocking() && !flag;
     }
 }

@@ -1,3 +1,7 @@
+# Additions
+
+added Starvation enchantment. causes exhaustion on the target making them lose food
+
 # Changes
 
 delicate enchantment now uses break speed instead of block break event, suppressing block particles and sounds

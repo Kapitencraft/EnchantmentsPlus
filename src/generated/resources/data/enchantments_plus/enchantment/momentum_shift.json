@@ -1,0 +1,44 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchantments_plus.momentum_shift"
+  },
+  "effects": {
+    "minecraft:post_attack": [
+      {
+        "affected": "victim",
+        "effect": {
+          "type": "enchantments_plus:apply_timed_modifier",
+          "amount": {
+            "type": "minecraft:linear",
+            "base": 0.05,
+            "per_level_above_first": 0.05
+          },
+          "attribute": "minecraft:generic.movement_speed",
+          "duration": {
+            "type": "minecraft:linear",
+            "base": 20.0,
+            "per_level_above_first": 20.0
+          },
+          "location": "enchantments_plus:movement_shift",
+          "operation": "add_multiplied_base"
+        },
+        "enchanted": "victim"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 4,
+    "per_level_above_first": 5
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 2,
+    "per_level_above_first": 5
+  },
+  "slots": [
+    "legs"
+  ],
+  "supported_items": "#minecraft:enchantable/leg_armor",
+  "weight": 1
+}

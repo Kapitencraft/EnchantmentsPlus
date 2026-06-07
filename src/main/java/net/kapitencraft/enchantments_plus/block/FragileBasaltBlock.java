@@ -1,6 +1,8 @@
 package net.kapitencraft.enchantments_plus.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FrostedIceBlock;
@@ -16,5 +18,10 @@ public class FragileBasaltBlock extends FrostedIceBlock {
     protected void melt(@NotNull BlockState state, Level level, @NotNull BlockPos pos) {
         level.setBlockAndUpdate(pos, Blocks.LAVA.defaultBlockState());
         level.neighborChanged(pos, Blocks.LAVA, pos);
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return false;
     }
 }

@@ -18,4 +18,5 @@ public interface ModEnchantmentEntityEffects {
     DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<WindBlessing>> WIND_BLESSING = REGISTRY.register("wind_blessing", () -> WindBlessing.CODEC);
     DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<ActivateCooldown>> ACTIVATE_COOLDOWN = REGISTRY.register("activate_cooldown", () -> ActivateCooldown.CODEC);
     DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<ApplyTimedModifier>> TIMED_MODIFIER = REGISTRY.register("apply_timed_modifier", () -> ApplyTimedModifier.CODEC);
+    DeferredHolder<MapCodec<? extends EnchantmentEntityEffect>, MapCodec<Starvation>> STARVATION = REGISTRY.register("starvation", () -> Starvation.CODEC);
 }
