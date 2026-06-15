@@ -2,12 +2,12 @@ package net.kapitencraft.enchantments_plus.enchantments.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.kapitencraft.kap_lib.core.client.util.pos_target.PositionTarget;
-import net.kapitencraft.kap_lib.core.client.util.rot_target.RotationTarget;
 import net.kapitencraft.kap_lib.particle.animation.activation_triggers.EntityAddedTrigger;
 import net.kapitencraft.kap_lib.particle.animation.core.ParticleAnimation;
 import net.kapitencraft.kap_lib.particle.animation.finalizers.SetLifeTimeFinalizer;
 import net.kapitencraft.kap_lib.particle.animation.spawners.RingSpawner;
+import net.kapitencraft.kap_lib.particle.animation.target.pos.PositionTarget;
+import net.kapitencraft.kap_lib.particle.animation.target.rot.RotationTarget;
 import net.kapitencraft.kap_lib.particle.animation.terminators.EntityRemovedTerminatorTrigger;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;

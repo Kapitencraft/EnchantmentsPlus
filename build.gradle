@@ -53,7 +53,7 @@ neoForge {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             systemProperty 'forge.logging.console.level', 'warn'
-            logLevel = org.slf4j.event.Level.WARN
+            logLevel = org.slf4j.event.Level.DEBUG
         }
 
         client {
@@ -86,6 +86,9 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenLocal()
+
+    //mavenCentral()
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
@@ -116,42 +119,42 @@ dependencies {
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:core") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-core:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:attribute") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-attribute:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:cooldown") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-cooldown:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:enchantment") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-enchantment:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:item") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-item:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:loot") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-loot:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:mob_effect") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-mob_effect:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }
     }
-    jarJar(implementation "maven.modrinth:kap_lib:v${kap_lib_version}-mc${minecraft_version}:particle") {
+    jarJar(implementation "io.github.kapitencraft:kap_lib-particle:v${kap_lib_version}-mc${minecraft_version}") {
         version {
             prefer "${kap_lib_version}"
         }

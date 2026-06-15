@@ -6,7 +6,6 @@ import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponent
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
 import net.kapitencraft.kap_lib.core.helpers.EnchantmentHelperExtras;
 import net.kapitencraft.kap_lib.core.helpers.MathHelper;
-import net.kapitencraft.kap_lib.core.util.Reference;
 import net.kapitencraft.kap_lib.item.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.particle.custom.LightningParticleOptions;
 import net.minecraft.core.BlockPos;
@@ -51,6 +50,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @EventBusSubscriber
 public class EventHandler {
@@ -98,10 +98,10 @@ public class EventHandler {
         }
         if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) || state.is(BlockTags.MINEABLE_WITH_SHOVEL)) {
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(level.registryAccess(), mainHandItem, ModEnchantments.VEIN_MINER, integer -> {
-                Reference<Integer> brokenBlocks = Reference.of(-1);
+                AtomicInteger brokenBlocks = new AtomicInteger(-1);
                 VeinMinerHolder.create(pos, serverPlayer, block,
-                        pos1 -> brokenBlocks.setValue(brokenBlocks.getValue() + 1),
-                        state1 -> true, pos1 -> brokenBlocks.getIntValue() > integer);
+                        pos1 -> brokenBlocks.set(brokenBlocks.get() + 1),
+                        state1 -> true, pos1 -> brokenBlocks.get() > integer);
             });
         }
     }
