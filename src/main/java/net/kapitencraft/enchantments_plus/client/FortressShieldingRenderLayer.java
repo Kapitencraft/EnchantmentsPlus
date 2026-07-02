@@ -4,9 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.kapitencraft.enchantments_plus.data_gen.ModEnchantments;
+import net.kapitencraft.kap_lib.core.client.ExtraRenderTypes;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -31,15 +33,15 @@ public class FortressShieldingRenderLayer<T extends LivingEntity, M extends Huma
         if (item != ItemStack.EMPTY && item.getEnchantmentLevel(livingEntity.registryAccess().holderOrThrow(ModEnchantments.FORTRESS)) > 0) {
             poseStack.pushPose();
             poseStack.translate(0, .5, 0);
-            poseStack.mulPose(Axis.YP.rotationDegrees(livingEntity.tickCount));
+            poseStack.mulPose(Axis.YP.rotationDegrees(livingEntity.tickCount + partialTick));
             Material material = ModelBakery.NO_PATTERN_SHIELD;
-            VertexConsumer buffer = material.buffer(bufferSource, this.model::renderType);
+            VertexConsumer buffer = material.buffer(bufferSource, ModRenderTypes::ghostEntity);
             for (int i = 0; i < 4; i++) {
                 poseStack.pushPose();
                 poseStack.mulPose(Axis.YP.rotationDegrees(90 * i));
                 poseStack.translate(0, 0, -.5f);
-                model.handle().render(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
-                model.plate().render(poseStack, buffer, packedLight, OverlayTexture.NO_OVERLAY);
+                model.handle().render(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+                model.plate().render(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
                 poseStack.popPose();
             }
             poseStack.popPose();
