@@ -1,6 +1,7 @@
 # Additions
 
 added Starvation enchantment. causes exhaustion on the target making them lose food
+added Fortress ultimate enchantment. shields with that enchantment prevent damage from all directions unless disabled
 
 # Changes
 

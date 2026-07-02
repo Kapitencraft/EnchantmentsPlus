@@ -159,12 +159,16 @@ dependencies {
             prefer "${kap_lib_version}"
         }
     }
+    implementation "io.github.kapitencraft:kap_lib-publish:v${kap_lib_version}-mc${minecraft_version}"
 }
 
 tasks.register('autoPublish', JavaExec) {
     mainClass = 'net.kapitencraft.kap_lib.publish.AutoPublisher'
+    group = 'publishing'
 
     classpath = sourceSets.main.runtimeClasspath
+    systemProperty('modrinthAuth', getProperty('modrinthAuth'))
+    systemProperty('curseforgeAuth', getProperty('curseforgeAuth'))
 }
 
 tasks.register('gitUpdate', Task) {
