@@ -26,12 +26,14 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentTarget;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -40,7 +42,9 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.predicates.DamageSourceCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 import net.neoforged.neoforge.common.Tags;
 
@@ -70,7 +74,6 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> SLEEPY = key("sleepy");
     ResourceKey<Enchantment> TRANSYLVANIAN = key("transylvanian");
     ResourceKey<Enchantment> TRUE_PROTECTION = key("true_protection");
-    ResourceKey<Enchantment> VOLT_SURGE = key("volt_surge");
     //endregion
     //region shield
     ResourceKey<Enchantment> FORTRESS = key("fortress");
@@ -131,6 +134,9 @@ public interface ModEnchantments {
     ResourceKey<Enchantment> HEALTH_MENDING = key("health_mending");
     ResourceKey<Enchantment> TELEKINESIS = key("telekinesis");
     //endregion
+    //region pet
+    ResourceKey<Enchantment> VAMPIRISM = key("vampirism");
+    //endregion pet
 
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT, EnchantmentsPlusMod.res(name));
@@ -144,15 +150,15 @@ public interface ModEnchantments {
 
         //region armor
         register(context, BASALT_WALKER, Enchantment.enchantment(
-                Enchantment.definition(
-                        items.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE),
-                        2,
-                        3,
-                        Enchantment.dynamicCost(10, 10),
-                        Enchantment.dynamicCost(25, 10),
-                        4,
-                        EquipmentSlotGroup.FEET
-                ))
+                        Enchantment.definition(
+                                items.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE),
+                                2,
+                                3,
+                                Enchantment.dynamicCost(10, 10),
+                                Enchantment.dynamicCost(25, 10),
+                                4,
+                                EquipmentSlotGroup.FEET
+                        ))
                 .withEffect(
                         EnchantmentEffectComponents.LOCATION_CHANGED,
                         new ReplaceDisk(
@@ -442,26 +448,6 @@ public interface ModEnchantments {
                                 .tag(TagPredicate.is(DamageTypeTags.BYPASSES_ARMOR))
                 )
         ));
-        register(context, VOLT_SURGE, Enchantment.enchantment(
-                Enchantment.definition(
-                        items.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
-                        1,
-                        2,
-                        Enchantment.dynamicCost(1, 10),
-                        Enchantment.dynamicCost(6, 10),
-                        5,
-                        EquipmentSlotGroup.ARMOR
-                )
-        ).withEffect(EnchantmentEffectComponents.POST_ATTACK,
-                        EnchantmentTarget.VICTIM, EnchantmentTarget.ATTACKER,
-                        AllOf.entityEffects(
-                                new SummonEntityEffect(HolderSet.direct(EntityType.LIGHTNING_BOLT.builtInRegistryHolder()), false),
-                                new DamageEntity(LevelBasedValue.constant(1.5F), LevelBasedValue.constant(7.5F), damageTypes.getOrThrow(DamageTypes.THORNS)),
-                                new DamageItem(LevelBasedValue.constant(2.0F))
-                        ),
-                        LootItemRandomChanceCondition.randomChance(EnchantmentLevelProvider.forEnchantmentLevel(LevelBasedValue.perLevel(0.15F)))
-                )
-        );
         //endregion
         //region shield
         register(context, FORTRESS,
@@ -743,8 +729,8 @@ public interface ModEnchantments {
                 )
         ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new ApplyMobEffect(
                 HolderSet.direct(MobEffects.POISON),
-                LevelBasedValue.perLevel(5),
-                LevelBasedValue.perLevel(5),
+                LevelBasedValue.perLevel(3),
+                LevelBasedValue.perLevel(3),
                 LevelBasedValue.constant(1),
                 LevelBasedValue.constant(1)
         )));
@@ -854,7 +840,7 @@ public interface ModEnchantments {
         ).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
                 EnchantmentsPlusMod.res("elvish_mastery_enchantment"), ExtraAttributes.DRAW_SPEED, LevelBasedValue.perLevel(7.5f), AttributeModifier.Operation.ADD_VALUE
         )));
-        register(context, FAST_ARROWS, Enchantment.enchantment(
+        register(context, FAST_ARROWS, Enchantment.enchantment( //TODO arrow desync
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
                         2,
@@ -919,25 +905,26 @@ public interface ModEnchantments {
                 )
         ).withEffect(ExtraEnchantmentEffectComponents.BOW.get(), new Snipe()));
         register(context, WIND_BLESSING, Enchantment.enchantment(
-                Enchantment.definition(
-                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
-                        1,
-                        3,
-                        Enchantment.dynamicCost(1, 10),
-                        Enchantment.dynamicCost(5, 10),
-                        2,
-                        EquipmentSlotGroup.MAINHAND
-                )
-        ).withEffect(ExtraEnchantmentEffectComponents.BOW_SPAWN.get(), new WindBlessing())
-                .withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
-                        EnchantmentsPlusMod.res("wind_blessing_enchantment"), ExtraAttributes.PROJECTILE_SPEED, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE
-                ))
+                                Enchantment.definition(
+                                        items.getOrThrow(ItemTags.BOW_ENCHANTABLE),
+                                        1,
+                                        3,
+                                        Enchantment.dynamicCost(1, 10),
+                                        Enchantment.dynamicCost(5, 10),
+                                        2,
+                                        EquipmentSlotGroup.MAINHAND
+                                )
+                        ).withEffect(ExtraEnchantmentEffectComponents.BOW_SPAWN.get(), new WindBlessing())
+                        .withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                                EnchantmentsPlusMod.res("wind_blessing_enchantment"), ExtraAttributes.PROJECTILE_SPEED, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE
+                        ))
         );
         //endregion
         //region weapon
+        HolderSet.Named<Item> allWeapons = items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE);
         register(context, CRITICAl, Enchantment.enchantment(
                 Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        allWeapons,
                         10,
                         5,
                         Enchantment.dynamicCost(1, 5),
@@ -950,7 +937,7 @@ public interface ModEnchantments {
         )));
         register(context, DIVINE_GIFT, Enchantment.enchantment(
                 Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        allWeapons,
                         1,
                         3,
                         Enchantment.dynamicCost(10, 15),
@@ -964,7 +951,7 @@ public interface ModEnchantments {
         register(context, INFERNO, EnchantmentHelperExtras.ultimate(
                 enchantments,
                 Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        weaponItems,
                         1,
                         5,
                         Enchantment.dynamicCost(10, 10),
@@ -975,7 +962,7 @@ public interface ModEnchantments {
         ).withEffect(ExtraEnchantmentEffectComponents.COUNT.get(), EnchantmentTarget.ATTACKER, EnchantmentTarget.VICTIM, new Inferno()));
         register(context, SCAVENGER, Enchantment.enchantment(
                 Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        allWeapons,
                         2,
                         5,
                         Enchantment.dynamicCost(5, 12),
@@ -986,7 +973,7 @@ public interface ModEnchantments {
         ));
         register(context, TWO_HANDED, Enchantment.enchantment(
                 Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
+                        allWeapons,
                         5,
                         3,
                         Enchantment.dynamicCost(1, 7),
@@ -999,17 +986,17 @@ public interface ModEnchantments {
                 AttackerEmptyOffhandCondition::new
         ));
         register(context, FATAL_TEMPO, EnchantmentHelperExtras.ultimate(enchantments,
-                Enchantment.definition(
-                        items.getOrThrow(ModTags.Items.ALL_WEAPONS_ENCHANTABLE),
-                        1,
-                        5,
-                        Enchantment.dynamicCost(10, 10),
-                        Enchantment.dynamicCost(10, 15),
-                        8,
-                        EquipmentSlotGroup.MAINHAND
-                )
-        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.ATTACKER,
-                new ApplyTimedModifier(EnchantmentsPlusMod.res("fatal_tempo_enchantment"), LevelBasedValue.constant(60), ExtraAttributes.FEROCITY, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE))
+                        Enchantment.definition(
+                                allWeapons,
+                                1,
+                                5,
+                                Enchantment.dynamicCost(10, 10),
+                                Enchantment.dynamicCost(10, 15),
+                                8,
+                                EquipmentSlotGroup.MAINHAND
+                        )
+                ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.ATTACKER,
+                        new ApplyTimedModifier(EnchantmentsPlusMod.res("fatal_tempo_enchantment"), LevelBasedValue.constant(60), ExtraAttributes.FEROCITY, LevelBasedValue.perLevel(10), AttributeModifier.Operation.ADD_VALUE))
         );
         //endregion
         //region misc
@@ -1027,8 +1014,8 @@ public interface ModEnchantments {
         ));
         register(context, EXPERIENCED, Enchantment.enchantment(
                 Enchantment.definition(
-                        weaponItems,
-                        items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                        items.getOrThrow(ModTags.Items.WEAPON_AND_MINING_ENCHANTABLE),
+                        items.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                         2,
                         5,
                         Enchantment.dynamicCost(1, 10),
@@ -1052,7 +1039,7 @@ public interface ModEnchantments {
         ).withEffect(ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()));
         register(context, TELEKINESIS, Enchantment.enchantment(
                 Enchantment.definition(
-                        weaponItems,
+                        items.getOrThrow(ModTags.Items.WEAPON_AND_MINING_ENCHANTABLE),
                         items.getOrThrow(ItemTags.MINING_ENCHANTABLE),
                         1,
                         1,
@@ -1063,6 +1050,23 @@ public interface ModEnchantments {
                 )
         ).withEffect(ModEnchantmentEffectComponents.TELEKINESIS.get()));
         //endregion
+        //region pet
+        register(context, VAMPIRISM, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ModTags.Items.WOLF_ARMOR_ENCHANTABLE),
+                items.getOrThrow(ModTags.Items.WOLF_ARMOR_ENCHANTABLE),
+                2,
+                3,
+                Enchantment.dynamicCost(5, 2),
+                Enchantment.dynamicCost(5, 3),
+                2,
+                EquipmentSlotGroup.BODY
+        )).withEffect(EnchantmentEffectComponents.ATTRIBUTES, new EnchantmentAttributeEffect(
+                EnchantmentsPlusMod.res("vampirism"),
+                ExtraAttributes.LIFE_STEAL,
+                LevelBasedValue.perLevel(1),
+                AttributeModifier.Operation.ADD_VALUE
+        )));
+        //endregion pet
     }
 
     private static void register(BootstrapContext<Enchantment> context, ResourceKey<Enchantment> key, Enchantment.Builder builder) {

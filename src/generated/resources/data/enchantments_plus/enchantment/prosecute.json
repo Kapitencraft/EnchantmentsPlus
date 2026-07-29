@@ -3,7 +3,7 @@
   "description": {
     "translate": "enchantment.enchantments_plus.prosecute"
   },
-  "exclusive_set": "#enchantments_plus:execution_exclusive",
+  "exclusive_set": "#enchantments_plus:exclusive_set/execution",
   "max_cost": {
     "base": 5,
     "per_level_above_first": 11

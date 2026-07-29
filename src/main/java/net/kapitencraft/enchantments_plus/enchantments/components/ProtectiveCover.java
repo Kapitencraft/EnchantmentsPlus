@@ -17,8 +17,9 @@ public class ProtectiveCover implements EnchantmentEntityEffect {
     @Override
     public void apply(ServerLevel level, int enchantmentLevel, EnchantedItemInUse item, Entity entity, Vec3 origin) {
         entity.level().getProfiler().push("protective cover enchantment");
-        List<Projectile> list = MathHelper.getEntitiesAround(Projectile.class, entity, enchantmentLevel * 1.5);
-        list.forEach(p -> p.setDeltaMovement(new Vec3(0, 0, 0)));
+        List<Projectile> list = MathHelper.getEntitiesAround(Projectile.class, entity, enchantmentLevel * 1.75);
+        double speedScale = 1 - (enchantmentLevel * .1);
+        list.forEach(p -> p.setDeltaMovement(p.getDeltaMovement().scale(speedScale)));
         entity.level().getProfiler().pop();
     }
 

@@ -26,10 +26,10 @@
     "base": 1,
     "per_level_above_first": 10
   },
-  "primary_items": "#minecraft:enchantable/mining",
+  "primary_items": "#minecraft:enchantable/weapon",
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/weapon",
+  "supported_items": "#enchantments_plus:enchantable/weapon_and_mining",
   "weight": 2
 }

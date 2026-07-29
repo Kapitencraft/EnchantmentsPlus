@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +30,20 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModTags.Items.FARMING_ENCHANTABLE)
                 .addTags(ItemTags.AXES, ItemTags.HOES);
         tag(ModTags.Items.ALL_WEAPONS_ENCHANTABLE)
-                .addTags(ItemTags.BOW_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE, ItemTags.MACE_ENCHANTABLE);
+                .addTags(
+                        ItemTags.BOW_ENCHANTABLE,
+                        ItemTags.WEAPON_ENCHANTABLE,
+                        ItemTags.CROSSBOW_ENCHANTABLE,
+                        ItemTags.MACE_ENCHANTABLE,
+                        ItemTags.TRIDENT_ENCHANTABLE
+                );
+        tag(ModTags.Items.WEAPON_AND_MINING_ENCHANTABLE)
+                .addTags(ModTags.Items.ALL_WEAPONS_ENCHANTABLE, ItemTags.MINING_ENCHANTABLE);
+        tag(ModTags.Items.HORSE_ARMOR_ENCHANTABLE)
+                .add(Items.LEATHER_HORSE_ARMOR, Items.GOLDEN_HORSE_ARMOR, Items.IRON_HORSE_ARMOR, Items.DIAMOND_HORSE_ARMOR);
+        tag(ModTags.Items.WOLF_ARMOR_ENCHANTABLE)
+                .add(Items.WOLF_ARMOR);
+        tag(ModTags.Items.PET_ARMOR_ENCHANTABLE)
+                .addTags(ModTags.Items.HORSE_ARMOR_ENCHANTABLE, ModTags.Items.WOLF_ARMOR_ENCHANTABLE);
     }
 }

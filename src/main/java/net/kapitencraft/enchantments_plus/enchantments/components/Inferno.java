@@ -33,7 +33,7 @@ public class Inferno implements EnchantmentCountEffect {
 
     @Override
     public float mainExecute(int level, ItemStack enchanted, LivingEntity attacker, LivingEntity attacked, float damageAmount, int curTick, DamageSource source, float attackDamageScale) {
-        if (attackDamageScale == 1 && !source.getMsgId().equals("inferno")) {
+        if (attackDamageScale > .9 && !source.getMsgId().equals("inferno")) {
             Level world = attacker.level();
             world.getProfiler().push("inferno enchantment");
             int extinguishLevel = EnchantmentHelper.getEnchantmentLevel(world.registryAccess().holderOrThrow(net.kapitencraft.enchantments_plus.data_gen.ModEnchantments.EXTINGUISH), attacked);

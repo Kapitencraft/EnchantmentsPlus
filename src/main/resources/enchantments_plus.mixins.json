@@ -14,6 +14,7 @@
     "CrossbowItemMixin",
     "EnchantmentHelperMixin",
     "EntityMixin",
+    "ItemMixin",
     "LivingEntityMixin",
     "ShearsDispenseItemBehaviourMixin",
     "ShearsItemMixin",

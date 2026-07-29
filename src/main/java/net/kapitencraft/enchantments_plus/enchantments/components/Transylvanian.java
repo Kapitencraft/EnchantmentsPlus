@@ -18,7 +18,7 @@ public class Transylvanian implements EnchantmentEntityEffect {
         if (!entity.level().isClientSide() && entity.tickCount % 20 == 0 && entity instanceof LivingEntity living) {
             List<LivingEntity> livings = MathHelper.getLivingAround(entity, enchantmentLevel * 1.5);
             livings = livings.stream().filter(living1 -> !living1.is(entity)).toList();
-            living.heal(livings.size() / 2f);
+            living.heal(livings.size() * .02f);
         }
     }
 

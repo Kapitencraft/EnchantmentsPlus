@@ -178,7 +178,6 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.THORNY,
                 ModEnchantments.TRANSYLVANIAN,
                 ModEnchantments.TRUE_PROTECTION,
-                ModEnchantments.VOLT_SURGE,
                 ModEnchantments.CHROMATIC,
                 ModEnchantments.DELICATE,
                 ModEnchantments.FLASH,

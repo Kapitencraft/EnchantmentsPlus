@@ -1,12 +1,12 @@
-// 1.21.1	2025-10-05T00:21:55.7917504	Tags for minecraft:enchantment mod id enchantments_plus
+// 1.21.1	2026-07-29T12:37:16.1290347	Tags for minecraft:enchantment mod id enchantments_plus
+0f38436923b6a2ec2bdc30447b406e75b8e87684 data/enchantments_plus/tags/enchantment/exclusive_set/execution.json
 517fd74f8efa97d6b5b0f5adce8ac9a0722cbcac data/enchantments_plus/tags/enchantment/exclusive_set/mining_drops.json
-0f38436923b6a2ec2bdc30447b406e75b8e87684 data/enchantments_plus/tags/enchantment/execution_exclusive.json
-393803333bb9425128dd2ab47ab16e2ec6bbb0e1 data/enchantments_plus/tags/enchantment/strike_exclusive.json
+393803333bb9425128dd2ab47ab16e2ec6bbb0e1 data/enchantments_plus/tags/enchantment/exclusive_set/strike.json
 c3d508e8dc6d7708a97b315581a58350222acc1d data/kap_lib/tags/enchantment/ultimate.json
 547cc2c3bebbe21fec126527d4e4ccc048b9fbce data/minecraft/tags/enchantment/curse.json
 6e7f2282857f8a4638f74bc4d06c7c954bf54703 data/minecraft/tags/enchantment/in_enchanting_table.json
 f3ecb54886818530e61f43b4c1856ab83a03b14e data/minecraft/tags/enchantment/on_mob_spawn_equipment.json
-b0a5737b821e142f26da69261ad3db12f35c854e data/minecraft/tags/enchantment/on_random_loot.json
+61a76780c818b1afd0cd109e8a2c686cb8cad808 data/minecraft/tags/enchantment/on_random_loot.json
 1ea7e1e7178586407abade890da60b442dfe0e7e data/minecraft/tags/enchantment/on_traded_equipment.json
 2cdcff11c601edd07596e2cadf6b7f5c55179077 data/minecraft/tags/enchantment/tooltip_order.json
 b3e4d0ca930417144205e15957a302fac31989e0 data/minecraft/tags/enchantment/tradeable.json

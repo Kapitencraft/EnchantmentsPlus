@@ -2,7 +2,21 @@
 
 added Starvation enchantment. causes exhaustion on the target making them lose food
 added Fortress ultimate enchantment. shields with that enchantment prevent damage from all directions unless disabled
+added Vampirism enchantment to wolf armor. allows wolfes to heal when attacking
 
 # Changes
 
-delicate enchantment now uses break speed instead of block break event, suppressing block particles and sounds
+changed delicate enchantment to uses break speed instead of block break event, suppressing block particles and sounds
+changed inferno to only target weapon items (swords, axes & mace)
+nerfed Poisonous Blade enchantment to have 3 * level seconds duration instead of 5 * level
+nerfed Transylvanian enchantment drastically to regenerate for 0.2% of entities near you instead of 50%
+changed protective cover to reduce projectile speed by 10% per level and tick, in an increased radius of 1.75 * level
+fixed being unable to put certain enchantments on tridents
+fixed Experienced enchantment not changing experience from mob drops
+fixed Gluttonous enchantment eating duration reduction being severally more than expected
+fixed Inferno Attacks not stacking due to invincibility frames
+made the translation file more consistent with other mods and... english (thanks to @N3R3SH for the significant support in this endeavor)
+
+# Removals
+
+removed Volt Surge as it didn't fit any niche

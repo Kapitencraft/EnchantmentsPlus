@@ -16,6 +16,6 @@
   "slots": [
     "hand"
   ],
-  "supported_items": "#enchantments_plus:shield_enchantable",
+  "supported_items": "#enchantments_plus:enchantable/shield",
   "weight": 1
 }

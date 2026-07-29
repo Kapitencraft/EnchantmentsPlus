@@ -3,6 +3,7 @@
     "#minecraft:enchantable/bow",
     "#minecraft:enchantable/weapon",
     "#minecraft:enchantable/crossbow",
-    "#minecraft:enchantable/mace"
+    "#minecraft:enchantable/mace",
+    "#minecraft:enchantable/trident"
   ]
 }

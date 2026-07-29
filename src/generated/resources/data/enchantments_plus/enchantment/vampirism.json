@@ -1,0 +1,35 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.enchantments_plus.vampirism"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 1.0,
+          "per_level_above_first": 1.0
+        },
+        "attribute": "kap_lib:generic.life_steal",
+        "id": "enchantments_plus:vampirism",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 5,
+    "per_level_above_first": 3
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 2
+  },
+  "primary_items": "#enchantments_plus:enchantable/wolf_armor",
+  "slots": [
+    "body"
+  ],
+  "supported_items": "#enchantments_plus:enchantable/wolf_armor",
+  "weight": 2
+}

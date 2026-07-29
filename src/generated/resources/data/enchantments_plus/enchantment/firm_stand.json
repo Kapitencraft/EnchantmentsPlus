@@ -30,6 +30,6 @@
     "feet",
     "legs"
   ],
-  "supported_items": "#enchantments_plus:movement_armor_enchantable",
+  "supported_items": "#enchantments_plus:enchantable/movement_armor",
   "weight": 10
 }

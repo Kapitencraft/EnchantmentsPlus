@@ -27,5 +27,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModEnchantmentTagsProvider(output, registries, helper));
         generator.addProvider(event.includeServer(), new ModItemTagsProvider(output, registries, helper));
         generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(output, registries, helper));
+        generator.addProvider(event.includeServer(), new ModDamageTypeTagsProvider(output, registries, helper));
     }
 }

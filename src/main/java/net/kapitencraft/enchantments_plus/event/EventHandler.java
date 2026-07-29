@@ -6,6 +6,7 @@ import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponent
 import net.kapitencraft.enchantments_plus.util.VeinMinerHolder;
 import net.kapitencraft.kap_lib.core.helpers.EnchantmentHelperExtras;
 import net.kapitencraft.kap_lib.core.helpers.MathHelper;
+import net.kapitencraft.kap_lib.enchantment.event.custom.RegisterEnchantmentApplicableCharsEvent;
 import net.kapitencraft.kap_lib.item.event.custom.ModifyFishingHookStatsEvent;
 import net.kapitencraft.kap_lib.particle.custom.LightningParticleOptions;
 import net.minecraft.core.BlockPos;
@@ -16,12 +17,14 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
@@ -48,6 +51,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -149,7 +153,7 @@ public class EventHandler {
     }
 
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBlockDrops(BlockDropsEvent event) {
         if (event.getBreaker() instanceof Player player) {
             ItemStack mainHandItem = event.getTool();
@@ -164,6 +168,16 @@ public class EventHandler {
                 event.setDroppedExperience(0);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
+        Player attackingPlayer = event.getAttackingPlayer();
+        ItemStack handItem = attackingPlayer.getWeaponItem();
+        RegistryAccess access = attackingPlayer.level().registryAccess();
+        EnchantmentHelperExtras.getEnchantmentLevelAndDo(access, handItem, ModEnchantments.EXPERIENCED, enchLevel ->
+                MathHelper.add(event::getDroppedExperience, event::setDroppedExperience, enchLevel)
+        );
     }
 
     //region chain lightning
@@ -209,7 +223,7 @@ public class EventHandler {
     public static void telekinesisXpRegister(LivingExperienceDropEvent event) {
         Player attacker = event.getAttackingPlayer();
         if (attacker != null) {
-            ItemStack mainHand = attacker.getMainHandItem();
+            ItemStack mainHand = attacker.getWeaponItem();
             if (EnchantmentHelper.has(mainHand, ModEnchantmentEffectComponents.TELEKINESIS.get())) {
                 addXp(attacker, event.getDroppedExperience());
                 event.setCanceled(true);
@@ -238,13 +252,6 @@ public class EventHandler {
             float amount = event.getAmount();
             amount = EnchantmentHelperExtras.repairPlayerItems(player, (int) amount, ModEnchantmentEffectComponents.REPAIR_WITH_HEALTH.get()) + amount % 1;
             event.setAmount(amount);
-        }
-    }
-
-    @SubscribeEvent
-    public static void itemUseEvents(LivingEntityUseItemEvent event) {
-        if (event.getItem().getFoodProperties(event.getEntity()) != null) {
-            EnchantmentHelperExtras.getEnchantmentLevelAndDo(event.getEntity(), ModEnchantments.GLUTTONOUS, i -> event.setDuration((int) (event.getDuration() * (1 - i * .1))));
         }
     }
 
@@ -297,4 +304,11 @@ public class EventHandler {
 
         return !source.is(DamageTypeTags.BYPASSES_SHIELD) && target.isBlocking() && !flag;
     }
+
+    @SubscribeEvent
+    public static void onRegisterEnchantmentApplicableChars(RegisterEnchantmentApplicableCharsEvent event) {
+        event.register(Items.DIAMOND_HORSE_ARMOR);
+        event.register(Items.WOLF_ARMOR);
+    }
+
 }
