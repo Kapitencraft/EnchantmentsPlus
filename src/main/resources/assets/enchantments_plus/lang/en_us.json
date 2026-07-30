@@ -47,7 +47,7 @@
   "enchantment.enchantments_plus.enlightenment": "Enlightenment",
   "enchantment.enchantments_plus.enlightenment.desc": "Increases fog distance and night vision as well as reducing the Darkness effect.",
   "enchantment.enchantments_plus.execute": "Execute",
-  "enchantment.enchantments_plus.execute.desc": "Increases the damage dealt based on HP the target is missing.",
+  "enchantment.enchantments_plus.execute.desc": "Increases damage dealt based on HP the target is missing.",
   "enchantment.enchantments_plus.experienced": "Experienced",
   "enchantment.enchantments_plus.experienced.desc": "Grants a bonus to the Wisdom attribute, which increases experience gained from mobs and blocks.",
   "enchantment.enchantments_plus.extinguish": "Extinguish",
@@ -93,6 +93,8 @@
   "enchantment.enchantments_plus.magic_protection.desc1": "(such as potions, dragon's breath and sonic booms)",
   "enchantment.enchantments_plus.magmatic": "Magmatic",
   "enchantment.enchantments_plus.magmatic.desc": "Turns broken netherrack into lava.",
+  "enchantment.enchantments_plus.momentum_shift": "Momentum Shift",
+  "enchantment.enchantments_plus.momentum_shift.desc": "Grants a small temporary speed boost when getting hit.",
   "enchantment.enchantments_plus.necrotic_touch": "Necrotic Touch",
   "enchantment.enchantments_plus.necrotic_touch.desc": "Grants Life Steal, which makes you drain health from hit mobs.",
   "enchantment.enchantments_plus.overload": "Overload",
@@ -121,6 +123,8 @@
   "enchantment.enchantments_plus.smelting_touch.desc": "Smelts drops instantly.",
   "enchantment.enchantments_plus.snipe": "Snipe",
   "enchantment.enchantments_plus.snipe.desc": "Increases damage dealt for every 10 blocks the arrow travels.",
+  "enchantment.enchantments_plus.starvation": "Starvation",
+  "enchantment.enchantments_plus.starvation.desc": "Causes food exhaustion on hit players, making them hungry.",
   "enchantment.enchantments_plus.heavy_plating": "Heavy Plating",
   "enchantment.enchantments_plus.heavy_plating.desc": "Decreases move speed but grants armor.",
   "enchantment.enchantments_plus.telekinesis": "Telekinesis",
@@ -142,5 +146,6 @@
   "enchantment.enchantments_plus.venomous": "Venomous",
   "enchantment.enchantments_plus.venomous.desc": "Reduces enemy speed for a short duration.",
   "enchantment.enchantments_plus.wind_blessing": "Wind Blessing",
-  "enchantment.enchantments_plus.wind_blessing.desc": "Grants a bonus to the Projectile Speed attribute and makes arrows ignore gravity."
+  "enchantment.enchantments_plus.wind_blessing.desc": "Grants a bonus to the Projectile Speed attribute and makes arrows ignore gravity.",
+  "commands.max_enchant.limited_enchantability": "Item can not be enchanted"
 }

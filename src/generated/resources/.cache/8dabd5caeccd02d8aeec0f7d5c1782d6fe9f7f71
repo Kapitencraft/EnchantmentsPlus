@@ -1,0 +1,5 @@
+// 1.21.1	2026-07-29T12:37:16.1290347	Tags for minecraft:damage_type mod id enchantments_plus
+7d299e4251ba8288ec303e41529120100009b712 data/minecraft/tags/damage_type/bypasses_armor.json
+7d299e4251ba8288ec303e41529120100009b712 data/minecraft/tags/damage_type/bypasses_cooldown.json
+7d299e4251ba8288ec303e41529120100009b712 data/minecraft/tags/damage_type/is_fire.json
+84539ef8fbe5ae07182a8a316f2bade5d17f3ece data/minecraft/tags/damage_type/no_knockback.json

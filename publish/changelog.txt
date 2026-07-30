@@ -3,6 +3,7 @@
 added Starvation enchantment. causes exhaustion on the target making them lose food
 added Fortress ultimate enchantment. shields with that enchantment prevent damage from all directions unless disabled
 added Vampirism enchantment to wolf armor. allows wolfes to heal when attacking
+added /max_enchant command to add all applicable enchantments to an item (including exclusive ones)
 
 # Changes
 
