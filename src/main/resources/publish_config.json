@@ -16,7 +16,7 @@
     {
       "version_name": "v${kap_lib_version}-mc${minecraft_version}",
       "modrinth_id": "IrKTRsiH",
-      "dependency_type": "embedded"
+      "type": "embedded"
     }
   ],
   "changelog": {
