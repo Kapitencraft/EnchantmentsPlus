@@ -2,7 +2,7 @@ package net.kapitencraft.enchantments_plus.registry;
 
 import com.mojang.serialization.MapCodec;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
-import net.kapitencraft.enchantments_plus.enchantments.components.*;
+import net.kapitencraft.enchantments_plus.enchantments.components.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
 import net.neoforged.neoforge.registries.DeferredHolder;

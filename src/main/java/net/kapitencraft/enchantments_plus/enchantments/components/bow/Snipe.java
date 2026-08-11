@@ -1,4 +1,4 @@
-package net.kapitencraft.enchantments_plus.enchantments.components;
+package net.kapitencraft.enchantments_plus.enchantments.components.bow;
 
 import com.mojang.serialization.MapCodec;
 import net.kapitencraft.kap_lib.enchantment.abstracts.EnchantmentBowEffect;

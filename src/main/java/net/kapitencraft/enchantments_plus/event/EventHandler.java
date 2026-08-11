@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -51,6 +52,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -145,7 +147,7 @@ public class EventHandler {
                 event.setNewDamage((float) (event.getNewDamage() * (1 + Math.min(moreHpPercent * i * 0.01f, 0.5))));
             });
             EnchantmentHelperExtras.getEnchantmentLevelAndDo(attacker, ModEnchantments.COMBAT_KNOWLEDGE, level -> {
-                if (source.getDirectEntity() == attacker && MathHelper.chance(.001, attacker)) {
+                if (source.getDirectEntity() == attacker && MathHelper.chance(.001 * level, attacker)) {
                     event.setNewDamage(Float.MAX_VALUE);
                 }
             });
@@ -187,18 +189,19 @@ public class EventHandler {
         DamageSource source = event.getSource();
         LivingEntity attacker = source.isDirect() ? source.getDirectEntity() instanceof LivingEntity living ? living : null : null;
         float damage = event.getOriginalDamage();
-        if (attacker != null && !attacker.level().isClientSide()) {
+        if (attacker != null && !attacker.level().isClientSide() && !source.is(ModDamageTypes.CHAIN_LIGHTNING)) {
             ServerLevel level = (ServerLevel) attacker.level();
             int enchantmentLevel = EnchantmentHelper.getEnchantmentLevel(level.registryAccess().holderOrThrow(ModEnchantments.CHAIN_LIGHTNING), attacker);
-            LivingEntity target;
-            List<LivingEntity> previous = new ArrayList<>();
             if (level.getRandom().nextFloat() < enchantmentLevel * .02f) {
+                LivingEntity target;
+                List<LivingEntity> previous = new ArrayList<>();
+                previous.add(attacked); //make sure the attack doesn't jump back to the hurt entity
                 for (int i = 0; i < enchantmentLevel; i++) {
                     target = selectTarget(enchantmentLevel, level, attacked, attacker, previous);
                     if (target == null) break;
                     previous.add(target);
                     target.hurt(attacked.damageSources().source(ModDamageTypes.CHAIN_LIGHTNING, attacker), enchantmentLevel * .05f * damage);
-                    level.sendParticles(new LightningParticleOptions(attacked.getEyePosition(), target.getEyePosition(), 5, 100, .4f, .2f), target.getX(), target.getY(), target.getZ(), 1, 0, 0, 0, 0);
+                    level.sendParticles(new LightningParticleOptions(attacked.getEyePosition(), target.getEyePosition(), 5, 100, .4f, .1f), target.getX(), target.getY(), target.getZ(), 1, 0, 0, 0, 0);
                     attacked = target;
                 }
             }
@@ -208,9 +211,9 @@ public class EventHandler {
     private static LivingEntity selectTarget(int enchLevel, Level level, LivingEntity origin, LivingEntity attacker, List<LivingEntity> previous) {
         List<LivingEntity> livings = level.getEntitiesOfClass(
                 LivingEntity.class,
-                origin.getBoundingBox().inflate(enchLevel * 2),
+                origin.getBoundingBox().inflate(Math.min(20, Mth.log2(enchLevel) * 2)),
                 living1 -> {
-                    if (living1 == attacker || previous.contains(living1)) return false;
+                    if (living1.isDeadOrDying() || living1 == attacker || previous.contains(living1) || attacker.isAlliedTo(living1)) return false;
                     BlockHitResult result = living1.level().clip(new ClipContext(origin.getEyePosition(), living1.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, attacker));
                     return result.getType() == HitResult.Type.MISS;
                 }

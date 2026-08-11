@@ -2,8 +2,8 @@ package net.kapitencraft.enchantments_plus.registry;
 
 import com.mojang.serialization.MapCodec;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
-import net.kapitencraft.enchantments_plus.enchantments.components.Aim;
-import net.kapitencraft.enchantments_plus.enchantments.components.Snipe;
+import net.kapitencraft.enchantments_plus.enchantments.components.bow.Aim;
+import net.kapitencraft.enchantments_plus.enchantments.components.bow.Snipe;
 import net.kapitencraft.kap_lib.enchantment.EnchantmentEffectRegistries;
 import net.kapitencraft.kap_lib.enchantment.abstracts.EnchantmentBowEffect;
 import net.neoforged.neoforge.registries.DeferredHolder;

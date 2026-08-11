@@ -2,7 +2,13 @@ package net.kapitencraft.enchantments_plus.data_gen;
 
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
 import net.kapitencraft.enchantments_plus.ModTags;
-import net.kapitencraft.enchantments_plus.enchantments.components.*;
+import net.kapitencraft.enchantments_plus.enchantments.components.bow.Aim;
+import net.kapitencraft.enchantments_plus.enchantments.components.bow.Snipe;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.FirstStrike;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.Inferno;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.LightningLord;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.TripleStrike;
+import net.kapitencraft.enchantments_plus.enchantments.components.entity.*;
 import net.kapitencraft.enchantments_plus.registry.ModBlocks;
 import net.kapitencraft.enchantments_plus.registry.ModCooldowns;
 import net.kapitencraft.enchantments_plus.registry.ModEnchantmentEffectComponents;

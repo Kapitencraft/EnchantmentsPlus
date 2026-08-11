@@ -2,10 +2,10 @@ package net.kapitencraft.enchantments_plus.registry;
 
 import com.mojang.serialization.MapCodec;
 import net.kapitencraft.enchantments_plus.EnchantmentsPlusMod;
-import net.kapitencraft.enchantments_plus.enchantments.components.FirstStrike;
-import net.kapitencraft.enchantments_plus.enchantments.components.Inferno;
-import net.kapitencraft.enchantments_plus.enchantments.components.LightningLord;
-import net.kapitencraft.enchantments_plus.enchantments.components.TripleStrike;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.FirstStrike;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.Inferno;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.LightningLord;
+import net.kapitencraft.enchantments_plus.enchantments.components.count.TripleStrike;
 import net.kapitencraft.kap_lib.enchantment.EnchantmentEffectRegistries;
 import net.kapitencraft.kap_lib.enchantment.abstracts.EnchantmentCountEffect;
 import net.neoforged.neoforge.registries.DeferredHolder;

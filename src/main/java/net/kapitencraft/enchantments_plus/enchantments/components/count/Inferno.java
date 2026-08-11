@@ -1,4 +1,4 @@
-package net.kapitencraft.enchantments_plus.enchantments.components;
+package net.kapitencraft.enchantments_plus.enchantments.components.count;
 
 import com.mojang.serialization.MapCodec;
 import net.kapitencraft.enchantments_plus.data_gen.ModDamageTypes;

@@ -1,0 +1,6 @@
+fixed mod description not displaying in mod menu
+fixed a possible StackOverflowError when ChainLightning would trigger to often
+fixed ChainLightning targeting allied or dead entities
+fixed ChainLightning hitting the entity that was hit originally
+
+changed ChainLightning to max range `log2(lvl) * 2` <= 20, and made the spawned particle thinner

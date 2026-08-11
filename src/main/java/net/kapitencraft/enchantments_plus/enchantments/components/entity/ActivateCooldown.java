@@ -1,4 +1,4 @@
-package net.kapitencraft.enchantments_plus.enchantments.components;
+package net.kapitencraft.enchantments_plus.enchantments.components.entity;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
