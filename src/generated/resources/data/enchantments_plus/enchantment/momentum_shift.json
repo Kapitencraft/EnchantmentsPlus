@@ -15,11 +15,7 @@
             "per_level_above_first": 0.05
           },
           "attribute": "minecraft:generic.movement_speed",
-          "duration": {
-            "type": "minecraft:linear",
-            "base": 20.0,
-            "per_level_above_first": 20.0
-          },
+          "duration": 100.0,
           "location": "enchantments_plus:movement_shift",
           "operation": "add_multiplied_base"
         },

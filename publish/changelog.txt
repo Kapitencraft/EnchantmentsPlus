@@ -2,5 +2,10 @@ fixed mod description not displaying in mod menu
 fixed a possible StackOverflowError when ChainLightning would trigger to often
 fixed ChainLightning targeting allied or dead entities
 fixed ChainLightning hitting the entity that was hit originally
+fixed a bug where XP drops from non-player kills crashing the game
 
+changed ChainLightning to target
 changed ChainLightning to max range `log2(lvl) * 2` <= 20, and made the spawned particle thinner
+changed Blood Thirst and Momentum Shift Attributes to apply for 10 seconds, instead of depending on the level
+
+update to KapLib v1.32.3

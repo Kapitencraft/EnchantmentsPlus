@@ -17,6 +17,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public class Inferno implements EnchantmentCountEffect {
     public static final MapCodec<Inferno> CODEC = MapCodec.unit(Inferno::new);
@@ -51,20 +54,35 @@ public class Inferno implements EnchantmentCountEffect {
 
             }
             int extinguishDamageReduction = extinguishLevel == 0 ? 0 : 50 + extinguishLevel * 15;
-            attack(attacked, attacker, 0, damageAmount * (100 + level * 25 - extinguishDamageReduction) / 100);
+            attack(attacked, attacker, damageAmount * (100 + level * 25 - extinguishDamageReduction) / 100);
             MiscHelper.maxEffectDuration(attacked, ExtraMobEffects.STUN, 100);
             world.getProfiler().pop();
         }
         return damageAmount;
     }
 
-    private void attack(LivingEntity attacked, LivingEntity attacker, int tick, float damage) {
-        MiscHelper.schedule(20, () -> {
-            attacked.hurt(attacked.damageSources().source(ModDamageTypes.INFERNO, attacker), damage);
-            if (tick < 5) {
-                attack(attacked, attacker, tick + 1, damage);
+    private void attack(LivingEntity attacked, LivingEntity attacker, float damage) {
+        new Object() {
+            private int ticks = 0;
+
+            public void start() {
+                NeoForge.EVENT_BUS.register(this);
             }
-        });
+
+            @SubscribeEvent
+            public void tick(ServerTickEvent.Post event) {
+                this.ticks += 1;
+                if (this.ticks % 20 == 0) {
+                    attacked.hurt(attacked.damageSources().source(ModDamageTypes.INFERNO, attacker), damage);
+                }
+                if (this.ticks >= 100)
+                    end();
+            }
+
+            private void end() {
+                NeoForge.EVENT_BUS.unregister(this);
+            }
+        }.start();
     }
 
     @Override

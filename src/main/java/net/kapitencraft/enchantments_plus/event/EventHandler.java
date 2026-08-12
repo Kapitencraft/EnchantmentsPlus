@@ -18,7 +18,6 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,8 +51,6 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -154,7 +151,6 @@ public class EventHandler {
         }
     }
 
-
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onBlockDrops(BlockDropsEvent event) {
         if (event.getBreaker() instanceof Player player) {
@@ -175,11 +171,13 @@ public class EventHandler {
     @SubscribeEvent
     public static void onLivingExperienceDrop(LivingExperienceDropEvent event) {
         Player attackingPlayer = event.getAttackingPlayer();
-        ItemStack handItem = attackingPlayer.getWeaponItem();
-        RegistryAccess access = attackingPlayer.level().registryAccess();
-        EnchantmentHelperExtras.getEnchantmentLevelAndDo(access, handItem, ModEnchantments.EXPERIENCED, enchLevel ->
-                MathHelper.add(event::getDroppedExperience, event::setDroppedExperience, enchLevel)
-        );
+        if (attackingPlayer != null) {
+            ItemStack handItem = attackingPlayer.getWeaponItem();
+            RegistryAccess access = attackingPlayer.level().registryAccess();
+            EnchantmentHelperExtras.getEnchantmentLevelAndDo(access, handItem, ModEnchantments.EXPERIENCED, enchLevel ->
+                    MathHelper.add(event::getDroppedExperience, event::setDroppedExperience, enchLevel)
+            );
+        }
     }
 
     //region chain lightning
@@ -197,7 +195,7 @@ public class EventHandler {
                 List<LivingEntity> previous = new ArrayList<>();
                 previous.add(attacked); //make sure the attack doesn't jump back to the hurt entity
                 for (int i = 0; i < enchantmentLevel; i++) {
-                    target = selectTarget(enchantmentLevel, level, attacked, attacker, previous);
+                    target = selectTarget(enchantmentLevel, attacked, attacker, previous);
                     if (target == null) break;
                     previous.add(target);
                     target.hurt(attacked.damageSources().source(ModDamageTypes.CHAIN_LIGHTNING, attacker), enchantmentLevel * .05f * damage);
@@ -208,17 +206,18 @@ public class EventHandler {
         }
     }
 
-    private static LivingEntity selectTarget(int enchLevel, Level level, LivingEntity origin, LivingEntity attacker, List<LivingEntity> previous) {
-        List<LivingEntity> livings = level.getEntitiesOfClass(
+    private static LivingEntity selectTarget(int enchLevel, LivingEntity origin, LivingEntity attacker, List<LivingEntity> previous) {
+        return MathHelper.getClosestEntity(
                 LivingEntity.class,
-                origin.getBoundingBox().inflate(Math.min(20, Mth.log2(enchLevel) * 2)),
+                origin,
+                Math.min(20, Mth.log2(enchLevel) * 2),
                 living1 -> {
-                    if (living1.isDeadOrDying() || living1 == attacker || previous.contains(living1) || attacker.isAlliedTo(living1)) return false;
+                    if (living1.isDeadOrDying() || living1 == attacker || previous.contains(living1) || attacker.isAlliedTo(living1))
+                        return false;
                     BlockHitResult result = living1.level().clip(new ClipContext(origin.getEyePosition(), living1.getEyePosition(), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, attacker));
                     return result.getType() == HitResult.Type.MISS;
                 }
         );
-        return MathHelper.pickRandom(livings, origin.getRandom());
     }
     //endregion
 

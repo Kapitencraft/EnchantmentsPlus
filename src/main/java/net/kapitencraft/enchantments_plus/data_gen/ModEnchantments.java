@@ -378,7 +378,7 @@ public interface ModEnchantments {
                         2,
                         EquipmentSlotGroup.LEGS
                 )
-        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.VICTIM, EnchantmentTarget.VICTIM, new ApplyTimedModifier(EnchantmentsPlusMod.res("movement_shift"), LevelBasedValue.perLevel(20), Attributes.MOVEMENT_SPEED, LevelBasedValue.perLevel(.05f), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
+        ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.VICTIM, EnchantmentTarget.VICTIM, new ApplyTimedModifier(EnchantmentsPlusMod.res("movement_shift"), LevelBasedValue.constant(100), Attributes.MOVEMENT_SPEED, LevelBasedValue.perLevel(.05f), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)));
         register(context, PROTECTIVE_COVER, Enchantment.enchantment(
                 Enchantment.definition(
                         items.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
@@ -620,7 +620,7 @@ public interface ModEnchantments {
                         EquipmentSlotGroup.MAINHAND
                 )
         ).withEffect(EnchantmentEffectComponents.POST_ATTACK, EnchantmentTarget.ATTACKER, EnchantmentTarget.ATTACKER,
-                new ApplyTimedModifier(EnchantmentsPlusMod.res("blood_thirst"), LevelBasedValue.perLevel(40), Attributes.ATTACK_DAMAGE, LevelBasedValue.perLevel(.01f), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ApplyTimedModifier(EnchantmentsPlusMod.res("blood_thirst"), LevelBasedValue.constant(100), Attributes.ATTACK_DAMAGE, LevelBasedValue.perLevel(.01f), AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
         ));
         register(context, CHILLING, Enchantment.enchantment(
                 Enchantment.definition(

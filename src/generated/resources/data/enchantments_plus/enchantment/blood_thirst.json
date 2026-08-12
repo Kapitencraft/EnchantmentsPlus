@@ -15,11 +15,7 @@
             "per_level_above_first": 0.01
           },
           "attribute": "minecraft:generic.attack_damage",
-          "duration": {
-            "type": "minecraft:linear",
-            "base": 40.0,
-            "per_level_above_first": 40.0
-          },
+          "duration": 100.0,
           "location": "enchantments_plus:blood_thirst",
           "operation": "add_multiplied_base"
         },
