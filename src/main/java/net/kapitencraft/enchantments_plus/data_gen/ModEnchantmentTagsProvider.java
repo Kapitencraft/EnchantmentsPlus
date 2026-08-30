@@ -54,6 +54,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.SMELTING_TOUCH,
                 ModEnchantments.BACK_STAB,
                 ModEnchantments.ENDER_SLAYER,
+                ModEnchantments.CUBISM,
                 ModEnchantments.JUSTICE,
                 ModEnchantments.ARMOR_SHREDDING,
                 ModEnchantments.FIRST_STRIKE,
@@ -98,6 +99,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.BACK_STAB,
                 ModEnchantments.BLOOD_THIRST,
                 ModEnchantments.CHILLING,
+                ModEnchantments.CUBISM,
                 ModEnchantments.ENDER_SLAYER,
                 ModEnchantments.GIANT_KILLER,
                 ModEnchantments.JUSTICE,
@@ -191,6 +193,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.BLOOD_THIRST,
                 ModEnchantments.CHILLING,
                 ModEnchantments.COMBAT_KNOWLEDGE,
+                ModEnchantments.CUBISM,
                 ModEnchantments.ENDER_SLAYER,
                 ModEnchantments.GIANT_KILLER,
                 ModEnchantments.JUSTICE,
@@ -237,6 +240,7 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.SMELTING_TOUCH,
                 ModEnchantments.BACK_STAB,
                 ModEnchantments.BLOOD_THIRST,
+                ModEnchantments.CUBISM,
                 ModEnchantments.ENDER_SLAYER,
                 ModEnchantments.JUSTICE,
                 ModEnchantments.FIRST_STRIKE,
@@ -288,6 +292,11 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
         tag(EnchantmentTags.ARMOR_EXCLUSIVE).add(
                 ModEnchantments.MAGIC_PROTECTION,
                 ModEnchantments.TRUE_PROTECTION
+        );
+        tag(EnchantmentTags.DAMAGE_EXCLUSIVE).add(
+                ModEnchantments.CUBISM,
+                ModEnchantments.ENDER_SLAYER,
+                ModEnchantments.JUSTICE
         );
     }
 }

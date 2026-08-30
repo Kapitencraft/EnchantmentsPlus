@@ -1,3 +1,4 @@
-// 1.21.1	2025-09-12T23:51:24.5012193	Tags for minecraft:entity_type mod id enchantments_plus
+// 1.21.1	2026-08-30T22:21:55.8083127	Tags for minecraft:entity_type mod id enchantments_plus
+c8eec608e1e980b0d32a9b90deaed39fc52e2611 data/enchantments_plus/tags/entity_type/sensitive_to_cubism.json
 fdac171762e141ec3439997a6bdcf104f4299a50 data/enchantments_plus/tags/entity_type/sensitive_to_ender_slayer.json
 3e4bd8f15c949fd687ea184af9350223de254ef4 data/enchantments_plus/tags/entity_type/sensitive_to_justice.json

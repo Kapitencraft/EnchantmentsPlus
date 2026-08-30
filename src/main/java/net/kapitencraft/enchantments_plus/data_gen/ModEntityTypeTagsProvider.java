@@ -24,5 +24,7 @@ public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
                 .add(EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.ENDER_DRAGON);
         tag(ModTags.EntityTypes.SENSITIVE_TO_JUSTICE)
                 .addTags(EntityTypeTags.RAIDERS);
+        tag(ModTags.EntityTypes.SENSITIVE_TO_CUBISM)
+                .add(EntityType.SLIME, EntityType.MAGMA_CUBE);
     }
 }
