@@ -1,9 +1,10 @@
-// 1.21.1	2026-07-29T12:37:16.1290347	Tags for minecraft:enchantment mod id enchantments_plus
+// 1.21.1	2026-08-30T21:34:17.3690152	Tags for minecraft:enchantment mod id enchantments_plus
 0f38436923b6a2ec2bdc30447b406e75b8e87684 data/enchantments_plus/tags/enchantment/exclusive_set/execution.json
 517fd74f8efa97d6b5b0f5adce8ac9a0722cbcac data/enchantments_plus/tags/enchantment/exclusive_set/mining_drops.json
 393803333bb9425128dd2ab47ab16e2ec6bbb0e1 data/enchantments_plus/tags/enchantment/exclusive_set/strike.json
 c3d508e8dc6d7708a97b315581a58350222acc1d data/kap_lib/tags/enchantment/ultimate.json
 547cc2c3bebbe21fec126527d4e4ccc048b9fbce data/minecraft/tags/enchantment/curse.json
+263bf8a8e00127ff2414b0f17d6754c007e010f3 data/minecraft/tags/enchantment/exclusive_set/armor.json
 6e7f2282857f8a4638f74bc4d06c7c954bf54703 data/minecraft/tags/enchantment/in_enchanting_table.json
 f3ecb54886818530e61f43b4c1856ab83a03b14e data/minecraft/tags/enchantment/on_mob_spawn_equipment.json
 61a76780c818b1afd0cd109e8a2c686cb8cad808 data/minecraft/tags/enchantment/on_random_loot.json

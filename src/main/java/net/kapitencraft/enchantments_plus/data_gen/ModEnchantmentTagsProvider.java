@@ -285,5 +285,9 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 ModEnchantments.EXECUTE,
                 ModEnchantments.PROSECUTE
         );
+        tag(EnchantmentTags.ARMOR_EXCLUSIVE).add(
+                ModEnchantments.MAGIC_PROTECTION,
+                ModEnchantments.TRUE_PROTECTION
+        );
     }
 }

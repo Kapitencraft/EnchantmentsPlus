@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.enchantments_plus.justice"
+    "translate": "enchantment.enchantments_plus.cubism"
   },
   "effects": {
     "minecraft:damage": [
@@ -18,7 +18,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "this",
           "predicate": {
-            "type": "#enchantments_plus:sensitive_to_justice"
+            "type": "#enchantments_plus:sensitive_to_cubism"
           }
         }
       }

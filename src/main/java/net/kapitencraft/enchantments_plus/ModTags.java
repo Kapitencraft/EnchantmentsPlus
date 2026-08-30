@@ -33,6 +33,7 @@ public class ModTags {
 
     public interface EntityTypes {
         TagKey<EntityType<?>> SENSITIVE_TO_ENDER_SLAYER = TagKey.create(Registries.ENTITY_TYPE, EnchantmentsPlusMod.res("sensitive_to_ender_slayer"));
+        TagKey<EntityType<?>> SENSITIVE_TO_CUBISM = TagKey.create(Registries.ENTITY_TYPE, EnchantmentsPlusMod.res("sensitive_to_cubism"));
         TagKey<EntityType<?>> SENSITIVE_TO_JUSTICE = TagKey.create(Registries.ENTITY_TYPE, EnchantmentsPlusMod.res("sensitive_to_justice"));
     }
 }
