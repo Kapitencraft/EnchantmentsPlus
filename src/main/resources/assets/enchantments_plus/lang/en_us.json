@@ -98,7 +98,7 @@
   "enchantment.enchantments_plus.necrotic_touch": "Necrotic Touch",
   "enchantment.enchantments_plus.necrotic_touch.desc": "Grants Life Steal, which makes you drain health from hit mobs.",
   "enchantment.enchantments_plus.overload": "Overload",
-  "enchantment.enchantments_plus.overload.desc": "Decreases Draw Speed but grants Crit Damage. Critical hits have a small chance to deal more damage.",
+  "enchantment.enchantments_plus.overload.desc": "Decreases Draw Speed but grants Crit Damage.",
   "enchantment.enchantments_plus.poisonous_blade": "Poisonous Blade",
   "enchantment.enchantments_plus.poisonous_blade.desc": "Adds Poison II to the target.",
   "enchantment.enchantments_plus.precision": "Precision",
